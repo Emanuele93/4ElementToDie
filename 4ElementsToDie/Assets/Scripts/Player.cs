@@ -4,15 +4,15 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	// Player base stats, they're fixed through the game so we can declare them as constants.
-	private const int baseVitality = 4;
-	private const int baseAttack = 4;
-	private const int baseDefense = 4;
-	private const int baseSpeed = 4;
+	private const int baseVitality = 3;
+	private const int baseAttack = 3;
+	private const int baseDefense = 3;
+	private const int baseSpeed = 3;
 
 	// Player base hidden stats, they're fixed through the game.
-	private const int baseLuck = 4; 
-	private const int baseAttackSpeed = 4;
-	private const int baseAttackRange = 4;
+	private const int baseLuck = 3; 
+	private const int baseAttackSpeed = 3;
+	private const int baseAttackRange = 3;
 
 	// Player equipment slots.
 	private const int numberEquipmentSlots = 3;
