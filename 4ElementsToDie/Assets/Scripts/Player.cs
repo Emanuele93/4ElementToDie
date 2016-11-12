@@ -49,6 +49,7 @@ public class Player : MonoBehaviour {
 		// Checking for attacking.
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			//TODO: Handle attack.
+			Debug.Log ("ATTACK");
 		}
 	}
 
