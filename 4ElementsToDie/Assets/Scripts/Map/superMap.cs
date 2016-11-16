@@ -59,6 +59,21 @@ public class superMap : MonoBehaviour
         }
         allSpaceFull();
         makeBigRoom();
+        makeloopRoom();
+    }
+
+    private void makeloopRoom()
+    {
+        for (int i = 2; i < map.GetLength(0) - 2; i++)
+        {
+            for (int j = 2; j < map.GetLength(1) - 2; j++)
+            {
+                if (map[i, j] == 1 && map[i + 1, j] >= 2 && map[i - 1, j] >= 2 && map[i, j - 1] < 2 && map[i, j + 1] < 2 && map[i, j - 2] < 2 && map[i, j + 2] < 2)
+                    map[i, j] = 2;
+                if (map[i, j] == 1 && map[i + 1, j] < 2 && map[i - 1, j] < 2 && map[i, j - 1] >= 2 && map[i, j + 1] >= 2 && map[i - 2, j] < 2 && map[i + 2, j] < 2)
+                    map[i, j] = 2;
+            }
+        }
     }
 
     private void makeBigRoom()
@@ -334,6 +349,11 @@ public class superMap : MonoBehaviour
                     }
                 }
             }
+        }
+        
+        foreach (GameObject g in walls)
+        {
+            g.transform.parent = gameObject.transform;
         }
     }
 
