@@ -33,7 +33,7 @@ public class Player : MonoBehaviour {
 	Transform tr;
 	float mHorizontalAttack = 0f;
 	float mVerticalAttack = 0f;
-	public Animator mAnimator;
+	Animator mAnimator;
 
 	// Facing variables.
 	bool mFacingRight;
@@ -44,6 +44,7 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		tr = GetComponent<Transform> () as Transform;
+		mAnimator = GetComponent<Animator> () as Animator;
 
 		FillWithBaseStats ();
 	}
@@ -57,7 +58,7 @@ public class Player : MonoBehaviour {
 	void FixedUpdate() {
 
 		bool[] facings = PlayerMovement.captureMovement (tr, mSpeed, mFacingRight, mFacingUp);
-		mFacingRight = facings [0]; mFacingUp = facings[1];
+		mFacingRight = facings [0]; mFacingUp = facings [1];
 
 		PlayerAnimation.Animate (mAnimator);
 			

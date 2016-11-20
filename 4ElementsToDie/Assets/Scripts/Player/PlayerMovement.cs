@@ -13,7 +13,7 @@ public class PlayerMovement {
 		playerTr.position += 
 			playerTr.right * Time.fixedDeltaTime * playerSpeed * mHorizontalMov +
 			playerTr.up * Time.fixedDeltaTime * playerSpeed * mVerticalMov;
-	
+		
 		// Flip Player horizontally
 		if ( (mHorizontalMov < 0) && (playerFacingRight) ){
 			Vector3 ls = playerTr.localScale;
@@ -22,20 +22,25 @@ public class PlayerMovement {
 			playerTr.localScale = ls;
 			playerFacingRight = !playerFacingRight;
 
+
 		} else if ( (mHorizontalMov > 0) && (!playerFacingRight) ) {
 			Vector3 ls = playerTr.localScale;
 
 			ls.x = -1f * ls.x;
 			playerTr.localScale = ls;
 			playerFacingRight = !playerFacingRight;
+
 		}
 
 		// Flip Player vertically
 		if ( (mVerticalMov < 0) && (playerFacingUp) ){
 			playerFacingUp = !playerFacingUp;
 
+
+
 		} else if ( (mVerticalMov > 0) && (!playerFacingUp) ) {
 			playerFacingUp = !playerFacingUp;
+
 		}
 
 		return new bool[]{playerFacingRight,playerFacingUp};
