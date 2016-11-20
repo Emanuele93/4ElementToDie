@@ -16,7 +16,8 @@ public class superMap : MonoBehaviour
     public GameObject threeEnterRoomHorizontal;
     public GameObject threeEnterRoomVertical;
     public GameObject angleWall;
-    
+    public GameObject door;
+
     void Start()
     {
 
@@ -58,8 +59,39 @@ public class superMap : MonoBehaviour
             newPosition.Remove(newPosition[0]);
         }
         allSpaceFull();
-        makeBigRoom();
-        makeLoopRoom();
+    }
+
+    private void addDoor()
+    {
+        int i, j;
+
+        j = 0;
+        for (i = 0; i < map.GetLength(0); i++)
+        {
+            if (map[i, j] < 0 && map[i, j + 1] >= 2)
+                Instantiate(door, new Vector3((j + 1) * 16 + marginX - 7, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, 90));
+        }
+
+        j = map.GetLength(1) - 1;
+        for (i = 0; i < map.GetLength(0); i++)
+        {
+            if (map[i, j] < 0 && map[i, j - 1] >= 2)
+                Instantiate(door, new Vector3((j - 1) * 16 + marginX + 7, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, -90));
+        }
+
+        i = 0;
+        for (j = 0; j < map.GetLength(1); j++)
+        {
+            if (map[i, j] < 0 && map[i + 1, j] >= 2)
+                Instantiate(door, new Vector3(j * 16 + marginX, -(i + 1) * 10 + marginY + 4, 0), Quaternion.Euler(0, 0, 0));
+        }
+
+        i = map.GetLength(0) - 1;
+        for (j = 0; j < map.GetLength(1); j++)
+        {
+            if (map[i, j] < 0 && map[i - 1, j] >= 2)
+                Instantiate(door, new Vector3(j * 16 + marginX, -(i - 1) * 10 + marginY - 4, 0), Quaternion.Euler(0, 0, 180));
+        }
     }
 
     private void makeLoopRoom()
@@ -130,28 +162,28 @@ public class superMap : MonoBehaviour
                     }
                     if (numero == 3 || numero == 4)
                     {
-                        if (u && r && ur && (ul || dr))
+                        if (u && r && ur && (numero == 3 || ul || dr))
                         {
                             map[i, j] = 3;
                             map[i - 1, j + 1] = 3;
                             map[i - 1, j] = 3;
                             map[i, j + 1] = 3;
                         }
-                        else if (u && l && ul && (dl || ur))
+                        else if (u && l && ul && (numero == 3 || dl || ur))
                         {
                             map[i, j] = 3;
                             map[i - 1, j - 1] = 3;
                             map[i - 1, j] = 3;
                             map[i, j - 1] = 3;
                         }
-                        else if (d && r && dr && (dl || ur))
+                        else if (d && r && dr && (numero == 3 || dl || ur))
                         {
                             map[i, j] = 3;
                             map[i + 1, j + 1] = 3;
                             map[i + 1, j] = 3;
                             map[i, j + 1] = 3;
                         }
-                        else if (d && l && dl && (ul || dr))
+                        else if (d && l && dl && (numero == 3 || ul || dr))
                         {
                             map[i, j] = 3;
                             map[i + 1, j - 1] = 3;
@@ -174,16 +206,31 @@ public class superMap : MonoBehaviour
                 if (validPosition(i, j))
                 {
                     if (map[i + 1, j] >= 2)
+                    {
                         generateMap(i + 1, j);
+                        return;
+                    }
                     else if (map[i - 1, j] >= 2)
+                    {
                         generateMap(i - 1, j);
+                        return;
+                    }
                     else if (map[i, j + 1] >= 2)
+                    {
                         generateMap(i, j + 1);
+                        return;
+                    }
                     else if (map[i, j - 1] >= 2)
+                    {
                         generateMap(i, j - 1);
+                        return;
+                    }
                 }
             }
         }
+        makeBigRoom();
+        makeLoopRoom();
+        addDoor();
     }
 
     private bool validPosition(int x, int y)
