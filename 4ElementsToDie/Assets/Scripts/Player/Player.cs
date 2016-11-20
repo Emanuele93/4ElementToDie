@@ -55,7 +55,7 @@ public class Player : MonoBehaviour {
 	// Fixed update because the player can
 	void FixedUpdate() {
 
-		PlayerMovement.captureMovement (tr, mSpeed);
+		mFacingRight = PlayerMovement.captureMovement (tr, mSpeed, mFacingRight);
 		PlayerAnimation.Animate (mAnimator);
 			
 		// Attacking.
