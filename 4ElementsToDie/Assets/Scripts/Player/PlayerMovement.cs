@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerMovement {
 
-	public static bool captureMovement(Transform playerTr, int playerSpeed, bool playerFacingRight) {
+	public static bool[] captureMovement(Transform playerTr, int playerSpeed, bool playerFacingRight, bool playerFacingUp) {
 
 		// Input capturing.
 		float mHorizontalMov = Input.GetAxis ("HorizontalMov");
@@ -14,7 +14,7 @@ public class PlayerMovement {
 			playerTr.right * Time.fixedDeltaTime * playerSpeed * mHorizontalMov +
 			playerTr.up * Time.fixedDeltaTime * playerSpeed * mVerticalMov;
 	
-		// Flip Player
+		// Flip Player horizontally
 		if ( (mHorizontalMov < 0) && (playerFacingRight) ){
 			Vector3 ls = playerTr.localScale;
 
@@ -30,6 +30,14 @@ public class PlayerMovement {
 			playerFacingRight = !playerFacingRight;
 		}
 
-		return playerFacingRight;
+		// Flip Player vertically
+		if ( (mVerticalMov < 0) && (playerFacingUp) ){
+			playerFacingUp = !playerFacingUp;
+
+		} else if ( (mVerticalMov > 0) && (!playerFacingUp) ) {
+			playerFacingUp = !playerFacingUp;
+		}
+
+		return new bool[]{playerFacingRight,playerFacingUp};
 	}
 }

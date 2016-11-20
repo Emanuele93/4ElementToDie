@@ -5,11 +5,11 @@ public class PlayerAnimation {
 	public static void Animate (Animator playerAnimator) {
 		// Movement animation.
 		if (Input.GetKeyDown (KeyCode.W) ){
-			playerAnimator.SetInteger ("Direction",1);
+			playerAnimator.SetInteger ("DirectionVertical",1);
 		}
 
 		if (Input.GetKeyDown (KeyCode.S) ){
-			playerAnimator.SetInteger ("Direction",2);
+			playerAnimator.SetInteger ("DirectionVertical",2);
 		}
 
 		if (Input.GetKeyDown (KeyCode.D) ){

@@ -37,6 +37,7 @@ public class Player : MonoBehaviour {
 
 	// Facing variables.
 	bool mFacingRight;
+	bool mFacingUp;
 	//bool mFacingUp;
 
 
@@ -55,7 +56,9 @@ public class Player : MonoBehaviour {
 	// Fixed update because the player can
 	void FixedUpdate() {
 
-		mFacingRight = PlayerMovement.captureMovement (tr, mSpeed, mFacingRight);
+		bool[] facings = PlayerMovement.captureMovement (tr, mSpeed, mFacingRight, mFacingUp);
+		mFacingRight = facings [0]; mFacingUp = facings[1];
+
 		PlayerAnimation.Animate (mAnimator);
 			
 		// Attacking.
@@ -92,5 +95,6 @@ public class Player : MonoBehaviour {
 		}
 
 		mFacingRight = true;
+		mFacingUp = false;
 	}
 }
