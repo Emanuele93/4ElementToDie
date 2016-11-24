@@ -1,19 +1,12 @@
 fileFormatVersion: 2
 guid: cad25051ddbebdf41b80aa4bf30207e3
-timeCreated: 1478962258
+timeCreated: 1479671380
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
-  - oneEnterRoom: {fileID: 1000013710852016, guid: 0091294da76ac5d418a0c83fa4ee1398,
-      type: 2}
-  - angleRoom: {fileID: 1000011569947026, guid: 46ac73ca30217ae4eaf60f3a2adbff16,
-      type: 2}
-  - straightRoom: {fileID: 1000014206157186, guid: ad8e425818bb8d44caf4552c90daca84,
-      type: 2}
-  - threeEnterRoom: {fileID: 1000012030580838, guid: 1779646a51add6243b7e4ea51d2b92fe,
-      type: 2}
-  - fourEnterRoom: {fileID: 1000011814199802, guid: f9dbd1a8336f1664391ff065df28f414,
+  - door: {fileID: 1000013040428480, guid: ddc2d0dcdb34d514a8466905c76867bc, type: 2}
+  - roomGeneratorObject: {fileID: 1000013170171296, guid: cb24dd712f667394799ad0514f7d7815,
       type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
