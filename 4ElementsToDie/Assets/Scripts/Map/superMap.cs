@@ -59,33 +59,47 @@ public class superMap : MonoBehaviour
     private void addDoor()
     {
         int i, j;
+        GameObject doorObject;
 
         j = 0;
         for (i = 0; i < map.GetLength(0); i++)
         {
             if (map[i, j] < 0 && map[i, j + 1] >= 2)
-                Instantiate(door, new Vector3((j + 1) * 16 + marginX - 7.25f, -i * 10 + marginY, 0f), Quaternion.Euler(0, 0, 90));
+            {
+                doorObject = Instantiate(door, new Vector3((j + 1) * 16 + marginX - 7.25f, -i * 10 + marginY, 0f), Quaternion.Euler(0, 0, 90)) as GameObject;
+                doorObject.transform.parent = transform;
+            }
+
         }
 
         j = map.GetLength(1) - 1;
         for (i = 0; i < map.GetLength(0); i++)
         {
             if (map[i, j] < 0 && map[i, j - 1] >= 2)
-                Instantiate(door, new Vector3((j - 1) * 16 + marginX + 7.25f, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, -90));
+            {
+                doorObject = Instantiate(door, new Vector3((j - 1) * 16 + marginX + 7.25f, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, -90)) as GameObject;
+                doorObject.transform.parent = transform;
+            }
         }
 
         i = 0;
         for (j = 0; j < map.GetLength(1); j++)
         {
             if (map[i, j] < 0 && map[i + 1, j] >= 2)
-                Instantiate(door, new Vector3(j * 16 + marginX, -(i + 1) * 10 + marginY + 4.25f, 0), Quaternion.Euler(0, 0, 0));
+            {
+                doorObject = Instantiate(door, new Vector3(j * 16 + marginX, -(i + 1) * 10 + marginY + 4.25f, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+                doorObject.transform.parent = transform;
+            }
         }
 
         i = map.GetLength(0) - 1;
         for (j = 0; j < map.GetLength(1); j++)
         {
             if (map[i, j] < 0 && map[i - 1, j] >= 2)
-                Instantiate(door, new Vector3(j * 16 + marginX, -(i - 1) * 10 + marginY - 4.25f, 0), Quaternion.Euler(0, 0, 180));
+            {
+                doorObject = Instantiate(door, new Vector3(j * 16 + marginX, -(i - 1) * 10 + marginY - 4.25f, 0), Quaternion.Euler(0, 0, 180)) as GameObject;
+                doorObject.transform.parent = transform;
+            }
         }
     }
 
