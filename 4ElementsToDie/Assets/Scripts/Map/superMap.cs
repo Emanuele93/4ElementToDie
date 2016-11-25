@@ -4,19 +4,15 @@ using System.Collections.Generic;
 
 public class superMap : MonoBehaviour
 {
-    protected int[,] map;
-    private List<GameObject> walls = new List<GameObject>();
-    protected int marginX, marginY;
+    private GameObject room;
+    private List<GameObject> rooms = new List<GameObject>();
 
-    public GameObject oneEnterRoomHorizontal;
-    public GameObject oneEnterRoomVertical;
-    public GameObject angleRoom;
-    public GameObject straightRoomHorizontal;
-    public GameObject straightRoomVertical;
-    public GameObject threeEnterRoomHorizontal;
-    public GameObject threeEnterRoomVertical;
-    public GameObject angleWall;
-    
+    protected int[,] map;
+    protected float marginX, marginY;
+
+    public GameObject door;
+    public GameObject roomGeneratorObject;
+
     void Start()
     {
 
@@ -58,7 +54,67 @@ public class superMap : MonoBehaviour
             newPosition.Remove(newPosition[0]);
         }
         allSpaceFull();
-        makeBigRoom();
+    }
+
+    private void addDoor()
+    {
+        int i, j;
+        GameObject doorObject;
+
+        j = 0;
+        for (i = 0; i < map.GetLength(0); i++)
+        {
+            if (map[i, j] < 0 && map[i, j + 1] >= 2)
+            {
+                doorObject = Instantiate(door, new Vector3((j + 1) * 16 + marginX - 7.25f, -i * 10 + marginY, 0f), Quaternion.Euler(0, 0, 90)) as GameObject;
+                doorObject.transform.parent = transform;
+            }
+
+        }
+
+        j = map.GetLength(1) - 1;
+        for (i = 0; i < map.GetLength(0); i++)
+        {
+            if (map[i, j] < 0 && map[i, j - 1] >= 2)
+            {
+                doorObject = Instantiate(door, new Vector3((j - 1) * 16 + marginX + 7.25f, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, -90)) as GameObject;
+                doorObject.transform.parent = transform;
+            }
+        }
+
+        i = 0;
+        for (j = 0; j < map.GetLength(1); j++)
+        {
+            if (map[i, j] < 0 && map[i + 1, j] >= 2)
+            {
+                doorObject = Instantiate(door, new Vector3(j * 16 + marginX, -(i + 1) * 10 + marginY + 4.25f, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+                doorObject.transform.parent = transform;
+            }
+        }
+
+        i = map.GetLength(0) - 1;
+        for (j = 0; j < map.GetLength(1); j++)
+        {
+            if (map[i, j] < 0 && map[i - 1, j] >= 2)
+            {
+                doorObject = Instantiate(door, new Vector3(j * 16 + marginX, -(i - 1) * 10 + marginY - 4.25f, 0), Quaternion.Euler(0, 0, 180)) as GameObject;
+                doorObject.transform.parent = transform;
+            }
+        }
+    }
+
+    private void makeLoopRoom()
+    {
+        for (int i = 2; i < map.GetLength(0) - 2; i++)
+        {
+            for (int j = 2; j < map.GetLength(1) - 2; j++)
+            {
+                if (map[i, j] == 1 && map[i - 1, j] < 2 && map[i - 2, j] < 2 && map[i + 1, j] < 2 && map[i + 2, j] < 2 && map[i, j + 1] >= 2 && map[i, j - 1] >= 2)
+                    map[i, j] = 2;
+                else if (map[i, j] == 1 && map[i, j - 1] < 2 && map[i, j - 2] < 2 && map[i, j + 1] < 2 && map[i, j + 2] < 2 && map[i + 1, j] >= 2 && map[i - 1, j] >= 2)
+                    map[i, j] = 2;
+            }
+        }
     }
 
     private void makeBigRoom()
@@ -115,28 +171,28 @@ public class superMap : MonoBehaviour
                     }
                     if (numero == 3 || numero == 4)
                     {
-                        if (u && r && ur && (ul || dr))
+                        if (u && r && ur && (numero == 3 || ul || dr))
                         {
                             map[i, j] = 3;
                             map[i - 1, j + 1] = 3;
                             map[i - 1, j] = 3;
                             map[i, j + 1] = 3;
                         }
-                        else if (u && l && ul && (dl || ur))
+                        else if (u && l && ul && (numero == 3 || dl || ur))
                         {
                             map[i, j] = 3;
                             map[i - 1, j - 1] = 3;
                             map[i - 1, j] = 3;
                             map[i, j - 1] = 3;
                         }
-                        else if (d && r && dr && (dl || ur))
+                        else if (d && r && dr && (numero == 3 || dl || ur))
                         {
                             map[i, j] = 3;
                             map[i + 1, j + 1] = 3;
                             map[i + 1, j] = 3;
                             map[i, j + 1] = 3;
                         }
-                        else if (d && l && dl && (ul || dr))
+                        else if (d && l && dl && (numero == 3 || ul || dr))
                         {
                             map[i, j] = 3;
                             map[i + 1, j - 1] = 3;
@@ -159,16 +215,31 @@ public class superMap : MonoBehaviour
                 if (validPosition(i, j))
                 {
                     if (map[i + 1, j] >= 2)
+                    {
                         generateMap(i + 1, j);
+                        return;
+                    }
                     else if (map[i - 1, j] >= 2)
+                    {
                         generateMap(i - 1, j);
+                        return;
+                    }
                     else if (map[i, j + 1] >= 2)
+                    {
                         generateMap(i, j + 1);
+                        return;
+                    }
                     else if (map[i, j - 1] >= 2)
+                    {
                         generateMap(i, j - 1);
+                        return;
+                    }
                 }
             }
         }
+        makeBigRoom();
+        makeLoopRoom();
+        addDoor();
     }
 
     private bool validPosition(int x, int y)
@@ -241,108 +312,24 @@ public class superMap : MonoBehaviour
                     if (map[i + 1, j - 1] >= 2)
                         dl = true;
 
-                    if (u && r && l && d)
-                    {
-                        if (!ur)
-                            walls.Add(Instantiate(angleWall, new Vector3(j * 16 + marginX + 7, -i * 10 + marginY + 4, 0), Quaternion.Euler(0, 0, 180)) as GameObject);
-                        if (!dr)
-                            walls.Add(Instantiate(angleWall, new Vector3(j * 16 + marginX + 7, -i * 10 + marginY - 4, 0), Quaternion.Euler(0, 0, 90)) as GameObject);
-                        if (!ul)
-                            walls.Add(Instantiate(angleWall, new Vector3(j * 16 + marginX - 7, -i * 10 + marginY + 4, 0), Quaternion.Euler(0, 0, -90)) as GameObject);
-                        if (!dl)
-                            walls.Add(Instantiate(angleWall, new Vector3(j * 16 + marginX - 7, -i * 10 + marginY - 4, 0), Quaternion.Euler(0, 0, 0)) as GameObject);
-                    }
-                    else if (l && !u && !r && !d)
-                    {
-                        walls.Add(Instantiate(oneEnterRoomHorizontal, new Vector3(j * 16 + marginX, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, 0)) as GameObject);
-                    }
-                    else if (!l && u && !r && !d)
-                    {
-                        walls.Add(Instantiate(oneEnterRoomVertical, new Vector3(j * 16 + marginX, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, 180)) as GameObject);
-                    }
-                    else if (!l && !u && r && !d)
-                    {
-                        walls.Add(Instantiate(oneEnterRoomHorizontal, new Vector3(j * 16 + marginX, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, 180)) as GameObject);
-                    }
-                    else if (!l && !u && !r && d)
-                    {
-                        walls.Add(Instantiate(oneEnterRoomVertical, new Vector3(j * 16 + marginX, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, 0)) as GameObject);
-                    }
-                    else if (l && u && !r && !d)
-                    {
-                        walls.Add(Instantiate(angleRoom, new Vector3(j * 16 + marginX, -i * 10 + marginY, 0), Quaternion.Euler(180, 0, 0)) as GameObject);
-                        if (!ul)
-                            walls.Add(Instantiate(angleWall, new Vector3(j * 16 + marginX - 7, -i * 10 + marginY + 4, 0), Quaternion.Euler(0, 0, -90)) as GameObject);
-                    }
-                    else if (l && !u && !r && d)
-                    {
-                        walls.Add(Instantiate(angleRoom, new Vector3(j * 16 + marginX, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, 0)) as GameObject);
-                        if (!dl)
-                            walls.Add(Instantiate(angleWall, new Vector3(j * 16 + marginX - 7, -i * 10 + marginY - 4, 0), Quaternion.Euler(0, 0, 0)) as GameObject);
-                    }
-                    else if (!l && u && r && !d)
-                    {
-                        walls.Add(Instantiate(angleRoom, new Vector3(j * 16 + marginX, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, 180)) as GameObject);
-                        if (!ur)
-                            walls.Add(Instantiate(angleWall, new Vector3(j * 16 + marginX + 7, -i * 10 + marginY + 4, 0), Quaternion.Euler(0, 0, 180)) as GameObject);
-                    }
-                    else if (!l && !u && r && d)
-                    {
-                        walls.Add(Instantiate(angleRoom, new Vector3(j * 16 + marginX, -i * 10 + marginY, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
-                        if (!dr)
-                            walls.Add(Instantiate(angleWall, new Vector3(j * 16 + marginX + 7, -i * 10 + marginY - 4, 0), Quaternion.Euler(0, 0, 90)) as GameObject);
-                    }
-                    else if (l && u && r && !d)
-                    {
-                        walls.Add(Instantiate(threeEnterRoomHorizontal, new Vector3(j * 16 + marginX, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, 180)) as GameObject);
-                        if (!ul)
-                            walls.Add(Instantiate(angleWall, new Vector3(j * 16 + marginX - 7, -i * 10 + marginY + 4, 0), Quaternion.Euler(0, 0, -90)) as GameObject);
-                        if (!ur)
-                            walls.Add(Instantiate(angleWall, new Vector3(j * 16 + marginX + 7, -i * 10 + marginY + 4, 0), Quaternion.Euler(0, 0, 180)) as GameObject);
-                    }
-                    else if (l && !u && r && d)
-                    {
-                        walls.Add(Instantiate(threeEnterRoomHorizontal, new Vector3(j * 16 + marginX, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, 0)) as GameObject);
-                        if (!dl)
-                            walls.Add(Instantiate(angleWall, new Vector3(j * 16 + marginX - 7, -i * 10 + marginY - 4, 0), Quaternion.Euler(0, 0, 0)) as GameObject);
-                        if (!dr)
-                            walls.Add(Instantiate(angleWall, new Vector3(j * 16 + marginX + 7, -i * 10 + marginY - 4, 0), Quaternion.Euler(0, 0, 90)) as GameObject);
-                    }
-                    else if (l && u && !r && d)
-                    {
-                        walls.Add(Instantiate(threeEnterRoomVertical, new Vector3(j * 16 + marginX, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, 0)) as GameObject);
-                        if (!ul)
-                            walls.Add(Instantiate(angleWall, new Vector3(j * 16 + marginX - 7, -i * 10 + marginY + 4, 0), Quaternion.Euler(0, 0, -90)) as GameObject);
-                        if (!dl)
-                            walls.Add(Instantiate(angleWall, new Vector3(j * 16 + marginX - 7, -i * 10 + marginY - 4, 0), Quaternion.Euler(0, 0, 0)) as GameObject);
-                    }
-                    else if (!l && u && r && d)
-                    {
-                        walls.Add(Instantiate(threeEnterRoomVertical, new Vector3(j * 16 + marginX, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, 180)) as GameObject);
-                        if (!ur)
-                            walls.Add(Instantiate(angleWall, new Vector3(j * 16 + marginX + 7, -i * 10 + marginY + 4, 0), Quaternion.Euler(0, 0, 180)) as GameObject);
-                        if (!dr)
-                            walls.Add(Instantiate(angleWall, new Vector3(j * 16 + marginX + 7, -i * 10 + marginY - 4, 0), Quaternion.Euler(0, 0, 90)) as GameObject);
-                    }
-                    else if (!l && u && !r && d)
-                    {
-                        walls.Add(Instantiate(straightRoomVertical, new Vector3(j * 16 + marginX, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, 0)) as GameObject);
-                    }
-                    else if (l && !u && r && !d)
-                    {
-                        walls.Add(Instantiate(straightRoomHorizontal, new Vector3(j * 16 + marginX, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, 0)) as GameObject);
-                    }
+                    room = roomGeneratorObject.GetComponent<roomFactory>().makeRoom(u, r, l, d, ur, ul, dr, dl, j * 16 + marginX, -i * 10 + marginY);
+                    if (room != null)
+                        rooms.Add(room);
                 }
             }
+        }
+        foreach (GameObject g in rooms)
+        {
+            g.transform.parent = transform;
         }
     }
 
     protected void clearMap()
     {
-        while(walls.Count > 0)
+        while (rooms.Count > 0)
         {
-            Destroy(walls[0]);
-            walls.Remove(walls[0]);
+            Destroy(rooms[0]);
+            rooms.Remove(rooms[0]);
         }
     }
 }
