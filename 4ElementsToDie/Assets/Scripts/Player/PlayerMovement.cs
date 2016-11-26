@@ -8,11 +8,15 @@ public class PlayerMovement {
 		// Input capturing.
 		float mHorizontalMov = Input.GetAxis ("HorizontalMov");
 		float mVerticalMov = Input.GetAxis ("VerticalMov");
+		float divide = 1f; // Divide factor to normalize speed.
+	
 
 		// Moving the player.
-		playerTr.position += 
-			playerTr.right * Time.fixedDeltaTime * playerSpeed * mHorizontalMov +
-			playerTr.up * Time.fixedDeltaTime * playerSpeed * mVerticalMov;
+		if (mHorizontalMov != 0 && mVerticalMov != 0) {
+			divide = Mathf.Sqrt (2);
+		}
+		Debug.Log (divide.ToString ());
+		playerTr.position += Time.fixedDeltaTime * playerSpeed * (playerTr.right * mHorizontalMov + playerTr.up * mVerticalMov) / divide;
 		
 		// Flip Player horizontally
 		if ( (mHorizontalMov < 0) && (playerFacingRight) ){
