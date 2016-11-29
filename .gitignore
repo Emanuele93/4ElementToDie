@@ -28,3 +28,16 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# Folders.
+library/
+Library/
+temp/
+Temp/
+obj/
+Obj/
+build/
+Build/
+Builds/
+builds/
+
