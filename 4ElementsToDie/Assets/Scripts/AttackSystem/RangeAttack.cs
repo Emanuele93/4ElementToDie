@@ -2,16 +2,16 @@
 using System.Collections;
 
 // PlayerScript requires the GameObject to have a Rigidbody component
-[RequireComponent (typeof (BoxCollider2D))]
-[RequireComponent (typeof (Rigidbody2D))]
+[RequireComponent (typeof (BoxCollider2D), typeof (Rigidbody2D))]
 public class RangeAttack : MonoBehaviour {
 	BoxCollider2D col;
 	Rigidbody2D rb;
 	Transform tr;
 
-
 	float mSpeed;
 	float direction;
+
+	float waitTime = 3f;
 
 	Vector2 colliderSize = new Vector2(2f,1f);
 
@@ -41,7 +41,12 @@ public class RangeAttack : MonoBehaviour {
 	// the attack method is called when the user presses the attack button.
 	public void Attack() {
 		tr.position += tr.right * Time.fixedDeltaTime * direction * mSpeed;
+		StartCoroutine( ExplosionTime ());
+	}
 
+	IEnumerator ExplosionTime () {
+		yield return new WaitForSeconds (waitTime);
+		Destroy (gameObject);
 	}
 
 	// Triggered when a collision happens.

@@ -11,7 +11,7 @@ public class AreaAttack : MonoBehaviour {
 	float mSpeed;
 	float direction;
 
-	float colliderRadius = 10f;
+	float colliderRadius = 3f;
 	float waitTime = 3f;
 
 	// Use this for initialization
