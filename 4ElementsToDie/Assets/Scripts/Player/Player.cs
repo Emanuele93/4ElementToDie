@@ -15,8 +15,8 @@ public class Player : MonoBehaviour {
 	private const int baseAttackRange = 3;
 
 	// Player equipment slots.
-	private const int numberEquipmentSlots = 4;
-	public int[] equipmentSlots = new int[numberEquipmentSlots];
+	private const int numberEquipmentSlots = 3;
+	private int[] equipmentSlots = new int[numberEquipmentSlots];
 
 	// Player onGame visible stats.
 	public int mVitality {get; private set;}
@@ -31,8 +31,8 @@ public class Player : MonoBehaviour {
 
 	// Unity objects and variables.
 	Transform tr;
-	float mHorizontalAttack = 0f;
-	float mVerticalAttack = 0f;
+//	float mHorizontalAttack = 0f;
+//	float mVerticalAttack = 0f;
 	Animator mAnimator;
 
 	// Facing variables.
@@ -56,7 +56,6 @@ public class Player : MonoBehaviour {
 
 	// Fixed update because the player can
 	void FixedUpdate() {
-
 		bool[] facings = PlayerMovement.captureMovement (tr, mSpeed, mFacingRight, mFacingUp);
 		mFacingRight = facings [0]; mFacingUp = facings [1];
 

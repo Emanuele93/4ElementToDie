@@ -15,9 +15,9 @@ public class PlayerMovement {
 		if (mHorizontalMov != 0 && mVerticalMov != 0) {
 			divide = Mathf.Sqrt (2);
 		}
-		Debug.Log (divide.ToString ());
+
 		playerTr.position += Time.fixedDeltaTime * playerSpeed * (playerTr.right * mHorizontalMov + playerTr.up * mVerticalMov) / divide;
-		
+
 		// Flip Player horizontally
 		if ( (mHorizontalMov < 0) && (playerFacingRight) ){
 			Vector3 ls = playerTr.localScale;

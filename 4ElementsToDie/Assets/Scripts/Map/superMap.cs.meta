@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cad25051ddbebdf41b80aa4bf30207e3
+timeCreated: 1479671380
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - door: {fileID: 1000013040428480, guid: ddc2d0dcdb34d514a8466905c76867bc, type: 2}
+  - roomGeneratorObject: {fileID: 1000013170171296, guid: cb24dd712f667394799ad0514f7d7815,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
