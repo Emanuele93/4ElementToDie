@@ -24,6 +24,7 @@ public class RangeAttack : MonoBehaviour {
 		mSpeed = 5f;
 		direction = 1f;
 		col.size = colliderSize;
+		col.isTrigger = true;
 	}
 	
 	// the attack method is called when the user presses the attack button.

@@ -1,31 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-// PlayerScript requires the GameObject to have a Rigidbody component
-[RequireComponent (typeof (BoxCollider2D))]
+[RequireComponent (typeof (CircleCollider2D))]
 [RequireComponent (typeof (Rigidbody2D))]
 public class AreaAttack : MonoBehaviour {
-	BoxCollider2D collider;
+	CircleCollider2D col;
 	Rigidbody2D rb;
 	Transform tr;
-
 
 	float mSpeed;
 	float direction;
 
+	float colliderRadius = 10f;
+	float waitTime = 3f;
+
 	// Use this for initialization
 	void Start () {
 		tr = GetComponent<Transform> () as Transform;
-		collider = GetComponent<BoxCollider2D> () as BoxCollider2D;
+		col = GetComponent<CircleCollider2D> () as CircleCollider2D;
 		rb = GetComponent<Rigidbody2D> () as Rigidbody2D;
 
 		mSpeed = 5f;
 		direction = 1f;
+		col.radius = colliderRadius;
+		col.isTrigger = true;
 	}
-	
+
 	// the attack method is called when the user presses the attack button.
 	void Update () {
-		
 	}
 
 	void FixedUpdate () {
@@ -34,19 +36,22 @@ public class AreaAttack : MonoBehaviour {
 
 	// the attack method is called when the user presses the attack button.
 	public void Attack() {
-		tr.position += tr.right * Time.fixedDeltaTime * direction * mSpeed;
+		StartCoroutine( ExplosionTime ());
 	}
 
+	IEnumerator ExplosionTime () {
+		yield return new WaitForSeconds (waitTime);
+		Destroy (gameObject);
+	}
+		
 	// Triggered when a collision happens.
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "Enemy") {
 			Debug.LogError ("Enemy");
 			Destroy (other.gameObject);
-			Destroy (gameObject);
 
 		} else if (other.tag == "Wall") {
 			Debug.LogError ("Wall");
-			Destroy (gameObject);
 		} 
 		else if (other.tag == "Player") { 
 			Debug.Log ("Collided with Player");
