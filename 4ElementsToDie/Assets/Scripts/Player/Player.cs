@@ -62,20 +62,28 @@ public class Player : MonoBehaviour {
 		PlayerAnimation.Animate (mAnimator);
 			
 		// Attacking.
-		if ( (Input.GetKeyDown (KeyCode.L)) || (Input.GetKeyDown (KeyCode.RightArrow)) ){
-			Debug.Log ("Right Attack");
-		}
+//		if ( (Input.GetKeyDown (KeyCode.L)) || (Input.GetKeyDown (KeyCode.RightArrow)) ){
+//			Debug.Log ("Right Attack");
+//		}
+//
+//		if ( (Input.GetKeyDown (KeyCode.J)) || (Input.GetKeyDown (KeyCode.LeftArrow)) ){
+//			Debug.Log ("Left Attack");
+//		}
+//
+//		if ( (Input.GetKeyDown (KeyCode.I)) || (Input.GetKeyDown (KeyCode.UpArrow)) ){
+//			Debug.Log ("Up Attack");
+//		}
 
-		if ( (Input.GetKeyDown (KeyCode.J)) || (Input.GetKeyDown (KeyCode.LeftArrow)) ){
-			Debug.Log ("Left Attack");
-		}
+//		if ( (Input.GetKeyDown (KeyCode.K)) || (Input.GetKeyDown (KeyCode.DownArrow)) ){
+//			GameObject go = ObjectPoolingManager.Instance.GetObject (m_shot_prefab.name);
+//			go.transform.position = m_shot_right.position;
+//			go.transform.rotation = m_shot_right.rotation;
+//		}
 
-		if ( (Input.GetKeyDown (KeyCode.I)) || (Input.GetKeyDown (KeyCode.UpArrow)) ){
-			Debug.Log ("Up Attack");
-		}
-
-		if ( (Input.GetKeyDown (KeyCode.K)) || (Input.GetKeyDown (KeyCode.DownArrow)) ){
-			Debug.Log ("Down Attack");
+		if (Input.GetKeyDown (KeyCode.Space)) {
+//			GameObject go = ObjectPoolingManager.Instance.GetObject (m_shot_prefab.name);
+//			go.transform.position = m_shot_right.position;
+//			go.transform.rotation = m_shot_right.rotation;
 		}
 
 	}
