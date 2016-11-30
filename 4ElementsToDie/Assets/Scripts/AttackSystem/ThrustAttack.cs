@@ -2,12 +2,12 @@
 using System.Collections;
 
 [RequireComponent (typeof (PolygonCollider2D),typeof(Rigidbody2D))]
-public class SlashAttack : MonoBehaviour {
+public class ThrustAttack : MonoBehaviour {
 	PolygonCollider2D col;
 	Rigidbody2D rb;
 	Transform tr;
 
-	const int numberOfPoints = 16;
+	const int numberOfPoints = 3;
 
 	float mSpeed;
 	float direction;
@@ -70,23 +70,22 @@ public class SlashAttack : MonoBehaviour {
 		float step = (attackAngle * 2) / ((float)numberOfPoints / 2f - 1);
 		float rad; float a; float r;
 
-		// Outer circle creation. 
-		a = attackAngle;
+		// Point.
 		r = 2.5f;
-		for (int i = 0; i < numberOfPoints / 2; i++) {
-			rad = a * Mathf.PI / 180f;
-			points [i] = new Vector2 (Mathf.Cos (rad) * r, Mathf.Sin (rad) * r);
-			a -= step;
-		}
+		points [0] = new Vector2 (Mathf.Cos (0) * r, Mathf.Sin (0) * r);
 
-		// Inner-Circle creation.
+		// Down point.
+		a = attackAngle;
+		r = 0.5f;
+		rad = a * Mathf.PI / 180f;
+		points [1] = new Vector2 (Mathf.Cos (rad) * r, Mathf.Sin (rad) * r);
+
+
+		// Upper-Point.
 		a = -attackAngle;
-		r = 1f;
-		for (int i = numberOfPoints/2; i < numberOfPoints; i++) {
-			rad = a * Mathf.PI / 180f;
-			points [i] = new Vector2 (Mathf.Cos (rad) * r, Mathf.Sin (rad) * r);
-			a += step;
-		}
+		r = 0.5f;
+		rad = a * Mathf.PI / 180f;
+		points [2] = new Vector2 (Mathf.Cos (rad) * r, Mathf.Sin (rad) * r);
 
 		return points;
 	}
