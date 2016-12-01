@@ -67,7 +67,6 @@ public class ThrustAttack : MonoBehaviour {
 		// Creating the points for the angle.
 		Vector2[] points = new Vector2[numberOfPoints];
 		int attackAngle = 30;
-		float step = (attackAngle * 2) / ((float)numberOfPoints / 2f - 1);
 		float rad; float a; float r;
 
 		// Point.

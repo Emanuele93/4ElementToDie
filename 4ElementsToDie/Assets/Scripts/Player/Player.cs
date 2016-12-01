@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using POLIMIGameCollective;
+
 
 public class Player : MonoBehaviour {
 
@@ -40,6 +42,17 @@ public class Player : MonoBehaviour {
 	bool mFacingUp;
 	//bool mFacingUp;
 
+	[Header ("Attack transforms")]
+	public Transform m_RangeAttackTransform;
+	public Transform mAreaAttackTransform;
+	public Transform mThrustAttackTransform;
+	public Transform mSlashAttackTransform;
+
+	[Header ("Attack prefabs")]
+	public GameObject mRangeAttack;
+	public GameObject mAreaAttack;
+	public GameObject mThrustAttack;
+	public GameObject mSlashAttack;
 
 	// Use this for initialization
 	void Start () {
@@ -81,7 +94,9 @@ public class Player : MonoBehaviour {
 //		}
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
-//			GameObject go = ObjectPoolingManager.Instance.GetObject (m_shot_prefab.name);
+			GameObject go = ObjectPoolingManager.Instance.GetObject (mRangeAttack.name);
+			go.transform.position = m_RangeAttackTransform.position;
+			go.transform.position = m_RangeAttackTransform.position;
 //			go.transform.position = m_shot_right.position;
 //			go.transform.rotation = m_shot_right.rotation;
 		}
