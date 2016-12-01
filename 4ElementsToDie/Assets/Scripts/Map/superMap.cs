@@ -287,14 +287,15 @@ public class superMap : MonoBehaviour
 
     protected void insertWall()
     {
-        bool u, d, r, l, ur, ul, dr, dl;
+        bool u, d, r, l, ur, ul, dr, dl,door;
         for (int i = 1; i < map.GetLength(0) - 1; i++)
         {
             for (int j = 1; j < map.GetLength(1) - 1; j++)
             {
                 if (map[i, j] >= 2)
                 {
-                    u = d = r = l = ur = ul = dr = dl = false;
+                    u = d = r = l = ur = ul = dr = dl = door = false;
+
                     if (map[i - 1, j] >= 2)
                         u = true;
                     if (map[i + 1, j] >= 2)
@@ -312,7 +313,10 @@ public class superMap : MonoBehaviour
                     if (map[i + 1, j - 1] >= 2)
                         dl = true;
 
-                    room = roomGeneratorObject.GetComponent<roomFactory>().makeRoom(u, r, l, d, ur, ul, dr, dl, j * 16 + marginX, -i * 10 + marginY);
+                    if (map[i - 1, j] < 0 || map[i + 1, j] < 0 || map[i, j - 1] < 0 || map[i, j + 1] < 0 || map[i - 1, j + 1] < 0 || map[i + 1, j + 1] < 0 || map[i - 1, j - 1] < 0 || map[i + 1, j - 1] < 0)
+                        door = true;
+
+                    room = roomGeneratorObject.GetComponent<roomFactory>().makeRoom(u, r, l, d, ur, ul, dr, dl, j * 16 + marginX, -i * 10 + marginY, door);
                     if (room != null)
                         rooms.Add(room);
                 }
