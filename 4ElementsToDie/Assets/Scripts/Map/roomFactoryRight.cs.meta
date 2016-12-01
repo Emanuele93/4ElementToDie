@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 5df3b5db686afdb408a171be49b7f24e
-timeCreated: 1480607167
+timeCreated: 1480622090
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
@@ -19,7 +19,8 @@ MonoImporter:
       type: 2}
   - angleWall: {fileID: 1000010121168960, guid: 3d79b853eb81112438dea748c2a85dde,
       type: 2}
-  - cameraMenager: {instanceID: 0}
+  - cameraMenager: {fileID: 1000011602573922, guid: ed8b77e137027a74caa3c7e344da5c6a,
+      type: 2}
   - obstacleObject: {fileID: 1000012821050112, guid: 87e6c6b018a3a1b45ad9794a31fff7cf,
       type: 2}
   executionOrder: 0

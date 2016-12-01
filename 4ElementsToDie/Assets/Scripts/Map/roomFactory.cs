@@ -99,7 +99,7 @@ public abstract class roomFactory : MonoBehaviour
         else if (l && !u && r && !d)
             room = straightHorizontalRoom();
 
-        if(!door)
+        if (!door)
             generateObstacle().transform.parent = room.transform;
 
         room.transform.position = new Vector3(x, y, 0);

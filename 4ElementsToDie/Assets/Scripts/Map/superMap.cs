@@ -11,6 +11,7 @@ public class superMap : MonoBehaviour
     protected float marginX, marginY;
 
     public GameObject door;
+    public GameObject centralRoomObject;
     public GameObject roomGeneratorObject;
 
     void Start()
@@ -64,10 +65,12 @@ public class superMap : MonoBehaviour
         j = 0;
         for (i = 0; i < map.GetLength(0); i++)
         {
-            if (map[i, j] < 0 && map[i, j + 1] >= 2)
+            if (map[i, j] < -1 && map[i, j + 1] >= 2)
             {
                 doorObject = Instantiate(door, new Vector3((j + 1) * 16 + marginX - 7.25f, -i * 10 + marginY, 0f), Quaternion.Euler(0, 0, 90)) as GameObject;
                 doorObject.transform.parent = transform;
+                if (map[i, j] == -2)
+                    doorObject.GetComponent<door>().where = centralRoomObject;
             }
 
         }
@@ -75,30 +78,36 @@ public class superMap : MonoBehaviour
         j = map.GetLength(1) - 1;
         for (i = 0; i < map.GetLength(0); i++)
         {
-            if (map[i, j] < 0 && map[i, j - 1] >= 2)
+            if (map[i, j] < -1 && map[i, j - 1] >= 2)
             {
                 doorObject = Instantiate(door, new Vector3((j - 1) * 16 + marginX + 7.25f, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, -90)) as GameObject;
                 doorObject.transform.parent = transform;
+                if (map[i, j] == -2)
+                    doorObject.GetComponent<door>().where = centralRoomObject;
             }
         }
 
         i = 0;
         for (j = 0; j < map.GetLength(1); j++)
         {
-            if (map[i, j] < 0 && map[i + 1, j] >= 2)
+            if (map[i, j] < -1 && map[i + 1, j] >= 2)
             {
                 doorObject = Instantiate(door, new Vector3(j * 16 + marginX, -(i + 1) * 10 + marginY + 4.25f, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
                 doorObject.transform.parent = transform;
+                if (map[i, j] == -2)
+                    doorObject.GetComponent<door>().where = centralRoomObject;
             }
         }
 
         i = map.GetLength(0) - 1;
         for (j = 0; j < map.GetLength(1); j++)
         {
-            if (map[i, j] < 0 && map[i - 1, j] >= 2)
+            if (map[i, j] < -1 && map[i - 1, j] >= 2)
             {
                 doorObject = Instantiate(door, new Vector3(j * 16 + marginX, -(i - 1) * 10 + marginY - 4.25f, 0), Quaternion.Euler(0, 0, 180)) as GameObject;
                 doorObject.transform.parent = transform;
+                if (map[i, j] == -2)
+                    doorObject.GetComponent<door>().where = centralRoomObject;
             }
         }
     }
@@ -313,7 +322,7 @@ public class superMap : MonoBehaviour
                     if (map[i + 1, j - 1] >= 2)
                         dl = true;
 
-                    if (map[i - 1, j] < 0 || map[i + 1, j] < 0 || map[i, j - 1] < 0 || map[i, j + 1] < 0 || map[i - 1, j + 1] < 0 || map[i + 1, j + 1] < 0 || map[i - 1, j - 1] < 0 || map[i + 1, j - 1] < 0)
+                    if (map[i - 1, j] < -1 || map[i + 1, j] < -1 || map[i, j - 1] < -1 || map[i, j + 1] < -1 || map[i - 1, j + 1] < -1 || map[i + 1, j + 1] < -1 || map[i - 1, j - 1] < -1 || map[i + 1, j - 1] < -1)
                         door = true;
 
                     room = roomGeneratorObject.GetComponent<roomFactory>().makeRoom(u, r, l, d, ur, ul, dr, dl, j * 16 + marginX, -i * 10 + marginY, door);
