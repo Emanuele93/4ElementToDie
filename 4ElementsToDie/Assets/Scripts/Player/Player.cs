@@ -43,16 +43,16 @@ public class Player : MonoBehaviour {
 	//bool mFacingUp;
 
 	[Header ("Attack transforms")]
-	public Transform m_RangeAttackTransform;
-	public Transform mAreaAttackTransform;
-	public Transform mThrustAttackTransform;
-	public Transform mSlashAttackTransform;
+	public Transform m_AreaTransform;
+	public Transform m_RangeTransform;
+	public Transform m_SlashTransform;
+	public Transform m_ThrustTransform;
 
 	[Header ("Attack prefabs")]
-	public GameObject mRangeAttack;
-	public GameObject mAreaAttack;
-	public GameObject mThrustAttack;
-	public GameObject mSlashAttack;
+	public GameObject m_AreaPrefab;
+	public GameObject m_RangePrefab;
+	public GameObject m_SlashPrefab;
+	public GameObject m_ThrustPrefab;
 
 	// Use this for initialization
 	void Start () {
@@ -94,9 +94,9 @@ public class Player : MonoBehaviour {
 //		}
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			GameObject go = ObjectPoolingManager.Instance.GetObject (mRangeAttack.name);
-			go.transform.position = m_RangeAttackTransform.position;
-			go.transform.position = m_RangeAttackTransform.position;
+			GameObject go = ObjectPoolingManager.Instance.GetObject (m_AreaPrefab.name);
+			go.transform.position = m_AreaTransform.position;
+			go.transform.rotation = m_AreaTransform.rotation;
 		}
 
 	}

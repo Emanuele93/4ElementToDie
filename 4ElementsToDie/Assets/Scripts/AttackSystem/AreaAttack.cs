@@ -41,7 +41,7 @@ public class AreaAttack : MonoBehaviour {
 
 	IEnumerator ExplosionTime () {
 		yield return new WaitForSeconds (waitTime);
-		Destroy (gameObject);
+		gameObject.SetActive (false);
 	}
 		
 	// Triggered when a collision happens.
