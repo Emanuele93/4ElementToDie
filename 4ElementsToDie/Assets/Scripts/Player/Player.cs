@@ -94,9 +94,9 @@ public class Player : MonoBehaviour {
 //		}
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			GameObject go = ObjectPoolingManager.Instance.GetObject (m_AreaPrefab.name);
-			go.transform.position = m_AreaTransform.position;
-			go.transform.rotation = m_AreaTransform.rotation;
+			GameObject go = ObjectPoolingManager.Instance.GetObject (m_SlashPrefab.name);
+			go.transform.position = m_SlashTransform.position;
+			go.transform.rotation = m_SlashTransform.rotation;
 		}
 
 	}
