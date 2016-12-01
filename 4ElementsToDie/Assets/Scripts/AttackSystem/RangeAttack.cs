@@ -46,7 +46,7 @@ public class RangeAttack : MonoBehaviour {
 
 	IEnumerator ExplosionTime () {
 		yield return new WaitForSeconds (waitTime);
-		Destroy (gameObject);
+		gameObject.SetActive (false);
 	}
 
 	// Triggered when a collision happens.
@@ -54,11 +54,11 @@ public class RangeAttack : MonoBehaviour {
 		if (other.tag == "Enemy") {
 			Debug.LogError ("Enemy");
 			Destroy (other.gameObject);
-			Destroy (gameObject);
+			gameObject.SetActive (false);
 
 		} else if (other.tag == "Wall") {
 			Debug.LogError ("Wall");
-			Destroy (gameObject);
+			gameObject.SetActive (false);
 		} 
 		else if (other.tag == "Player") { 
 			Debug.Log ("Collided with Player");

@@ -97,8 +97,6 @@ public class Player : MonoBehaviour {
 			GameObject go = ObjectPoolingManager.Instance.GetObject (mRangeAttack.name);
 			go.transform.position = m_RangeAttackTransform.position;
 			go.transform.position = m_RangeAttackTransform.position;
-//			go.transform.position = m_shot_right.position;
-//			go.transform.rotation = m_shot_right.rotation;
 		}
 
 	}
