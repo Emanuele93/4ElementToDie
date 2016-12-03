@@ -6,6 +6,7 @@ public class superMap : MonoBehaviour
 {
     private GameObject room;
     private List<GameObject> rooms = new List<GameObject>();
+    private List<GameObject> externalObject = new List<GameObject>();
 
     protected int[,] map;
     protected float marginX, marginY;
@@ -13,6 +14,8 @@ public class superMap : MonoBehaviour
     public GameObject door;
     public GameObject centralRoomObject;
     public GameObject roomGeneratorObject;
+    public GameObject bossRoom;
+    public GameObject bossDoor;
 
     void Start()
     {
@@ -57,58 +60,74 @@ public class superMap : MonoBehaviour
         allSpaceFull();
     }
 
-    private void addDoor()
+    private void addExternalElement()
     {
         int i, j;
-        GameObject doorObject;
+        List<Vector2> possibleBossRoom = new List<Vector2>();
 
-        j = 0;
         for (i = 0; i < map.GetLength(0); i++)
         {
-            if (map[i, j] < -1 && map[i, j + 1] >= 2)
+            for (j = 0; j < map.GetLength(1); j++)
             {
-                doorObject = Instantiate(door, new Vector3((j + 1) * 16 + marginX - 7.25f, -i * 10 + marginY, 0f), Quaternion.Euler(0, 0, 90)) as GameObject;
-                doorObject.transform.parent = transform;
-                if (map[i, j] == -2)
-                    doorObject.GetComponent<door>().where = centralRoomObject;
-            }
+                if (map[i, j] < 0)
+                {
+                    if (map[i, j] == -1 && ((j < map.GetLength(1) - 1 && map[i, j + 1] >= 2) || (j > 0 && map[i, j - 1] >= 2) || (i < map.GetLength(0) - 1 && map[i + 1, j] >= 2) || (i > 0 && map[i - 1, j] >= 2)))
+                        possibleBossRoom.Add(new Vector2(i, j));
+                    else if (map[i, j] == -2)
+                    {
+                        GameObject doorObject = null;
+                        if (j < map.GetLength(1) - 1 && map[i, j + 1] >= 2)
+                            doorObject = Instantiate(door, new Vector3((j + 1) * 16 + marginX - 7.25f, -i * 10 + marginY, 0f), Quaternion.Euler(0, 0, 90)) as GameObject;
+                        else if (j > 0 && map[i, j - 1] >= 2)
+                            doorObject = Instantiate(door, new Vector3((j - 1) * 16 + marginX + 7.25f, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, -90)) as GameObject;
+                        else if (i < map.GetLength(0) - 1 && map[i + 1, j] >= 2)
+                            doorObject = Instantiate(door, new Vector3(j * 16 + marginX, -(i + 1) * 10 + marginY + 4.25f, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+                        else if (i > 0 && map[i - 1, j] >= 2)
+                            doorObject = Instantiate(door, new Vector3(j * 16 + marginX, -(i - 1) * 10 + marginY - 4.25f, 0), Quaternion.Euler(0, 0, 180)) as GameObject;
 
-        }
-
-        j = map.GetLength(1) - 1;
-        for (i = 0; i < map.GetLength(0); i++)
-        {
-            if (map[i, j] < -1 && map[i, j - 1] >= 2)
-            {
-                doorObject = Instantiate(door, new Vector3((j - 1) * 16 + marginX + 7.25f, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, -90)) as GameObject;
-                doorObject.transform.parent = transform;
-                if (map[i, j] == -2)
-                    doorObject.GetComponent<door>().where = centralRoomObject;
-            }
-        }
-
-        i = 0;
-        for (j = 0; j < map.GetLength(1); j++)
-        {
-            if (map[i, j] < -1 && map[i + 1, j] >= 2)
-            {
-                doorObject = Instantiate(door, new Vector3(j * 16 + marginX, -(i + 1) * 10 + marginY + 4.25f, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
-                doorObject.transform.parent = transform;
-                if (map[i, j] == -2)
-                    doorObject.GetComponent<door>().where = centralRoomObject;
+                        if (doorObject != null)
+                        {
+                            doorObject.transform.parent = transform;
+                            doorObject.GetComponent<door>().where = centralRoomObject;
+                            externalObject.Add(doorObject);
+                        }
+                    }
+                }
             }
         }
-
-        i = map.GetLength(0) - 1;
-        for (j = 0; j < map.GetLength(1); j++)
+        if (possibleBossRoom.Count > 0)
         {
-            if (map[i, j] < -1 && map[i - 1, j] >= 2)
+            Vector2 selected = possibleBossRoom[Random.Range(0, possibleBossRoom.Count)];
+            GameObject boosRoomObject = null;
+            GameObject doorObject = null;
+            i = (int)selected.x;
+            j = (int)selected.y;
+            map[i, j] = -3;
+            if (j < map.GetLength(1) - 1 && map[i, j + 1] >= 2)
             {
-                doorObject = Instantiate(door, new Vector3(j * 16 + marginX, -(i - 1) * 10 + marginY - 4.25f, 0), Quaternion.Euler(0, 0, 180)) as GameObject;
-                doorObject.transform.parent = transform;
-                if (map[i, j] == -2)
-                    doorObject.GetComponent<door>().where = centralRoomObject;
+                boosRoomObject = Instantiate(bossRoom, new Vector3((j + 1) * 16 + marginX - 21, -i * 10 + marginY, 0f), Quaternion.Euler(0, 0, 0)) as GameObject;
+                doorObject = Instantiate(bossDoor, new Vector3((j + 1) * 16 + marginX - 7.25f, -i * 10 + marginY, 0f), Quaternion.Euler(0, 0, 90)) as GameObject;
             }
+            else if (j > 0 && map[i, j - 1] >= 2)
+            {
+                boosRoomObject = Instantiate(bossRoom, new Vector3((j - 1) * 16 + marginX + 21, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+                doorObject = Instantiate(bossDoor, new Vector3((j - 1) * 16 + marginX + 7.25f, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, -90)) as GameObject;
+            }
+            else if (i < map.GetLength(0) - 1 && map[i + 1, j] >= 2)
+            {
+                boosRoomObject = Instantiate(bossRoom, new Vector3(j * 16 + marginX, -(i + 1) * 10 + marginY + 14, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+                doorObject = Instantiate(bossDoor, new Vector3(j * 16 + marginX, -(i + 1) * 10 + marginY + 4.25f, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+            }
+            else if (i > 0 && map[i - 1, j] >= 2)
+            {
+                boosRoomObject = Instantiate(bossRoom, new Vector3(j * 16 + marginX, -(i - 1) * 10 + marginY - 14, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+                doorObject = Instantiate(bossDoor, new Vector3(j * 16 + marginX, -(i - 1) * 10 + marginY - 4.25f, 0), Quaternion.Euler(0, 0, 180)) as GameObject;
+            }
+            boosRoomObject.transform.parent = transform;
+            doorObject.transform.parent = transform;
+            doorObject.GetComponent<door>().where = boosRoomObject;
+            externalObject.Add(boosRoomObject);
+            externalObject.Add(doorObject);
         }
     }
 
@@ -248,7 +267,7 @@ public class superMap : MonoBehaviour
         }
         makeBigRoom();
         makeLoopRoom();
-        addDoor();
+        addExternalElement();
     }
 
     private bool validPosition(int x, int y)
@@ -296,7 +315,7 @@ public class superMap : MonoBehaviour
 
     protected void insertWall()
     {
-        bool u, d, r, l, ur, ul, dr, dl,door;
+        bool u, d, r, l, ur, ul, dr, dl, door;
         for (int i = 1; i < map.GetLength(0) - 1; i++)
         {
             for (int j = 1; j < map.GetLength(1) - 1; j++)
@@ -322,7 +341,7 @@ public class superMap : MonoBehaviour
                     if (map[i + 1, j - 1] >= 2)
                         dl = true;
 
-                    if (map[i - 1, j] < -1 || map[i + 1, j] < -1 || map[i, j - 1] < -1 || map[i, j + 1] < -1 || map[i - 1, j + 1] < -1 || map[i + 1, j + 1] < -1 || map[i - 1, j - 1] < -1 || map[i + 1, j - 1] < -1)
+                    if (map[i - 1, j] < -1 || map[i + 1, j] < -1 || map[i, j - 1] < -1 || map[i, j + 1] < -1)
                         door = true;
 
                     room = roomGeneratorObject.GetComponent<roomFactory>().makeRoom(u, r, l, d, ur, ul, dr, dl, j * 16 + marginX, -i * 10 + marginY, door);
@@ -343,6 +362,11 @@ public class superMap : MonoBehaviour
         {
             Destroy(rooms[0]);
             rooms.Remove(rooms[0]);
+        }
+        while (externalObject.Count > 0)
+        {
+            Destroy(externalObject[0]);
+            externalObject.Remove(externalObject[0]);
         }
     }
 }
