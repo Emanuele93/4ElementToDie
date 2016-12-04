@@ -6,7 +6,7 @@ using POLIMIGameCollective;
 public class Player : MonoBehaviour {
 
 	// Player base stats, they're fixed through the game so we can declare them as constants.
-	private const int baseVitality = 3;
+	private const int baseVitality = 0;
 	private const int baseAttack = 3;
 	private const int baseDefense = 3;
 	private const int baseSpeed = 3;
@@ -69,10 +69,14 @@ public class Player : MonoBehaviour {
 
 	// Fixed update because the player can
 	void FixedUpdate() {
+		if (mVitality == 0) {
+			StartCoroutine (playerDead ());
+		}
+
 		bool[] facings = PlayerMovement.captureMovement (tr, mSpeed, mFacingRight, mFacingUp);
 		mFacingRight = facings [0]; mFacingUp = facings [1];
 
-		PlayerAnimation.Animate (mAnimator);
+		PlayerAnimation.Move (mAnimator);
 			
 		// Attacking.
 //		if ( (Input.GetKeyDown (KeyCode.L)) || (Input.GetKeyDown (KeyCode.RightArrow)) ){
@@ -99,6 +103,8 @@ public class Player : MonoBehaviour {
 			go.transform.rotation = m_ThrustTransform.rotation;
 		}
 
+
+
 	}
 
 	// Fills all stats with the base values.
@@ -117,5 +123,12 @@ public class Player : MonoBehaviour {
 
 		mFacingRight = true;
 		mFacingUp = false;
+	}
+
+	IEnumerator playerDead() {
+		//yield return new WaitForSeconds (.1f);
+		PlayerAnimation.Dead(mAnimator, true);
+		yield return new WaitForSeconds (2.2f); // Waiting for the animation before disappear
+		gameObject.SetActive (false);
 	}
 }
