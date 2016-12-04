@@ -15,6 +15,8 @@ public abstract class roomFactory : MonoBehaviour
     public GameObject cameraMenager;
 
     public GameObject obstacleObject;
+    public GameObject enemiesActivator;
+    public GameObject enemyObject;
 
     protected int[,] roomStructure;
 
@@ -100,7 +102,10 @@ public abstract class roomFactory : MonoBehaviour
             room = straightHorizontalRoom();
 
         if (!door)
+        {
             generateObstacle().transform.parent = room.transform;
+            generateEnemies().transform.parent = room.transform;
+        }
 
         room.transform.position = new Vector3(x, y, 0);
         room.name = "room";
@@ -335,6 +340,43 @@ public abstract class roomFactory : MonoBehaviour
 
     protected abstract GameObject generateObstacle();
 
+    protected GameObject generateEnemies()
+    {
+        GameObject enemies = Instantiate(enemiesActivator, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+
+        int i, j, x, y;
+        bool full;
+        int numEnemies = Random.Range(1,5);
+        for (int k = 0; k < numEnemies; k++)
+        {
+            i = x = Random.Range(0, roomStructure.GetLength(0));
+            j = y = Random.Range(0, roomStructure.GetLength(1));
+            full = false;
+            while (roomStructure[x, y] != 0 && !full)
+            {
+                i++;
+                if (i == roomStructure.GetLength(0))
+                {
+                    i = 0;
+                    j++;
+                    if (j == roomStructure.GetLength(1))
+                        j = 0;
+                }
+                if (i == x && j == y)
+                    full = true;
+            }
+
+            if (!full)
+            {
+                roomStructure[i, j] = 2;
+                GameObject enemy = Instantiate(enemyObject, new Vector3(i - 6, j - 3, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+                enemy.transform.parent = enemies.transform;
+                enemy.SetActive(false);
+            }
+        }
+        return enemies;
+    }
+
     protected bool validPoint(int x, int y)
     {
         if (x >= 0 && x < roomStructure.GetLength(0) && y >= 0 && y < roomStructure.GetLength(1))
@@ -376,7 +418,7 @@ public abstract class roomFactory : MonoBehaviour
         GameObject obstacle;
         for (int i = 0; i < roomStructure.GetLength(0); i++)
             for (int j = 0; j < roomStructure.GetLength(1); j++)
-                if (roomStructure[i, j] > 0)
+                if (roomStructure[i, j] == 1)
                 {
                     obstacle = Instantiate(obstacleObject, new Vector3(i - 6, j - 3, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
                     obstacle.transform.parent = obstacles.transform;
