@@ -26,7 +26,7 @@ public class leftMap : superMap
 
         generateMap(5, 10);
 
-        insertWall();
+        insertObjects();
 
         gameObject.SetActive(false);
     }
@@ -51,6 +51,6 @@ public class leftMap : superMap
 
         generateMap(5, 10);
 
-        insertWall();
+        insertObjects();
     }
 }

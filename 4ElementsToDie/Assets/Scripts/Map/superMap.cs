@@ -9,6 +9,7 @@ public class superMap : MonoBehaviour
     private List<GameObject> externalObject = new List<GameObject>();
 
     protected int[,] map;
+    protected GameObject miniMap;
     protected float marginX, marginY;
 
     public GameObject door;
@@ -16,6 +17,7 @@ public class superMap : MonoBehaviour
     public GameObject roomGeneratorObject;
     public GameObject bossRoom;
     public GameObject bossDoor;
+    public GameObject miniMapObject;
 
     void Start()
     {
@@ -313,8 +315,10 @@ public class superMap : MonoBehaviour
         return true;
     }
 
-    protected void insertWall()
+    protected void insertObjects()
     {
+        miniMap = Instantiate(miniMapObject, transform) as GameObject;
+
         bool u, d, r, l, ur, ul, dr, dl, door;
         for (int i = 1; i < map.GetLength(0) - 1; i++)
         {
@@ -343,7 +347,7 @@ public class superMap : MonoBehaviour
 
                     if (map[i - 1, j] < -1 || map[i + 1, j] < -1 || map[i, j - 1] < -1 || map[i, j + 1] < -1)
                         door = true;
-
+                    
                     room = roomGeneratorObject.GetComponent<roomFactory>().makeRoom(u, r, l, d, ur, ul, dr, dl, j * 16 + marginX, -i * 10 + marginY, door);
                     if (room != null)
                         rooms.Add(room);
@@ -368,5 +372,21 @@ public class superMap : MonoBehaviour
             Destroy(externalObject[0]);
             externalObject.Remove(externalObject[0]);
         }
+        Destroy(miniMap);
+    }
+
+    public Vector2 getMargin()
+    {
+        return new Vector2(marginX, marginY);
+    }
+
+    public int[,] getMatrix()
+    {
+        return map;
+    }
+
+    public GameObject getMiniMap()
+    {
+        return miniMap;
     }
 }

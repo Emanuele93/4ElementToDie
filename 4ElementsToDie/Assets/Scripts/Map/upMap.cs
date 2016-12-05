@@ -27,7 +27,7 @@ public class upMap : superMap
 
         generateMap(10, 5);
 
-        insertWall();
+        insertObjects();
 
         gameObject.SetActive(false);
     }
@@ -53,6 +53,6 @@ public class upMap : superMap
 
         generateMap(10, 5);
 
-        insertWall();
+        insertObjects();
     }
 }

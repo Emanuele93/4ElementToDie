@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class enemiesActivator : MonoBehaviour
 {
-    private List<Transform> childs = new List<Transform>();
+    private List<GameObject> childs = new List<GameObject>();
 
 
     // Use this for initialization
@@ -23,16 +23,17 @@ public class enemiesActivator : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            foreach (Transform child in transform)
+            foreach (GameObject child in childs)
             {
-                child.gameObject.SetActive(true);
-                childs.Add(child);
+                child.SetActive(true);
             }
-            Transform father = transform.parent;
-            foreach (Transform child in childs)
-                child.parent = father;
             Destroy(gameObject);
         }
         else return;
+    }
+
+    public void addChild(GameObject child)
+    {
+        childs.Add(child);
     }
 }

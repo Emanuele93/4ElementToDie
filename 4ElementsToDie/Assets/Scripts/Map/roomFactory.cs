@@ -17,6 +17,8 @@ public abstract class roomFactory : MonoBehaviour
     public GameObject obstacleObject;
     public GameObject enemiesActivator;
     public GameObject enemyObject;
+    public GameObject miniMapActivator;
+    private GameObject miniMap;
 
     protected int[,] roomStructure;
 
@@ -32,6 +34,9 @@ public abstract class roomFactory : MonoBehaviour
 
     public GameObject makeRoom(bool u, bool r, bool l, bool d, bool ur, bool ul, bool dr, bool dl, float x, float y, bool door)
     {
+        miniMap = transform.parent.gameObject.GetComponent<superMap>().getMiniMap();
+        miniMapActivator.GetComponent<miniMapSetter>().controller = miniMap;
+
         GameObject room = null;
 
         if (u && r && l && d)
@@ -106,6 +111,8 @@ public abstract class roomFactory : MonoBehaviour
             generateObstacle().transform.parent = room.transform;
             generateEnemies().transform.parent = room.transform;
         }
+        else
+            Instantiate(miniMapActivator, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), room.transform);
 
         room.transform.position = new Vector3(x, y, 0);
         room.name = "room";
@@ -115,58 +122,38 @@ public abstract class roomFactory : MonoBehaviour
     private GameObject fourEnterRoom(bool ur, bool ul, bool dr, bool dl)
     {
         GameObject room = new GameObject();
-        GameObject wall;
         GameObject cameraController;
         if (!ur)
-        {
-            wall = Instantiate(angleWall, new Vector3(7, 4, 0), Quaternion.Euler(0, 0, -90)) as GameObject;
-            wall.transform.parent = room.transform;
-        }
+            Instantiate(angleWall, new Vector3(7, 4, 0), Quaternion.Euler(0, 0, -90), room.transform);
         if (!dr)
-        {
-            wall = Instantiate(angleWall, new Vector3(7, -4, 0), Quaternion.Euler(0, 0, 180)) as GameObject;
-            wall.transform.parent = room.transform;
-        }
+            Instantiate(angleWall, new Vector3(7, -4, 0), Quaternion.Euler(0, 0, 180), room.transform);
         if (!ul)
-        {
-            wall = Instantiate(angleWall, new Vector3(-7, 4, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
-            wall.transform.parent = room.transform;
-        }
+            Instantiate(angleWall, new Vector3(-7, 4, 0), Quaternion.Euler(0, 0, 0), room.transform);
         if (!dl)
-        {
-            wall = Instantiate(angleWall, new Vector3(-7, -4, 0), Quaternion.Euler(0, 0, 90)) as GameObject;
-            wall.transform.parent = room.transform;
-        }
-        cameraController = Instantiate(cameraMenager, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+            Instantiate(angleWall, new Vector3(-7, -4, 0), Quaternion.Euler(0, 0, 90), room.transform);
+        cameraController = Instantiate(cameraMenager, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), room.transform) as GameObject;
         cameraController.transform.localScale = new Vector3(2, 2, 1);
         cameraController.GetComponent<colliderCameraMenager>().horizontal = true;
         cameraController.GetComponent<colliderCameraMenager>().vertical = true;
-        cameraController.transform.parent = room.transform;
         return room;
     }
 
     private GameObject oneEnterHorizontalRoom()
     {
         GameObject room = new GameObject();
-        GameObject wall;
         GameObject cameraController;
 
-        wall = Instantiate(wallVerticalDoubleAngle, new Vector3(-7, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
-        wall.transform.parent = room.transform;
-        wall = Instantiate(wallHorizontalAngle, new Vector3(0, 4, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
-        wall.transform.parent = room.transform;
-        wall = Instantiate(wallHorizontalAngle, new Vector3(0, -4, 0), Quaternion.Euler(180, 0, 0)) as GameObject;
-        wall.transform.parent = room.transform;
-        cameraController = Instantiate(cameraMenager, new Vector3(4, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        Instantiate(wallVerticalDoubleAngle, new Vector3(-7, 0, 0), Quaternion.Euler(0, 0, 0), room.transform);
+        Instantiate(wallHorizontalAngle, new Vector3(0, 4, 0), Quaternion.Euler(0, 0, 0), room.transform);
+        Instantiate(wallHorizontalAngle, new Vector3(0, -4, 0), Quaternion.Euler(180, 0, 0), room.transform);
+        cameraController = Instantiate(cameraMenager, new Vector3(4, 0, 0), Quaternion.Euler(0, 0, 0), room.transform) as GameObject;
         cameraController.transform.localScale = new Vector3(0.935f, 2, 1);
         cameraController.GetComponent<colliderCameraMenager>().horizontal = true;
         cameraController.GetComponent<colliderCameraMenager>().vertical = false;
-        cameraController.transform.parent = room.transform;
-        cameraController = Instantiate(cameraMenager, new Vector3(-4f, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        cameraController = Instantiate(cameraMenager, new Vector3(-4f, 0, 0), Quaternion.Euler(0, 0, 0), room.transform) as GameObject;
         cameraController.transform.localScale = new Vector3(0.935f, 2, 1);
         cameraController.GetComponent<colliderCameraMenager>().horizontal = false;
         cameraController.GetComponent<colliderCameraMenager>().vertical = false;
-        cameraController.transform.parent = room.transform;
 
         return room;
     }
@@ -174,25 +161,19 @@ public abstract class roomFactory : MonoBehaviour
     private GameObject oneEnterVerticalRoom()
     {
         GameObject room = new GameObject();
-        GameObject wall;
         GameObject cameraController;
 
-        wall = Instantiate(wallHorizontalDoubleAngle, new Vector3(0, 4, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
-        wall.transform.parent = room.transform;
-        wall = Instantiate(wallVerticalAngle, new Vector3(7, 0, 0), Quaternion.Euler(0, 180, 0)) as GameObject;
-        wall.transform.parent = room.transform;
-        wall = Instantiate(wallVerticalAngle, new Vector3(-7, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
-        wall.transform.parent = room.transform;
-        cameraController = Instantiate(cameraMenager, new Vector3(0, 2f, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        Instantiate(wallHorizontalDoubleAngle, new Vector3(0, 4, 0), Quaternion.Euler(0, 0, 0), room.transform);
+        Instantiate(wallVerticalAngle, new Vector3(7, 0, 0), Quaternion.Euler(0, 180, 0), room.transform);
+        Instantiate(wallVerticalAngle, new Vector3(-7, 0, 0), Quaternion.Euler(0, 0, 0), room.transform);
+        cameraController = Instantiate(cameraMenager, new Vector3(0, 2f, 0), Quaternion.Euler(0, 0, 0), room.transform) as GameObject;
         cameraController.transform.localScale = new Vector3(2, 1, 1);
         cameraController.GetComponent<colliderCameraMenager>().horizontal = false;
         cameraController.GetComponent<colliderCameraMenager>().vertical = false;
-        cameraController.transform.parent = room.transform;
-        cameraController = Instantiate(cameraMenager, new Vector3(0, -3f, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        cameraController = Instantiate(cameraMenager, new Vector3(0, -3f, 0), Quaternion.Euler(0, 0, 0), room.transform) as GameObject;
         cameraController.transform.localScale = new Vector3(2, 0.75f, 1);
         cameraController.GetComponent<colliderCameraMenager>().horizontal = false;
         cameraController.GetComponent<colliderCameraMenager>().vertical = true;
-        cameraController.transform.parent = room.transform;
 
         return room;
     }
@@ -200,38 +181,28 @@ public abstract class roomFactory : MonoBehaviour
     private GameObject angleRoom(bool angle)
     {
         GameObject room = new GameObject();
-        GameObject wall;
         GameObject cameraController;
 
-        wall = Instantiate(wallHorizontalAngle, new Vector3(0, 4, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
-        wall.transform.parent = room.transform;
-        wall = Instantiate(wallVerticalAngle, new Vector3(-7, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
-        wall.transform.parent = room.transform;
+        Instantiate(wallHorizontalAngle, new Vector3(0, 4, 0), Quaternion.Euler(0, 0, 0), room.transform);
+        Instantiate(wallVerticalAngle, new Vector3(-7, 0, 0), Quaternion.Euler(0, 0, 0), room.transform);
         if (angle)
-        {
-            wall = Instantiate(angleWall, new Vector3(7, -4, 0), Quaternion.Euler(0, 0, 180)) as GameObject;
-            wall.transform.parent = room.transform;
-        }
-        cameraController = Instantiate(cameraMenager, new Vector3(-4f, 2f, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+            Instantiate(angleWall, new Vector3(7, -4, 0), Quaternion.Euler(0, 0, 180), room.transform);
+        cameraController = Instantiate(cameraMenager, new Vector3(-4f, 2f, 0), Quaternion.Euler(0, 0, 0), room.transform) as GameObject;
         cameraController.transform.localScale = new Vector3(0.935f, 1, 1);
         cameraController.GetComponent<colliderCameraMenager>().horizontal = false;
         cameraController.GetComponent<colliderCameraMenager>().vertical = false;
-        cameraController.transform.parent = room.transform;
-        cameraController = Instantiate(cameraMenager, new Vector3(4f, 2f, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        cameraController = Instantiate(cameraMenager, new Vector3(4f, 2f, 0), Quaternion.Euler(0, 0, 0), room.transform) as GameObject;
         cameraController.transform.localScale = new Vector3(0.935f, 1, 1);
         cameraController.GetComponent<colliderCameraMenager>().horizontal = true;
         cameraController.GetComponent<colliderCameraMenager>().vertical = false;
-        cameraController.transform.parent = room.transform;
-        cameraController = Instantiate(cameraMenager, new Vector3(-4f, -3f, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        cameraController = Instantiate(cameraMenager, new Vector3(-4f, -3f, 0), Quaternion.Euler(0, 0, 0), room.transform) as GameObject;
         cameraController.transform.localScale = new Vector3(0.935f, 0.75f, 1);
         cameraController.GetComponent<colliderCameraMenager>().horizontal = false;
         cameraController.GetComponent<colliderCameraMenager>().vertical = true;
-        cameraController.transform.parent = room.transform;
-        cameraController = Instantiate(cameraMenager, new Vector3(4f, -3f, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        cameraController = Instantiate(cameraMenager, new Vector3(4f, -3f, 0), Quaternion.Euler(0, 0, 0), room.transform) as GameObject;
         cameraController.transform.localScale = new Vector3(0.935f, 0.75f, 1);
         cameraController.GetComponent<colliderCameraMenager>().horizontal = true;
         cameraController.GetComponent<colliderCameraMenager>().vertical = true;
-        cameraController.transform.parent = room.transform;
 
         return room;
     }
@@ -239,31 +210,21 @@ public abstract class roomFactory : MonoBehaviour
     private GameObject threeEnterHorizontalRoom(bool angleLeft, bool angleRight)
     {
         GameObject room = new GameObject();
-        GameObject wall;
         GameObject cameraController;
 
-        wall = Instantiate(wallHorizontal, new Vector3(0, 4, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
-        wall.transform.parent = room.transform;
+        Instantiate(wallHorizontal, new Vector3(0, 4, 0), Quaternion.Euler(0, 0, 0), room.transform);
         if (angleLeft)
-        {
-            wall = Instantiate(angleWall, new Vector3(-7, -4, 0), Quaternion.Euler(0, 0, 90)) as GameObject;
-            wall.transform.parent = room.transform;
-        }
+            Instantiate(angleWall, new Vector3(-7, -4, 0), Quaternion.Euler(0, 0, 90), room.transform);
         if (angleRight)
-        {
-            wall = Instantiate(angleWall, new Vector3(7, -4, 0), Quaternion.Euler(0, 0, 180)) as GameObject;
-            wall.transform.parent = room.transform;
-        }
-        cameraController = Instantiate(cameraMenager, new Vector3(0, 2, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+            Instantiate(angleWall, new Vector3(7, -4, 0), Quaternion.Euler(0, 0, 180), room.transform);
+        cameraController = Instantiate(cameraMenager, new Vector3(0, 2, 0), Quaternion.Euler(0, 0, 0), room.transform) as GameObject;
         cameraController.transform.localScale = new Vector3(2, 1, 1);
         cameraController.GetComponent<colliderCameraMenager>().horizontal = true;
         cameraController.GetComponent<colliderCameraMenager>().vertical = false;
-        cameraController.transform.parent = room.transform;
-        cameraController = Instantiate(cameraMenager, new Vector3(0, -3, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        cameraController = Instantiate(cameraMenager, new Vector3(0, -3, 0), Quaternion.Euler(0, 0, 0), room.transform) as GameObject;
         cameraController.transform.localScale = new Vector3(2, 0.75f, 1);
         cameraController.GetComponent<colliderCameraMenager>().horizontal = true;
         cameraController.GetComponent<colliderCameraMenager>().vertical = true;
-        cameraController.transform.parent = room.transform;
 
         return room;
     }
@@ -271,31 +232,21 @@ public abstract class roomFactory : MonoBehaviour
     private GameObject threeEnterVerticalRoom(bool angleUp, bool angleDown)
     {
         GameObject room = new GameObject();
-        GameObject wall;
         GameObject cameraController;
 
-        wall = Instantiate(wallVertical, new Vector3(7, 0, 0), Quaternion.Euler(0, 0, 180)) as GameObject;
-        wall.transform.parent = room.transform;
+        Instantiate(wallVertical, new Vector3(7, 0, 0), Quaternion.Euler(0, 0, 180), room.transform);
         if (angleUp)
-        {
-            wall = Instantiate(angleWall, new Vector3(-7, 4, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
-            wall.transform.parent = room.transform;
-        }
+            Instantiate(angleWall, new Vector3(-7, 4, 0), Quaternion.Euler(0, 0, 0), room.transform);
         if (angleDown)
-        {
-            wall = Instantiate(angleWall, new Vector3(-7, -4, 0), Quaternion.Euler(0, 0, 90)) as GameObject;
-            wall.transform.parent = room.transform;
-        }
-        cameraController = Instantiate(cameraMenager, new Vector3(4f, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+            Instantiate(angleWall, new Vector3(-7, -4, 0), Quaternion.Euler(0, 0, 90), room.transform);
+        cameraController = Instantiate(cameraMenager, new Vector3(4f, 0, 0), Quaternion.Euler(0, 0, 0), room.transform) as GameObject;
         cameraController.transform.localScale = new Vector3(0.935f, 2, 1);
         cameraController.GetComponent<colliderCameraMenager>().horizontal = false;
         cameraController.GetComponent<colliderCameraMenager>().vertical = true;
-        cameraController.transform.parent = room.transform;
-        cameraController = Instantiate(cameraMenager, new Vector3(-4f, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        cameraController = Instantiate(cameraMenager, new Vector3(-4f, 0, 0), Quaternion.Euler(0, 0, 0), room.transform) as GameObject;
         cameraController.transform.localScale = new Vector3(0.935f, 2, 1);
         cameraController.GetComponent<colliderCameraMenager>().horizontal = true;
         cameraController.GetComponent<colliderCameraMenager>().vertical = true;
-        cameraController.transform.parent = room.transform;
 
         return room;
     }
@@ -303,18 +254,14 @@ public abstract class roomFactory : MonoBehaviour
     private GameObject straightHorizontalRoom()
     {
         GameObject room = new GameObject();
-        GameObject wall;
         GameObject cameraController;
 
-        wall = Instantiate(wallHorizontal, new Vector3(0, 4, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
-        wall.transform.parent = room.transform;
-        wall = Instantiate(wallHorizontal, new Vector3(0, -4, 0), Quaternion.Euler(0, 0, 180)) as GameObject;
-        wall.transform.parent = room.transform;
-        cameraController = Instantiate(cameraMenager, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        Instantiate(wallHorizontal, new Vector3(0, 4, 0), Quaternion.Euler(0, 0, 0), room.transform);
+        Instantiate(wallHorizontal, new Vector3(0, -4, 0), Quaternion.Euler(0, 0, 180), room.transform);
+        cameraController = Instantiate(cameraMenager, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), room.transform) as GameObject;
         cameraController.transform.localScale = new Vector3(2, 2, 1);
         cameraController.GetComponent<colliderCameraMenager>().horizontal = true;
         cameraController.GetComponent<colliderCameraMenager>().vertical = false;
-        cameraController.transform.parent = room.transform;
 
         return room;
     }
@@ -322,18 +269,14 @@ public abstract class roomFactory : MonoBehaviour
     private GameObject straightVerticalRoom()
     {
         GameObject room = new GameObject();
-        GameObject wall;
         GameObject cameraController;
 
-        wall = Instantiate(wallVertical, new Vector3(7, 0, 0), Quaternion.Euler(0, 0, 180)) as GameObject;
-        wall.transform.parent = room.transform;
-        wall = Instantiate(wallVertical, new Vector3(-7, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
-        wall.transform.parent = room.transform;
-        cameraController = Instantiate(cameraMenager, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        Instantiate(wallVertical, new Vector3(7, 0, 0), Quaternion.Euler(0, 0, 180), room.transform);
+        Instantiate(wallVertical, new Vector3(-7, 0, 0), Quaternion.Euler(0, 0, 0), room.transform);
+        cameraController = Instantiate(cameraMenager, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), room.transform) as GameObject;
         cameraController.transform.localScale = new Vector3(2, 2, 1);
         cameraController.GetComponent<colliderCameraMenager>().horizontal = false;
         cameraController.GetComponent<colliderCameraMenager>().vertical = true;
-        cameraController.transform.parent = room.transform;
 
         return room;
     }
@@ -342,36 +285,62 @@ public abstract class roomFactory : MonoBehaviour
 
     protected GameObject generateEnemies()
     {
-        GameObject enemies = Instantiate(enemiesActivator, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        GameObject enemies = Instantiate(miniMapActivator, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
 
-        int i, j, x, y;
+        int i, j, x, y, activX, activY;
         bool full;
-        int numEnemies = Random.Range(1,5);
-        for (int k = 0; k < numEnemies; k++)
-        {
-            i = x = Random.Range(0, roomStructure.GetLength(0));
-            j = y = Random.Range(0, roomStructure.GetLength(1));
-            full = false;
-            while (roomStructure[x, y] != 0 && !full)
-            {
-                i++;
-                if (i == roomStructure.GetLength(0))
-                {
-                    i = 0;
-                    j++;
-                    if (j == roomStructure.GetLength(1))
-                        j = 0;
-                }
-                if (i == x && j == y)
-                    full = true;
-            }
 
-            if (!full)
+        i = x = Random.Range(0, roomStructure.GetLength(0));
+        j = y = Random.Range(0, roomStructure.GetLength(1));
+        full = false;
+        while (roomStructure[i, j] != 0 && !full)
+        {
+            i++;
+            if (i == roomStructure.GetLength(0))
             {
-                roomStructure[i, j] = 2;
-                GameObject enemy = Instantiate(enemyObject, new Vector3(i - 6, j - 3, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
-                enemy.transform.parent = enemies.transform;
-                enemy.SetActive(false);
+                i = 0;
+                j++;
+                if (j == roomStructure.GetLength(1))
+                    j = 0;
+            }
+            if (i == x && j == y)
+                full = true;
+        }
+
+        if (!full)
+        {
+            roomStructure[i, j] = 3;
+            activX = i;
+            activY = j;
+            GameObject activator = Instantiate(enemiesActivator, new Vector3(i - 6, j - 3, 0), Quaternion.Euler(0, 0, 0), enemies.transform) as GameObject;
+
+            int numEnemies = Random.Range(1, 5);
+            for (int k = 0; k < numEnemies; k++)
+            {
+                i = x = Random.Range(0, roomStructure.GetLength(0));
+                j = y = Random.Range(0, roomStructure.GetLength(1));
+                full = false;
+                while (!(roomStructure[i, j] == 0 && (Mathf.Abs(activX - i) > 2 || Mathf.Abs(activY - j) > 2)) && !full)
+                {
+                    i++;
+                    if (i == roomStructure.GetLength(0))
+                    {
+                        i = 0;
+                        j++;
+                        if (j == roomStructure.GetLength(1))
+                            j = 0;
+                    }
+                    if (i == x && j == y)
+                        full = true;
+                }
+
+                if (!full)
+                {
+                    roomStructure[i, j] = 2;
+                    GameObject enemy = Instantiate(enemyObject, new Vector3(i - 6, j - 3, 0), Quaternion.Euler(0, 0, 0), enemies.transform) as GameObject;
+                    enemy.SetActive(false);
+                    activator.GetComponent<enemiesActivator>().addChild(enemy);
+                }
             }
         }
         return enemies;
@@ -415,13 +384,9 @@ public abstract class roomFactory : MonoBehaviour
 
     protected void addObstacles(GameObject obstacles)
     {
-        GameObject obstacle;
         for (int i = 0; i < roomStructure.GetLength(0); i++)
             for (int j = 0; j < roomStructure.GetLength(1); j++)
                 if (roomStructure[i, j] == 1)
-                {
-                    obstacle = Instantiate(obstacleObject, new Vector3(i - 6, j - 3, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
-                    obstacle.transform.parent = obstacles.transform;
-                }
+                    Instantiate(obstacleObject, new Vector3(i - 6, j - 3, 0), Quaternion.Euler(0, 0, 0), obstacles.transform);
     }
 }

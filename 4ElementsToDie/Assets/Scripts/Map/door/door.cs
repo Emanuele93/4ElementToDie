@@ -17,7 +17,7 @@ public class door : MonoBehaviour
     {
         if (inDoorArea && Input.GetKeyDown(KeyCode.F))
         {
-            Vector3 mouvement = new Vector3(0, 4, 0);
+            Vector3 mouvement = new Vector3(0, 3.5f, 0);
             player.transform.position = transform.rotation * mouvement + transform.position;
             mouvement = new Vector3(0, 6, 0);
             mouvement = transform.rotation * mouvement + transform.position;
