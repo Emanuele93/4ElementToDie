@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 888ed19e4359f4a42a00b418ffd66d79
-timeCreated: 1479641056
+timeCreated: 1480622056
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
@@ -18,6 +18,10 @@ MonoImporter:
   - wallVerticalDoubleAngle: {fileID: 1000013768224014, guid: e678f81f1a03bef409c64ba7db80f3ab,
       type: 2}
   - angleWall: {fileID: 1000010121168960, guid: 3d79b853eb81112438dea748c2a85dde,
+      type: 2}
+  - cameraMenager: {fileID: 1000011602573922, guid: ed8b77e137027a74caa3c7e344da5c6a,
+      type: 2}
+  - obstacleObject: {fileID: 1000012821050112, guid: 87e6c6b018a3a1b45ad9794a31fff7cf,
       type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
