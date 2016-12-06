@@ -45,7 +45,7 @@ public class SlashAttack : MonoBehaviour {
 
 	// Triggered when a collision happens.
 	void OnTriggerEnter2D (Collider2D other) {
-		if (other.tag == "Enemy") {
+		if (other.tag == "Enemy") { 
 			Debug.LogError ("Enemy");
 			Destroy (other.gameObject);
 
