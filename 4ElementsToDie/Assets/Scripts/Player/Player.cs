@@ -6,7 +6,7 @@ using POLIMIGameCollective;
 public class Player : MonoBehaviour {
 
 	// Player base stats, they're fixed through the game so we can declare them as constants.
-	private const int baseVitality = 0;
+	private const int baseVitality = 1;
 	private const int baseAttack = 3;
 	private const int baseDefense = 3;
 	private const int baseSpeed = 3;
@@ -79,32 +79,33 @@ public class Player : MonoBehaviour {
 		PlayerAnimation.Move (mAnimator);
 			
 		// Attacking.
-//		if ( (Input.GetKeyDown (KeyCode.L)) || (Input.GetKeyDown (KeyCode.RightArrow)) ){
-//			Debug.Log ("Right Attack");
-//		}
-//
-//		if ( (Input.GetKeyDown (KeyCode.J)) || (Input.GetKeyDown (KeyCode.LeftArrow)) ){
-//			Debug.Log ("Left Attack");
-//		}
-//
-//		if ( (Input.GetKeyDown (KeyCode.I)) || (Input.GetKeyDown (KeyCode.UpArrow)) ){
-//			Debug.Log ("Up Attack");
-//		}
-
-//		if ( (Input.GetKeyDown (KeyCode.K)) || (Input.GetKeyDown (KeyCode.DownArrow)) ){
-//			GameObject go = ObjectPoolingManager.Instance.GetObject (m_shot_prefab.name);
-//			go.transform.position = m_shot_right.position;
-//			go.transform.rotation = m_shot_right.rotation;
-//		}
-
-		if (Input.GetKeyDown (KeyCode.Space)) {
+		// Right attack.
+		if ( (Input.GetKeyDown (KeyCode.L)) || (Input.GetKeyDown (KeyCode.RightArrow)) ){
 			GameObject go = ObjectPoolingManager.Instance.GetObject (m_ThrustPrefab.name);
 			go.transform.position = m_ThrustTransform.position;
-			go.transform.rotation = m_ThrustTransform.rotation;
+			go.transform.rotation = Quaternion.Euler (0f,0f,0f);
 		}
 
+		// Left attack.
+		if ( (Input.GetKeyDown (KeyCode.J)) || (Input.GetKeyDown (KeyCode.LeftArrow)) ){
+			GameObject go = ObjectPoolingManager.Instance.GetObject (m_ThrustPrefab.name);
+			go.transform.position = m_ThrustTransform.position;
+			go.transform.rotation = Quaternion.Euler (0f,0f,180f);
+		}
 
+		// Up attack.
+		if ( (Input.GetKeyDown (KeyCode.I)) || (Input.GetKeyDown (KeyCode.UpArrow)) ){
+			GameObject go = ObjectPoolingManager.Instance.GetObject (m_ThrustPrefab.name);
+			go.transform.position = m_ThrustTransform.position;
+			go.transform.rotation = Quaternion.Euler (0f,0f,90f);
+		}
 
+		// Down attack.
+		if ( (Input.GetKeyDown (KeyCode.K)) || (Input.GetKeyDown (KeyCode.DownArrow)) ){
+			GameObject go = ObjectPoolingManager.Instance.GetObject (m_ThrustPrefab.name);
+			go.transform.position = m_ThrustTransform.position;
+			go.transform.rotation = Quaternion.Euler (0f,0f,270f);
+		}
 	}
 
 	// Fills all stats with the base values.
