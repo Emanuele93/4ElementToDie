@@ -34,7 +34,7 @@ public  class Attack : MonoBehaviour {
 	// virtual in order to be overriden if necessary.
 	protected virtual void OnTriggerEnter2D (Collider2D other) {
 		attacker = GameplayManager.Instance.attackersDict [gameObject.GetInstanceID ()];
-
+		Debug.Log (gameObject.tag + " - " + attacker.ToString ());
 		if (gameObject.tag == "FromPlayer" && other.tag == "Enemy") {
 			
 			Debug.LogError ("Enemy");

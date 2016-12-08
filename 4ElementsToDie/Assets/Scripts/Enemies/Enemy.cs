@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using POLIMIGameCollective;
 
 public class Enemy : MonoBehaviour {
 
@@ -13,6 +14,7 @@ public class Enemy : MonoBehaviour {
 	private const int baseLuck = 2; 
 	private const int baseAttackSpeed = 2;
 	private const int baseAttackRange = 2;
+	private const float baseAttackRate = 1f;
 
 	// Enemy onGame visible stats.
 	public int mVitality {get; private set;}
@@ -25,31 +27,54 @@ public class Enemy : MonoBehaviour {
 	public int mAttackSpeed { get; private set;}
 	public int mAttackRange { get; private set;}
 
+	// Attack tag.
+	string attackTag =  "FromEnemy";
+
+	[Header ("Attack transforms")]
+	public Transform m_AreaTransform;
+	public Transform m_RangeTransform;
+	public Transform m_SlashTransform;
+	public Transform m_ThrustTransform;
+
+	[Header ("Attack prefabs")]
+	public GameObject m_AreaPrefab;
+	public GameObject m_RangePrefab;
+	public GameObject m_SlashPrefab;
+	public GameObject m_ThrustPrefab;
+
 	// Unity objects and variables.
 	Transform tr;
 	float mHorizontalAttack = 0f;
 	float mVerticalAttack = 0f;
 	Animator mAnimator;
 	GameObject player;
+	CharacterManager charManager;
 
 	// Facing and chasing variables.
 	bool mFacingRight;
 	bool mFacingUp;
 	bool chasePlayer;
+	bool isInCooldown;
 
+	WaitForSeconds m_attackTime = new WaitForSeconds(baseAttackRate);
 
 	// Use this for initialization
 	void Start () {
 		tr = GetComponent<Transform> () as Transform;
 		mAnimator = GetComponent<Animator> () as Animator;
+		charManager = GetComponent<CharacterManager> () as CharacterManager;
 		player  = GameObject.FindGameObjectWithTag ("Player");
+
+
 		FillWithBaseStats ();
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
 
 	// Fixed update because the Enemy can
 	void FixedUpdate() {
@@ -60,6 +85,8 @@ public class Enemy : MonoBehaviour {
 			mFacingRight = facings [0];
 			mFacingUp = facings [1];
 			chasePlayer = true;
+
+			StartCoroutine(AttackPlayer ());
 		} 
 			
 		EnemyAnimation.Animate (mAnimator, chasePlayer);
@@ -79,5 +106,20 @@ public class Enemy : MonoBehaviour {
 
 		mFacingRight = true;
 		mFacingUp = false;
+		isInCooldown = false;
+	}
+
+	IEnumerator AttackPlayer() {
+		if (!isInCooldown){
+			GameObject go = ObjectPoolingManager.Instance.GetObject (m_AreaPrefab.name);
+			go.transform.position = m_AreaTransform.position;
+			go.transform.rotation = Quaternion.Euler (0f, 0f, 0f);
+			go.tag = attackTag;
+			GameplayManager.Instance.attackersDict [go.GetInstanceID ()] = charManager;
+
+			isInCooldown = true;
+			yield return m_attackTime;
+			isInCooldown = false;
+		}
 	}
 }
