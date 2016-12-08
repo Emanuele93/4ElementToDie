@@ -1,0 +1,36 @@
+fileFormatVersion: 2
+guid: f6cdc4119fd2d7d45a6737e1b215f36e
+timeCreated: 1481109812
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - wallHorizontal: {fileID: 1000010063292482, guid: 47e7fb3ad8fbe874d8ec269a6533d5aa,
+      type: 2}
+  - wallHorizontalAngle: {fileID: 1000012712815494, guid: a2ae6b6d945d27843ba64ba777448ecf,
+      type: 2}
+  - wallHorizontalDoubleAngle: {fileID: 1000010379096372, guid: 877b642a04627a4498df891e05ec6b09,
+      type: 2}
+  - wallVertical: {fileID: 1000012721864892, guid: 4de2122e72f4e6d4797d1e52d05c7cea,
+      type: 2}
+  - wallVerticalAngle: {fileID: 1000010877170858, guid: 5a2130d771ff9af4994941c854173906,
+      type: 2}
+  - wallVerticalDoubleAngle: {fileID: 1000013768224014, guid: e678f81f1a03bef409c64ba7db80f3ab,
+      type: 2}
+  - angleWall: {fileID: 1000010121168960, guid: 3d79b853eb81112438dea748c2a85dde,
+      type: 2}
+  - cameraMenager: {fileID: 1000011602573922, guid: ed8b77e137027a74caa3c7e344da5c6a,
+      type: 2}
+  - obstacleObject: {fileID: 1000012821050112, guid: 87e6c6b018a3a1b45ad9794a31fff7cf,
+      type: 2}
+  - enemiesActivator: {fileID: 1000014079089848, guid: 903fd592ee757854190db84a05f3cadb,
+      type: 2}
+  - enemyObject: {fileID: 1000010744910480, guid: 9564641e985c2fd41b2fac3bf0d882b7,
+      type: 2}
+  - miniMapActivator: {fileID: 1000011510778500, guid: e9a0bd1e0c0a8414da703d77833080fb,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: b16703251671e4d469751a0d6588e415
+timeCreated: 1481117144
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - enemy1: {fileID: 1000010744910480, guid: 9564641e985c2fd41b2fac3bf0d882b7, type: 2}
+  - enemy2: {fileID: 1000010744910480, guid: fed496ad96f23ba42a2689b19970f9c4, type: 2}
+  - enemy3: {fileID: 1000010744910480, guid: 2b3808e8dd362ae46a307f3d69aadee4, type: 2}
+  - enemy4: {fileID: 1000010744910480, guid: 9ad73cd95db7f1e4ab551ca6a62ad18f, type: 2}
+  - enemy5: {fileID: 1000010744910480, guid: 0cf94a339712f314dbb565dad37bb88a, type: 2}
+  - enemy6: {fileID: 1000010744910480, guid: 5fd9bfffb3d2a3541baa5820641b1749, type: 2}
+  - enemy7: {fileID: 1000010744910480, guid: 3aa86bf2cf3efac48a26250bb47d3a7a, type: 2}
+  - enemy8: {fileID: 1000010744910480, guid: 259d8fe7cb492dd43a23124f4b8199b7, type: 2}
+  - enemy9: {fileID: 1000010744910480, guid: 0da41e6438cbc7248b2d08d6ac2d1325, type: 2}
+  - enemy10: {fileID: 1000010744910480, guid: 3c3ac2a67a028aa4ebc725ee59a14165, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
