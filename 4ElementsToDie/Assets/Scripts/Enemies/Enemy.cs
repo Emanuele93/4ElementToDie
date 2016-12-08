@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour {
 	bool chasePlayer;
 	bool isInCooldown;
 
-	WaitForSeconds m_attackTime = new WaitForSeconds(baseAttackRate);
+	WaitForSeconds m_cooldownTime = new WaitForSeconds(baseAttackRate);
 
 	// Use this for initialization
 	void Start () {
@@ -118,7 +118,7 @@ public class Enemy : MonoBehaviour {
 			GameplayManager.Instance.attackersDict [go.GetInstanceID ()] = charManager;
 
 			isInCooldown = true;
-			yield return m_attackTime;
+			yield return m_cooldownTime;
 			isInCooldown = false;
 		}
 	}
