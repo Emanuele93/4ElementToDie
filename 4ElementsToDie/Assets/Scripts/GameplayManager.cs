@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 using POLIMIGameCollective;
 
 public class GameplayManager : Singleton<GameplayManager> {
@@ -10,6 +11,8 @@ public class GameplayManager : Singleton<GameplayManager> {
 	public GameObject mAreaAttack;
 	public GameObject mThrustAttack;
 	public GameObject mSlashAttack;
+
+	public Dictionary<int,CharacterManager> attackersDict = new Dictionary<int,CharacterManager> ();
 
 	// Use this for initialization
 	void Start () {

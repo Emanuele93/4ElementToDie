@@ -2,7 +2,7 @@
 using System.Collections;
 
 // PlayerScript requires the GameObject to have a Rigidbody component
-[RequireComponent (typeof (BoxCollider2D), typeof (Rigidbody2D))]
+[RequireComponent (typeof (BoxCollider2D))]
 public class RangeAttack : Attack {
 	BoxCollider2D col;
 	Vector2 colliderSize = new Vector2(2f,1f);

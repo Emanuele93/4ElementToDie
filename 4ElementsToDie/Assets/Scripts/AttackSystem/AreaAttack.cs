@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent (typeof(CircleCollider2D))]
 public class AreaAttack : Attack {
 	CircleCollider2D col;
 	float colliderRadius = 3f;

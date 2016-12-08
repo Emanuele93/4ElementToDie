@@ -4,9 +4,8 @@ using POLIMIGameCollective;
 
 
 public class Player : MonoBehaviour {
-
 	// Player base stats, they're fixed through the game so we can declare them as constants.
-	private const int baseVitality = 1;
+	private const int baseVitality = 10;
 	private const int baseAttack = 3;
 	private const int baseDefense = 3;
 	private const int baseSpeed = 3;
@@ -31,16 +30,17 @@ public class Player : MonoBehaviour {
 	public int mAttackSpeed { get; private set;}
 	public int mAttackRange { get; private set;}
 
+	private string attackTag = "FromPlayer";
+
+
 	// Unity objects and variables.
 	Transform tr;
-//	float mHorizontalAttack = 0f;
-//	float mVerticalAttack = 0f;
 	Animator mAnimator;
+	CharacterManager charManager;
 
 	// Facing variables.
 	bool mFacingRight;
 	bool mFacingUp;
-	//bool mFacingUp;
 
 	[Header ("Attack transforms")]
 	public Transform m_AreaTransform;
@@ -58,6 +58,7 @@ public class Player : MonoBehaviour {
 	void Start () {
 		tr = GetComponent<Transform> () as Transform;
 		mAnimator = GetComponent<Animator> () as Animator;
+		charManager = GetComponent<CharacterManager> () as CharacterManager;
 
 		FillWithBaseStats ();
 	}
@@ -69,11 +70,11 @@ public class Player : MonoBehaviour {
 
 	// Fixed update because the player can
 	void FixedUpdate() {
-		if (mVitality == 0) {
-			StartCoroutine (playerDead ());
-		}
+//		if (mVitality == 0) {
+//			StartCoroutine (playerDead ());
+//		}
 
-		bool[] facings = PlayerMovement.captureMovement (tr, mSpeed, mFacingRight, mFacingUp);
+		bool[] facings = PlayerMovement.captureMovement (tr,  mSpeed , mFacingRight, mFacingUp);
 		mFacingRight = facings [0]; mFacingUp = facings [1];
 
 		PlayerAnimation.Move (mAnimator);
@@ -84,6 +85,9 @@ public class Player : MonoBehaviour {
 			GameObject go = ObjectPoolingManager.Instance.GetObject (m_ThrustPrefab.name);
 			go.transform.position = m_ThrustTransform.position;
 			go.transform.rotation = Quaternion.Euler (0f,0f,0f);
+			go.tag = attackTag;
+			GameplayManager.Instance.attackersDict [go.GetInstanceID ()] = charManager;
+
 		}
 
 		// Left attack.
@@ -91,6 +95,8 @@ public class Player : MonoBehaviour {
 			GameObject go = ObjectPoolingManager.Instance.GetObject (m_ThrustPrefab.name);
 			go.transform.position = m_ThrustTransform.position;
 			go.transform.rotation = Quaternion.Euler (0f,0f,180f);
+			go.tag = attackTag;
+			GameplayManager.Instance.attackersDict [go.GetInstanceID ()] = charManager;
 		}
 
 		// Up attack.
@@ -98,6 +104,8 @@ public class Player : MonoBehaviour {
 			GameObject go = ObjectPoolingManager.Instance.GetObject (m_ThrustPrefab.name);
 			go.transform.position = m_ThrustTransform.position;
 			go.transform.rotation = Quaternion.Euler (0f,0f,90f);
+			go.tag = attackTag;
+			GameplayManager.Instance.attackersDict [go.GetInstanceID ()] = charManager;
 		}
 
 		// Down attack.
@@ -105,6 +113,8 @@ public class Player : MonoBehaviour {
 			GameObject go = ObjectPoolingManager.Instance.GetObject (m_ThrustPrefab.name);
 			go.transform.position = m_ThrustTransform.position;
 			go.transform.rotation = Quaternion.Euler (0f,0f,270f);
+			go.tag = attackTag;
+			GameplayManager.Instance.attackersDict [go.GetInstanceID ()] = charManager;
 		}
 	}
 

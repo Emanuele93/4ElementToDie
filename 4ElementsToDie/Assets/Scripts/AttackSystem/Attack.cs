@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-[RequireComponent (typeof (PolygonCollider2D),typeof(Rigidbody2D))]
-public abstract class Attack : MonoBehaviour {
-
+[RequireComponent (typeof(Rigidbody2D))]
+public  class Attack : MonoBehaviour {
+	
 	protected Rigidbody2D rb;
 	protected Transform tr;
 
@@ -32,9 +33,25 @@ public abstract class Attack : MonoBehaviour {
 
 	// virtual in order to be overriden if necessary.
 	protected virtual void OnTriggerEnter2D (Collider2D other) {
-		if (other.tag == "Enemy") {
+		attacker = GameplayManager.Instance.attackersDict [gameObject.GetInstanceID ()];
+
+		if (gameObject.tag == "FromPlayer" && other.tag == "Enemy") {
 			
 			Debug.LogError ("Enemy");
+
+			//CharacterManager defender = other.GetComponent<CharacterManager> () as CharacterManager;
+			//GameplayManager.Instance.SuccessfulAttack (attacker, defender);
+			//
+			//			
+			//
+			//			double damage = GameLogicManager.CalculateDamage (attacker, defender);
+			//			defender.ApplyDamage(damage);
+			//			if (GameLogicManager.IsDead(defender))
+			//			{
+			//				GameplayManager.Instance.Kill(defender);
+			//			}
+		} else if (gameObject.tag == "FromEnemy" && other.tag == "Player"){ 
+			Debug.LogError ("Player");
 
 			//CharacterManager defender = other.GetComponent<CharacterManager> () as CharacterManager;
 			//GameplayManager.Instance.SuccessfulAttack (attacker, defender);

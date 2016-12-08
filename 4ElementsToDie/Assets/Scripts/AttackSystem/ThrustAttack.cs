@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//[RequireComponent (typeof (PolygonCollider2D),typeof(Rigidbody2D))]
+[RequireComponent (typeof (PolygonCollider2D),typeof(Rigidbody2D))]
 public class ThrustAttack : Attack {
 	PolygonCollider2D col;
 	const int numberOfPoints = 3;
