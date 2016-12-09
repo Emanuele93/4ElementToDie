@@ -4,16 +4,15 @@ using POLIMIGameCollective;
 
 
 public class Player : MonoBehaviour {
-
 	// Player base stats, they're fixed through the game so we can declare them as constants.
-	private const int baseVitality = 3;
+	private const int baseVitality = 10;
 	private const int baseAttack = 3;
 	private const int baseDefense = 3;
 	private const int baseSpeed = 3;
 
 	// Player base hidden stats, they're fixed through the game.
 	private const int baseLuck = 3; 
-	private const int baseAttackSpeed = 3;
+	private const int baseAttackSpeed = 1;
 	private const int baseAttackRange = 3;
 
 	// Player equipment slots.
@@ -31,16 +30,19 @@ public class Player : MonoBehaviour {
 	public int mAttackSpeed { get; private set;}
 	public int mAttackRange { get; private set;}
 
+	private string attackTag = "FromPlayer";
+
+	bool isInCooldown;
+	WaitForSeconds m_cooldownTime;
+
 	// Unity objects and variables.
 	Transform tr;
-//	float mHorizontalAttack = 0f;
-//	float mVerticalAttack = 0f;
 	Animator mAnimator;
+	CharacterManager charManager;
 
 	// Facing variables.
 	bool mFacingRight;
 	bool mFacingUp;
-	//bool mFacingUp;
 
 	[Header ("Attack transforms")]
 	public Transform m_AreaTransform;
@@ -58,8 +60,10 @@ public class Player : MonoBehaviour {
 	void Start () {
 		tr = GetComponent<Transform> () as Transform;
 		mAnimator = GetComponent<Animator> () as Animator;
+		charManager = GetComponent<CharacterManager> () as CharacterManager;
 
 		FillWithBaseStats ();
+		m_cooldownTime = new WaitForSeconds(mAttackSpeed);
 	}
 	
 	// Update is called once per frame
@@ -69,35 +73,58 @@ public class Player : MonoBehaviour {
 
 	// Fixed update because the player can
 	void FixedUpdate() {
-		bool[] facings = PlayerMovement.captureMovement (tr, mSpeed, mFacingRight, mFacingUp);
+//		if (mVitality == 0) {
+//			StartCoroutine (playerDead ());
+//		}
+
+		bool[] facings = PlayerMovement.captureMovement (tr,  mSpeed , mFacingRight, mFacingUp);
 		mFacingRight = facings [0]; mFacingUp = facings [1];
 
-		PlayerAnimation.Animate (mAnimator);
+		PlayerAnimation.Move (mAnimator);
 			
 		// Attacking.
-//		if ( (Input.GetKeyDown (KeyCode.L)) || (Input.GetKeyDown (KeyCode.RightArrow)) ){
-//			Debug.Log ("Right Attack");
-//		}
-//
-//		if ( (Input.GetKeyDown (KeyCode.J)) || (Input.GetKeyDown (KeyCode.LeftArrow)) ){
-//			Debug.Log ("Left Attack");
-//		}
-//
-//		if ( (Input.GetKeyDown (KeyCode.I)) || (Input.GetKeyDown (KeyCode.UpArrow)) ){
-//			Debug.Log ("Up Attack");
-//		}
+		// Right attack.
+		if (!isInCooldown) {
+			if ( (Input.GetKeyDown (KeyCode.L)) || (Input.GetKeyDown (KeyCode.RightArrow)) ){
+				GameObject go = ObjectPoolingManager.Instance.GetObject (m_ThrustPrefab.name);
+				go.transform.position = m_ThrustTransform.position;
+				go.transform.rotation = Quaternion.Euler (0f,0f,0f);
+				go.tag = attackTag;
+				GameplayManager.Instance.attackersDict [go.GetInstanceID ()] = charManager;
+				StartCoroutine (WaitForCooldown ());
 
-//		if ( (Input.GetKeyDown (KeyCode.K)) || (Input.GetKeyDown (KeyCode.DownArrow)) ){
-//			GameObject go = ObjectPoolingManager.Instance.GetObject (m_shot_prefab.name);
-//			go.transform.position = m_shot_right.position;
-//			go.transform.rotation = m_shot_right.rotation;
-//		}
+			}
 
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			GameObject go = ObjectPoolingManager.Instance.GetObject (m_ThrustPrefab.name);
-			go.transform.position = m_ThrustTransform.position;
-			go.transform.rotation = m_ThrustTransform.rotation;
-		}
+			// Left attack.
+			if ( (Input.GetKeyDown (KeyCode.J)) || (Input.GetKeyDown (KeyCode.LeftArrow)) ){
+				GameObject go = ObjectPoolingManager.Instance.GetObject (m_ThrustPrefab.name);
+				go.transform.position = m_ThrustTransform.position;
+				go.transform.rotation = Quaternion.Euler (0f,0f,180f);
+				go.tag = attackTag;
+				GameplayManager.Instance.attackersDict [go.GetInstanceID ()] = charManager;
+				StartCoroutine (WaitForCooldown ());
+			}
+
+			// Up attack.
+			if ( (Input.GetKeyDown (KeyCode.I)) || (Input.GetKeyDown (KeyCode.UpArrow)) ){
+				GameObject go = ObjectPoolingManager.Instance.GetObject (m_ThrustPrefab.name);
+				go.transform.position = m_ThrustTransform.position;
+				go.transform.rotation = Quaternion.Euler (0f,0f,90f);
+				go.tag = attackTag;
+				GameplayManager.Instance.attackersDict [go.GetInstanceID ()] = charManager;
+				StartCoroutine (WaitForCooldown ());
+			}
+
+			// Down attack.
+			if ( (Input.GetKeyDown (KeyCode.K)) || (Input.GetKeyDown (KeyCode.DownArrow)) ){
+				GameObject go = ObjectPoolingManager.Instance.GetObject (m_ThrustPrefab.name);
+				go.transform.position = m_ThrustTransform.position;
+				go.transform.rotation = Quaternion.Euler (0f,0f,270f);
+				go.tag = attackTag;
+				GameplayManager.Instance.attackersDict [go.GetInstanceID ()] = charManager;
+				StartCoroutine (WaitForCooldown ());
+			}
+		} 
 
 	}
 
@@ -117,5 +144,20 @@ public class Player : MonoBehaviour {
 
 		mFacingRight = true;
 		mFacingUp = false;
+		isInCooldown = false;
+	}
+
+	IEnumerator playerDead() {
+		//yield return new WaitForSeconds (.1f);
+		PlayerAnimation.Dead(mAnimator, true);
+		yield return new WaitForSeconds (2.2f); // Waiting for the animation before disappear
+		gameObject.SetActive (false);
+	}
+
+	IEnumerator WaitForCooldown() {
+		isInCooldown = true;
+		yield return m_cooldownTime;
+		isInCooldown = false;
+
 	}
 }

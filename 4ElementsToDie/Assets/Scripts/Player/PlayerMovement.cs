@@ -46,7 +46,7 @@ public class PlayerMovement {
 			playerFacingUp = !playerFacingUp;
 
 		}
-
+			
 		return new bool[]{playerFacingRight,playerFacingUp};
 	}
 }

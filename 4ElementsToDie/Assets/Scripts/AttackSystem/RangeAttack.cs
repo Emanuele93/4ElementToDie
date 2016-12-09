@@ -2,70 +2,51 @@
 using System.Collections;
 
 // PlayerScript requires the GameObject to have a Rigidbody component
-[RequireComponent (typeof (BoxCollider2D), typeof (Rigidbody2D))]
-public class RangeAttack : MonoBehaviour {
+[RequireComponent (typeof (BoxCollider2D))]
+public class RangeAttack : Attack {
 	BoxCollider2D col;
-	Rigidbody2D rb;
-	Transform tr;
+	Vector2 colliderSize = new Vector2(2f,1f);
 
 	float mSpeed;
 	float direction;
 
-	float waitTime = 3f;
-
-	Vector2 colliderSize = new Vector2(2f,1f);
-
 	// Use this for initialization
-	void Start () {
-		tr = GetComponent<Transform> () as Transform;
+	protected override void Start () {
+		base.Start ();
+
 		col = GetComponent<BoxCollider2D> () as BoxCollider2D;
-		rb = GetComponent<Rigidbody2D> () as Rigidbody2D;
 
 		mSpeed = 5f;
 		direction = 1f;
 		col.size = colliderSize;
 		col.isTrigger = true;
 	}
-	
-	// the attack method is called when the user presses the attack button.
-	void Update () {
-		//Debug.Log ("Collider size: " +  (col.size + ( Vector2.up / 100)).ToString ());
-		//col.size = new Vector2(col.size.x, col.size.y +1);
-	}
-
-	void FixedUpdate () {
-		
-		Attack ();
-	}
 
 	// the attack method is called when the user presses the attack button.
-	public void Attack() {
+	public override void AttackNow() {
 		tr.position += tr.right * Time.fixedDeltaTime * direction * mSpeed;
 		StartCoroutine( ExplosionTime ());
 	}
-
-	IEnumerator ExplosionTime () {
-		yield return new WaitForSeconds (waitTime);
-		gameObject.SetActive (false);
-	}
-
+		
 	// Triggered when a collision happens.
-	void OnTriggerEnter2D (Collider2D other) {
+	protected override void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "Enemy") {
 			Debug.LogError ("Enemy");
-			Destroy (other.gameObject);
-			gameObject.SetActive (false);
+			//CharacterManager defender = other.GetComponent<CharacterManager> () as CharacterManager;
+			//GameplayManager.Instance.SuccessfulAttack (attacker, defender);
+			//
+			//			
+			//
+			//			double damage = GameLogicManager.CalculateDamage (attacker, defender);
+			//			defender.ApplyDamage(damage);
+			//			if (GameLogicManager.IsDead(defender))
+			//			{
+			//				GameplayManager.Instance.Kill(defender);
+			//			}
 
 		} else if (other.tag == "Wall") {
 			Debug.LogError ("Wall");
 			gameObject.SetActive (false);
 		} 
-		else if (other.tag == "Player") { 
-			Debug.Log ("Collided with Player");
-		}
-
-		else {
-			Debug.LogError ("Didnt touch.");
-		}
 	}
 }
