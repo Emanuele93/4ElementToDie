@@ -345,7 +345,7 @@ public abstract class roomFactory : MonoBehaviour
                         roomStructure[i, j] = 2;
 
                         GameObject enemy = getEnemy(difficulty);
-                        difficulty -= enemy.GetComponent<tempStatsEnemy>().difficulty;
+                        difficulty -= enemy.GetComponent<Enemy>().difficulty;
                         enemy.transform.position = new Vector3(i - 6, j - 3, 0);
                         enemy.transform.parent = enemies.transform;
                         activator.GetComponent<chestEnemiesActivator>().addChild(enemy);
@@ -379,7 +379,7 @@ public abstract class roomFactory : MonoBehaviour
             {
                 roomStructure[i, j] = 2;
                 GameObject enemy = getEnemy(difficulty);
-                difficulty -= enemy.GetComponent<tempStatsEnemy>().difficulty;
+                difficulty -= enemy.GetComponent<Enemy>().difficulty;
                 enemy.transform.position = new Vector3(i - 6, j - 3, 0);
                 enemy.transform.parent = enemies.transform;
             }

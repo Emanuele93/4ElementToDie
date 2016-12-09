@@ -68,28 +68,28 @@ public class EnemyObjectCollection : MonoBehaviour
         foreach (Object world in worlds)
         {
             go = world as GameObject;
-            fireEnemies[go.GetComponent<tempStatsEnemy>().difficulty - 1].Add(go);
+            fireEnemies[go.GetComponent<Enemy>().difficulty - 1].Add(go);
         }
 
         worlds = Resources.LoadAll("Enemies/WaterEnemies", typeof(GameObject));
         foreach (Object world in worlds)
         {
             go = world as GameObject;
-            waterEnemies[go.GetComponent<tempStatsEnemy>().difficulty - 1].Add(go);
+            waterEnemies[go.GetComponent<Enemy>().difficulty - 1].Add(go);
         }
 
         worlds = Resources.LoadAll("Enemies/AirEnemies", typeof(GameObject));
         foreach (Object world in worlds)
         {
             go = world as GameObject;
-            airEnemies[go.GetComponent<tempStatsEnemy>().difficulty - 1].Add(go);
+            airEnemies[go.GetComponent<Enemy>().difficulty - 1].Add(go);
         }
 
         worlds = Resources.LoadAll("Enemies/EarthEnemies", typeof(GameObject));
         foreach (Object world in worlds)
         {
             go = world as GameObject;
-            earthEnemies[go.GetComponent<tempStatsEnemy>().difficulty - 1].Add(go);
+            earthEnemies[go.GetComponent<Enemy>().difficulty - 1].Add(go);
         }
         
         worlds = Resources.LoadAll("Object/FireObject/Equipment", typeof(GameObject));

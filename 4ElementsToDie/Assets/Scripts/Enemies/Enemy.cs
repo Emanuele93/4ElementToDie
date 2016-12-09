@@ -4,6 +4,9 @@ using POLIMIGameCollective;
 
 public class Enemy : MonoBehaviour {
 
+    //Enamy Difficulty, you must set it whene you create an enemy prefabs
+    public int difficulty; 
+
 	// Enemy base stats, they're fixed through the game so we can declare them as constants.
 	private const int baseVitality = 2;
 	private const int baseAttack = 2;
@@ -54,7 +57,10 @@ public class Enemy : MonoBehaviour {
 	bool chasePlayer;
 	bool isInCooldown;
 
-	WaitForSeconds m_cooldownTime = new WaitForSeconds(baseAttackRate);
+    // Enemy Sprite Render
+    private SpriteRenderer enemySpriteRender;
+
+    WaitForSeconds m_cooldownTime = new WaitForSeconds(baseAttackRate);
 
 	// Use this for initialization
 	void Start () {
@@ -66,11 +72,15 @@ public class Enemy : MonoBehaviour {
 
 		FillWithBaseStats ();
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+        enemySpriteRender = GetComponent<SpriteRenderer>();
+    }
+
+    // Update is called once per frame
+    void Update () {
+        if (player.transform.position.y > transform.position.y)
+            enemySpriteRender.sortingLayerName = "enemyDown";
+        else
+            enemySpriteRender.sortingLayerName = "enwmyUp";
 	}
 
 
