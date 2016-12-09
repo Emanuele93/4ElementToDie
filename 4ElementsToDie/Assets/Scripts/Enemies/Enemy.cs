@@ -44,8 +44,6 @@ public class Enemy : MonoBehaviour {
 
 	// Unity objects and variables.
 	Transform tr;
-	float mHorizontalAttack = 0f;
-	float mVerticalAttack = 0f;
 	Animator mAnimator;
 	GameObject player;
 	CharacterManager charManager;
@@ -111,11 +109,13 @@ public class Enemy : MonoBehaviour {
 
 	IEnumerator AttackPlayer() {
 		if (!isInCooldown){
+			// Here we dispatch the attack based on enemy's type.
 			GameObject go = ObjectPoolingManager.Instance.GetObject (m_AreaPrefab.name);
 			go.transform.position = m_AreaTransform.position;
 			go.transform.rotation = Quaternion.Euler (0f, 0f, 0f);
 			go.tag = attackTag;
-			GameplayManager.Instance.attackersDict [go.GetInstanceID ()] = charManager;
+
+			 GameplayManager.Instance.attackersDict [go.GetInstanceID ()] = charManager;
 
 			isInCooldown = true;
 			yield return m_cooldownTime;
