@@ -25,7 +25,7 @@ public abstract class roomFactory : MonoBehaviour
     void Start()
     {
         roomStructure = new int[13, 7];
-}
+    }
 
     void Update()
     {
@@ -112,7 +112,6 @@ public abstract class roomFactory : MonoBehaviour
         {
             generateObstacle().transform.parent = room.transform;
             generateEnemies().transform.parent = room.transform;
-            //generateObject().transform.parent = room.transform;
         }
         else
             Instantiate(miniMapActivator, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), room.transform);
@@ -289,157 +288,106 @@ public abstract class roomFactory : MonoBehaviour
     protected GameObject generateEnemies()
     {
         GameObject enemies = Instantiate(miniMapActivator, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
-        
+
         int i, j, x, y, activX, activY;
-        bool full, gold;
+        bool full, stop;
 
         i = x = Random.Range(0, roomStructure.GetLength(0));
         j = y = Random.Range(0, roomStructure.GetLength(1));
-        full = gold = false;
-        while (roomStructure[i, j] != 0 && !full)
-        {
-            i++;
-            if (i == roomStructure.GetLength(0))
-            {
-                i = 0;
-                j++;
-                if (j == roomStructure.GetLength(1))
-                    j = 0;
-            }
-            if (i == x && j == y)
-                full = true;
-        }
+        full = stop = false;
 
-        if (!full)
+        int difficulty = Random.Range(1, 10);
+        if (Random.Range(0, 3) == 0)
         {
-            roomStructure[i, j] = 3;
-            activX = i;
-            activY = j;
-            if (Random.Range(0, 3) == 0)
+            while (roomStructure[i, j] != 0 && !full)
             {
-                gold = true;
-                //GameManager PlayerGold++
-            }
-
-            int difficulty = Random.Range(1, 10);
-            while (difficulty > 0)
-            {
-                i = x = Random.Range(0, roomStructure.GetLength(0));
-                j = y = Random.Range(0, roomStructure.GetLength(1));
-                full = false;
-                while (!(roomStructure[i, j] == 0 && (Mathf.Abs(activX - i) > 2 || Mathf.Abs(activY - j) > 2 || !gold) && !full))
+                i++;
+                if (i == roomStructure.GetLength(0))
                 {
-                    i++;
-                    if (i == roomStructure.GetLength(0))
-                    {
-                        i = 0;
-                        j++;
-                        if (j == roomStructure.GetLength(1))
-                            j = 0;
-                    }
-                    if (i == x && j == y)
-                        full = true;
+                    i = 0;
+                    j++;
+                    if (j == roomStructure.GetLength(1))
+                        j = 0;
                 }
-
-                if (!full)
+                if (i == x && j == y)
+                    full = true;
+            }
+            if (!full)
+            {
+                roomStructure[i, j] = 3;
+                activX = i;
+                activY = j;
+                GameObject activator = getChest();
+                activator.transform.position = new Vector3(activX - 6, activY - 3, 0);
+                activator.transform.parent = enemies.transform;
+                while (difficulty > 0 && !stop && !full)
                 {
-                    roomStructure[i, j] = 2;
-
-                    GameObject enemy = getEnemy(difficulty);
-                    difficulty -= enemy.GetComponent<tempStats>().difficulty;
-                    enemy.transform.position = new Vector3(i - 6, j - 3, 0);
-                    enemy.transform.parent = enemies.transform;
-                    if (gold)
+                    i = x = Random.Range(0, roomStructure.GetLength(0));
+                    j = y = Random.Range(0, roomStructure.GetLength(1));
+                    full = false;
+                    while (!(roomStructure[i, j] == 0 && (Mathf.Abs(activX - i) > 2 || Mathf.Abs(activY - j) > 2) && !full))
                     {
-                        GameObject activator = Instantiate(enemiesActivator, new Vector3(activX - 6, activY - 3, 0), Quaternion.Euler(0, 0, 0), enemies.transform) as GameObject;
+                        i++;
+                        if (i == roomStructure.GetLength(0))
+                        {
+                            i = 0;
+                            j++;
+                            if (j == roomStructure.GetLength(1))
+                                j = 0;
+                        }
+                        if (i == x && j == y)
+                            full = true;
+                    }
+
+                    if (!full)
+                    {
+                        roomStructure[i, j] = 2;
+
+                        GameObject enemy = getEnemy(difficulty);
+                        difficulty -= enemy.GetComponent<tempStatsEnemy>().difficulty;
+                        enemy.transform.position = new Vector3(i - 6, j - 3, 0);
+                        enemy.transform.parent = enemies.transform;
                         activator.GetComponent<enemiesActivator>().addChild(enemy);
                         enemy.SetActive(false);
-                        if(Random.Range(0, 2) == 0) gold = false;
                     }
+                    if (Random.Range(0, 2) == 0)
+                        stop = true;
                 }
+            }
+        }
+        while (difficulty > 0 && !full)
+        {
+            i = x = Random.Range(0, roomStructure.GetLength(0));
+            j = y = Random.Range(0, roomStructure.GetLength(1));
+            full = false;
+            while (!(roomStructure[i, j] == 0 && !full))
+            {
+                i++;
+                if (i == roomStructure.GetLength(0))
+                {
+                    i = 0;
+                    j++;
+                    if (j == roomStructure.GetLength(1))
+                        j = 0;
+                }
+                if (i == x && j == y)
+                    full = true;
+            }
+
+            if (!full)
+            {
+                roomStructure[i, j] = 2;
+                GameObject enemy = getEnemy(difficulty);
+                difficulty -= enemy.GetComponent<tempStatsEnemy>().difficulty;
+                enemy.transform.position = new Vector3(i - 6, j - 3, 0);
+                enemy.transform.parent = enemies.transform;
             }
         }
         return enemies;
     }
 
     protected abstract GameObject getEnemy(int difficulty);
-
-
-    protected GameObject generateObject()
-    {
-        GameObject enemies = Instantiate(miniMapActivator, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
-
-        int i, j, x, y, activX, activY;
-        bool full, gold;
-
-        i = x = Random.Range(0, roomStructure.GetLength(0));
-        j = y = Random.Range(0, roomStructure.GetLength(1));
-        full = gold = false;
-        while (roomStructure[i, j] != 0 && !full)
-        {
-            i++;
-            if (i == roomStructure.GetLength(0))
-            {
-                i = 0;
-                j++;
-                if (j == roomStructure.GetLength(1))
-                    j = 0;
-            }
-            if (i == x && j == y)
-                full = true;
-        }
-
-        if (!full)
-        {
-            roomStructure[i, j] = 3;
-            activX = i;
-            activY = j;
-            if (Random.Range(0, 3) == 0)
-            {
-                gold = true;
-                //GameManager PlayerGold++
-            }
-
-            int difficulty = Random.Range(1, 10);
-            while (difficulty > 0)
-            {
-                i = x = Random.Range(0, roomStructure.GetLength(0));
-                j = y = Random.Range(0, roomStructure.GetLength(1));
-                full = false;
-                while (!(roomStructure[i, j] == 0 && (Mathf.Abs(activX - i) > 2 || Mathf.Abs(activY - j) > 2 || !gold) && !full))
-                {
-                    i++;
-                    if (i == roomStructure.GetLength(0))
-                    {
-                        i = 0;
-                        j++;
-                        if (j == roomStructure.GetLength(1))
-                            j = 0;
-                    }
-                    if (i == x && j == y)
-                        full = true;
-                }
-
-                if (!full)
-                {
-                    roomStructure[i, j] = 2;
-
-                    GameObject enemy = getEnemy(difficulty);
-                    difficulty -= enemy.GetComponent<tempStats>().difficulty;
-                    enemy.transform.position = new Vector3(i - 6, j - 3, 0);
-                    enemy.transform.parent = enemies.transform;
-                    if (gold)
-                    {
-                        GameObject activator = Instantiate(enemiesActivator, new Vector3(activX - 6, activY - 3, 0), Quaternion.Euler(0, 0, 0), enemies.transform) as GameObject;
-                        activator.GetComponent<enemiesActivator>().addChild(enemy);
-                        enemy.SetActive(false);
-                        if (Random.Range(0, 2) == 0) gold = false;
-                    }
-                }
-            }
-        }
-        return enemies;
-    }
+    protected abstract GameObject getChest();
 
     protected bool validPoint(int x, int y)
     {

@@ -157,4 +157,21 @@ public class roomFactoryLeft : roomFactory
     {
         return enemyObjectCollection.GetComponent<EnemyObjectCollection>().getEarthEnemy(difficulty);
     }
+
+    protected override GameObject getChest()
+    {
+        if (Random.Range(0, 10) == 0)
+        {
+            switch (Random.Range(0, 3))
+            {
+                case 0:
+                    return enemyObjectCollection.GetComponent<EnemyObjectCollection>().getWaterChest();
+                case 1:
+                    return enemyObjectCollection.GetComponent<EnemyObjectCollection>().getFireChest();
+            }
+            return enemyObjectCollection.GetComponent<EnemyObjectCollection>().getAirChest();
+        }
+        else
+            return enemyObjectCollection.GetComponent<EnemyObjectCollection>().getEarthChest();
+    }
 }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class tempStats : MonoBehaviour {
+public class tempStatsObject : MonoBehaviour {
 
-    public int difficulty;
+    public int rarity;
 
 	// Use this for initialization
 	void Start () {

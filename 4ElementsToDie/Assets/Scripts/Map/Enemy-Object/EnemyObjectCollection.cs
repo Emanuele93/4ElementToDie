@@ -13,6 +13,11 @@ public class EnemyObjectCollection : MonoBehaviour
     private List<GameObject>[] airObject;
     private List<GameObject>[] earthObject;
 
+    private GameObject fireChest;
+    private GameObject waterChest;
+    private GameObject airChest;
+    private GameObject earthChest;
+
     void Start()
     {
         GameObject go;
@@ -54,64 +59,69 @@ public class EnemyObjectCollection : MonoBehaviour
         foreach (Object world in worlds)
         {
             go = world as GameObject;
-            fireEnemies[go.GetComponent<tempStats>().difficulty - 1].Add(go);
+            fireEnemies[go.GetComponent<tempStatsEnemy>().difficulty - 1].Add(go);
         }
 
         worlds = Resources.LoadAll("Enemies/WaterEnemies", typeof(GameObject));
         foreach (Object world in worlds)
         {
             go = world as GameObject;
-            waterEnemies[go.GetComponent<tempStats>().difficulty - 1].Add(go);
+            waterEnemies[go.GetComponent<tempStatsEnemy>().difficulty - 1].Add(go);
         }
 
         worlds = Resources.LoadAll("Enemies/AirEnemies", typeof(GameObject));
         foreach (Object world in worlds)
         {
             go = world as GameObject;
-            airEnemies[go.GetComponent<tempStats>().difficulty - 1].Add(go);
+            airEnemies[go.GetComponent<tempStatsEnemy>().difficulty - 1].Add(go);
         }
 
         worlds = Resources.LoadAll("Enemies/EarthEnemies", typeof(GameObject));
         foreach (Object world in worlds)
         {
             go = world as GameObject;
-            earthEnemies[go.GetComponent<tempStats>().difficulty - 1].Add(go);
+            earthEnemies[go.GetComponent<tempStatsEnemy>().difficulty - 1].Add(go);
         }
-
+        /*
         worlds = Resources.LoadAll("Object/FireObject", typeof(GameObject));
         foreach (Object world in worlds)
         {
             go = world as GameObject;
-            fireObject[go.GetComponent<tempStats>().difficulty - 1].Add(go);
+            fireObject[go.GetComponent<tempStatsObject>().rarity - 1].Add(go);
         }
 
         worlds = Resources.LoadAll("Object/WaterObject", typeof(GameObject));
         foreach (Object world in worlds)
         {
             go = world as GameObject;
-            waterObject[go.GetComponent<tempStats>().difficulty - 1].Add(go);
+            waterObject[go.GetComponent<tempStatsObject>().rarity - 1].Add(go);
         }
 
         worlds = Resources.LoadAll("Object/AirObject", typeof(GameObject));
         foreach (Object world in worlds)
         {
             go = world as GameObject;
-            airObject[go.GetComponent<tempStats>().difficulty - 1].Add(go);
+            airObject[go.GetComponent<tempStatsObject>().rarity - 1].Add(go);
         }
 
         worlds = Resources.LoadAll("Object/EarthObject", typeof(GameObject));
         foreach (Object world in worlds)
         {
             go = world as GameObject;
-            earthObject[go.GetComponent<tempStats>().difficulty - 1].Add(go);
+            earthObject[go.GetComponent<tempStatsObject>().rarity - 1].Add(go);
         }
+        */
+        fireChest = (Resources.LoadAll("Object/FireObject/chestFire", typeof(GameObject)))[0] as GameObject;
+        airChest = (Resources.LoadAll("Object/AirObject/chestAir", typeof(GameObject)))[0] as GameObject;
+        waterChest = (Resources.LoadAll("Object/WaterObject/chestWater", typeof(GameObject)))[0] as GameObject;
+        earthChest = (Resources.LoadAll("Object/EarthObject/chestEarth", typeof(GameObject)))[0] as GameObject;
     }
 
     public GameObject getFireEnemy(int diff)
     {
         int difficulty = Random.Range(0, diff - 1);
-        while (fireEnemies[difficulty].Count == 0)
-            difficulty--;
+        /*while (fireEnemies[difficulty].Count == 0)
+            difficulty--;*/
         int enemyNumber = Random.Range(0, fireEnemies[difficulty].Count);
         return Instantiate(fireEnemies[difficulty][enemyNumber], new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
     }
@@ -119,8 +129,8 @@ public class EnemyObjectCollection : MonoBehaviour
     public GameObject getWaterEnemy(int diff)
     {
         int difficulty = Random.Range(0, diff - 1);
-        while (waterEnemies[difficulty].Count == 0)
-            difficulty--;
+        /*while (waterEnemies[difficulty].Count == 0)
+            difficulty--;*/
         int enemyNumber = Random.Range(0, fireEnemies[difficulty].Count);
         return Instantiate(waterEnemies[difficulty][enemyNumber], new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
     }
@@ -128,8 +138,8 @@ public class EnemyObjectCollection : MonoBehaviour
     public GameObject getAirEnemy(int diff)
     {
         int difficulty = Random.Range(0, diff - 1);
-        while (airEnemies[difficulty].Count == 0)
-            difficulty--;
+        /*while (airEnemies[difficulty].Count == 0)
+            difficulty--;*/
         int enemyNumber = Random.Range(0, fireEnemies[difficulty].Count);
         return Instantiate(airEnemies[difficulty][enemyNumber], new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
     }
@@ -137,9 +147,29 @@ public class EnemyObjectCollection : MonoBehaviour
     public GameObject getEarthEnemy(int diff)
     {
         int difficulty = Random.Range(0, diff - 1);
-        while (earthEnemies[difficulty].Count == 0)
-            difficulty--;
+        /*while (earthEnemies[difficulty].Count == 0)
+            difficulty--;*/
         int enemyNumber = Random.Range(0, fireEnemies[difficulty].Count);
         return Instantiate(earthEnemies[difficulty][enemyNumber], new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+    }
+
+    public GameObject getAirChest()
+    {
+        return Instantiate(airChest, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+    }
+
+    public GameObject getWaterChest()
+    {
+        return Instantiate(waterChest, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+    }
+
+    public GameObject getFireChest()
+    {
+        return Instantiate(fireChest, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+    }
+
+    public GameObject getEarthChest()
+    {
+        return Instantiate(earthChest, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
     }
 }
