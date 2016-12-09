@@ -3,13 +3,13 @@ using System.Collections;
 
 public class colliderCameraMenager : MonoBehaviour
 {
-    public CameraController cam;
+    private CameraController cam;
     public bool vertical;
     public bool horizontal;
 
     void Start()
     {
-
+        cam = Camera.main.GetComponent<CameraController>();
     }
 
     void Update()

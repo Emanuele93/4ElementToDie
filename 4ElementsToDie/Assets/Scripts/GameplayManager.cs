@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 using POLIMIGameCollective;
 
 public class GameplayManager : Singleton<GameplayManager> {
@@ -10,6 +11,11 @@ public class GameplayManager : Singleton<GameplayManager> {
 	public GameObject mAreaAttack;
 	public GameObject mThrustAttack;
 	public GameObject mSlashAttack;
+
+	// We create a dictionary where the keys will be the instance ID of the attacks (they're managed by the pooling manager)
+	// and the values will be the CharacterManager of the attacker using that instance, this, in order to have the 
+	// stats of the attacker.
+	public Dictionary<int,CharacterManager> attackersDict = new Dictionary<int,CharacterManager> ();
 
 	// Use this for initialization
 	void Start () {
