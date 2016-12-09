@@ -5,9 +5,9 @@ using System.Collections.Generic;
 public class CharacterManager : MonoBehaviour
 {
 
-    private Character m_baseCharacterData;
+	public Character m_baseCharacterData;
 
-    private ElementType m_element;
+	private ElementType m_element;
     private AttackType m_attackType;
 
     private Stat[] m_stats = new Stat[System.Enum.GetValues(typeof(StatType)).Length];
