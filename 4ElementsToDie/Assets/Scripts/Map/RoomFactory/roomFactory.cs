@@ -10,6 +10,7 @@ public abstract class roomFactory : MonoBehaviour
     public GameObject wallVerticalAngle;
     public GameObject wallVerticalDoubleAngle;
     public GameObject angleWall;
+    public GameObject floor;
 
     public GameObject cameraMenager;
 
@@ -105,10 +106,13 @@ public abstract class roomFactory : MonoBehaviour
         else if (l && !u && r && !d)
             room = straightHorizontalRoom();
 
+        Instantiate(floor, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), room.transform);
+
         if (!door)
         {
             generateObstacle().transform.parent = room.transform;
             generateEnemies().transform.parent = room.transform;
+            //generateObject().transform.parent = room.transform;
         }
         else
             Instantiate(miniMapActivator, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), room.transform);
@@ -285,13 +289,13 @@ public abstract class roomFactory : MonoBehaviour
     protected GameObject generateEnemies()
     {
         GameObject enemies = Instantiate(miniMapActivator, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
-
+        
         int i, j, x, y, activX, activY;
-        bool full;
+        bool full, gold;
 
         i = x = Random.Range(0, roomStructure.GetLength(0));
         j = y = Random.Range(0, roomStructure.GetLength(1));
-        full = false;
+        full = gold = false;
         while (roomStructure[i, j] != 0 && !full)
         {
             i++;
@@ -311,7 +315,11 @@ public abstract class roomFactory : MonoBehaviour
             roomStructure[i, j] = 3;
             activX = i;
             activY = j;
-            GameObject activator = Instantiate(enemiesActivator, new Vector3(i - 6, j - 3, 0), Quaternion.Euler(0, 0, 0), enemies.transform) as GameObject;
+            if (Random.Range(0, 3) == 0)
+            {
+                gold = true;
+                //GameManager PlayerGold++
+            }
 
             int difficulty = Random.Range(1, 10);
             while (difficulty > 0)
@@ -319,7 +327,7 @@ public abstract class roomFactory : MonoBehaviour
                 i = x = Random.Range(0, roomStructure.GetLength(0));
                 j = y = Random.Range(0, roomStructure.GetLength(1));
                 full = false;
-                while (!(roomStructure[i, j] == 0 && (Mathf.Abs(activX - i) > 2 || Mathf.Abs(activY - j) > 2)) && !full)
+                while (!(roomStructure[i, j] == 0 && (Mathf.Abs(activX - i) > 2 || Mathf.Abs(activY - j) > 2 || !gold) && !full))
                 {
                     i++;
                     if (i == roomStructure.GetLength(0))
@@ -341,8 +349,13 @@ public abstract class roomFactory : MonoBehaviour
                     difficulty -= enemy.GetComponent<tempStats>().difficulty;
                     enemy.transform.position = new Vector3(i - 6, j - 3, 0);
                     enemy.transform.parent = enemies.transform;
-                    enemy.SetActive(false);
-                    activator.GetComponent<enemiesActivator>().addChild(enemy);
+                    if (gold)
+                    {
+                        GameObject activator = Instantiate(enemiesActivator, new Vector3(activX - 6, activY - 3, 0), Quaternion.Euler(0, 0, 0), enemies.transform) as GameObject;
+                        activator.GetComponent<enemiesActivator>().addChild(enemy);
+                        enemy.SetActive(false);
+                        if(Random.Range(0, 2) == 0) gold = false;
+                    }
                 }
             }
         }
@@ -350,6 +363,83 @@ public abstract class roomFactory : MonoBehaviour
     }
 
     protected abstract GameObject getEnemy(int difficulty);
+
+
+    protected GameObject generateObject()
+    {
+        GameObject enemies = Instantiate(miniMapActivator, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+
+        int i, j, x, y, activX, activY;
+        bool full, gold;
+
+        i = x = Random.Range(0, roomStructure.GetLength(0));
+        j = y = Random.Range(0, roomStructure.GetLength(1));
+        full = gold = false;
+        while (roomStructure[i, j] != 0 && !full)
+        {
+            i++;
+            if (i == roomStructure.GetLength(0))
+            {
+                i = 0;
+                j++;
+                if (j == roomStructure.GetLength(1))
+                    j = 0;
+            }
+            if (i == x && j == y)
+                full = true;
+        }
+
+        if (!full)
+        {
+            roomStructure[i, j] = 3;
+            activX = i;
+            activY = j;
+            if (Random.Range(0, 3) == 0)
+            {
+                gold = true;
+                //GameManager PlayerGold++
+            }
+
+            int difficulty = Random.Range(1, 10);
+            while (difficulty > 0)
+            {
+                i = x = Random.Range(0, roomStructure.GetLength(0));
+                j = y = Random.Range(0, roomStructure.GetLength(1));
+                full = false;
+                while (!(roomStructure[i, j] == 0 && (Mathf.Abs(activX - i) > 2 || Mathf.Abs(activY - j) > 2 || !gold) && !full))
+                {
+                    i++;
+                    if (i == roomStructure.GetLength(0))
+                    {
+                        i = 0;
+                        j++;
+                        if (j == roomStructure.GetLength(1))
+                            j = 0;
+                    }
+                    if (i == x && j == y)
+                        full = true;
+                }
+
+                if (!full)
+                {
+                    roomStructure[i, j] = 2;
+
+                    GameObject enemy = getEnemy(difficulty);
+                    difficulty -= enemy.GetComponent<tempStats>().difficulty;
+                    enemy.transform.position = new Vector3(i - 6, j - 3, 0);
+                    enemy.transform.parent = enemies.transform;
+                    if (gold)
+                    {
+                        GameObject activator = Instantiate(enemiesActivator, new Vector3(activX - 6, activY - 3, 0), Quaternion.Euler(0, 0, 0), enemies.transform) as GameObject;
+                        activator.GetComponent<enemiesActivator>().addChild(enemy);
+                        enemy.SetActive(false);
+                        if (Random.Range(0, 2) == 0) gold = false;
+                    }
+                }
+            }
+        }
+        return enemies;
+    }
 
     protected bool validPoint(int x, int y)
     {

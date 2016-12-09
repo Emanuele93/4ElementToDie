@@ -110,6 +110,8 @@ public class EnemyObjectCollection : MonoBehaviour
     public GameObject getFireEnemy(int diff)
     {
         int difficulty = Random.Range(0, diff - 1);
+        while (fireEnemies[difficulty].Count == 0)
+            difficulty--;
         int enemyNumber = Random.Range(0, fireEnemies[difficulty].Count);
         return Instantiate(fireEnemies[difficulty][enemyNumber], new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
     }
@@ -117,6 +119,8 @@ public class EnemyObjectCollection : MonoBehaviour
     public GameObject getWaterEnemy(int diff)
     {
         int difficulty = Random.Range(0, diff - 1);
+        while (waterEnemies[difficulty].Count == 0)
+            difficulty--;
         int enemyNumber = Random.Range(0, fireEnemies[difficulty].Count);
         return Instantiate(waterEnemies[difficulty][enemyNumber], new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
     }
@@ -124,6 +128,8 @@ public class EnemyObjectCollection : MonoBehaviour
     public GameObject getAirEnemy(int diff)
     {
         int difficulty = Random.Range(0, diff - 1);
+        while (airEnemies[difficulty].Count == 0)
+            difficulty--;
         int enemyNumber = Random.Range(0, fireEnemies[difficulty].Count);
         return Instantiate(airEnemies[difficulty][enemyNumber], new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
     }
@@ -131,6 +137,8 @@ public class EnemyObjectCollection : MonoBehaviour
     public GameObject getEarthEnemy(int diff)
     {
         int difficulty = Random.Range(0, diff - 1);
+        while (earthEnemies[difficulty].Count == 0)
+            difficulty--;
         int enemyNumber = Random.Range(0, fireEnemies[difficulty].Count);
         return Instantiate(earthEnemies[difficulty][enemyNumber], new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
     }
