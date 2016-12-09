@@ -318,6 +318,7 @@ public abstract class roomFactory : MonoBehaviour
                 activX = i;
                 activY = j;
                 GameObject activator = getChest();
+                activator.GetComponent<chestEnemiesActivator>().addItemOnChest(enemyObjectCollection);
                 activator.transform.position = new Vector3(activX - 6, activY - 3, 0);
                 activator.transform.parent = enemies.transform;
                 while (difficulty > 0 && !stop && !full)
@@ -347,7 +348,7 @@ public abstract class roomFactory : MonoBehaviour
                         difficulty -= enemy.GetComponent<tempStatsEnemy>().difficulty;
                         enemy.transform.position = new Vector3(i - 6, j - 3, 0);
                         enemy.transform.parent = enemies.transform;
-                        activator.GetComponent<enemiesActivator>().addChild(enemy);
+                        activator.GetComponent<chestEnemiesActivator>().addChild(enemy);
                         enemy.SetActive(false);
                     }
                     if (Random.Range(0, 2) == 0)
