@@ -5,5 +5,4 @@ public class Weapon : Equipment {
 
     [Header("AttackType")]
     public AttackType attackType;
-
 }

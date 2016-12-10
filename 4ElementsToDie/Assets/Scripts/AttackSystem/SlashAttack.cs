@@ -16,17 +16,17 @@ public class SlashAttack : Attack {
 	}
 		
 	Vector2[] setColliderPoints() {
-		// Thanks to my friend salim :D.
+        // Thanks to my friend salim :D.
 
-		// Creating the points for the angle.
-		Vector2[] points = new Vector2[numberOfPoints];
+        // Creating the points for the angle.
+        Vector2[] points = new Vector2[numberOfPoints];
 		int attackAngle = 30;
 		float step = (attackAngle * 2) / ((float)numberOfPoints / 2f - 1);
 		float rad; float a; float r;
 
 		// Outer circle creation. 
 		a = attackAngle;
-		r = 2.5f;
+        r = attRange;
 		for (int i = 0; i < numberOfPoints / 2; i++) {
 			rad = a * Mathf.PI / 180f;
 			points [i] = new Vector2 (Mathf.Cos (rad) * r, Mathf.Sin (rad) * r);

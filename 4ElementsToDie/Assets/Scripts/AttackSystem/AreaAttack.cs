@@ -7,7 +7,8 @@ public class AreaAttack : Attack {
 	float colliderRadius = 3f;
 
 	// Use this for initialization
-	protected override void Start () {
+	protected override void Start ()
+    {
 		base.Start ();
 
 		col = GetComponent<CircleCollider2D> () as CircleCollider2D;
@@ -15,4 +16,11 @@ public class AreaAttack : Attack {
 		col.radius = colliderRadius;
 		col.isTrigger = true;
 	}
+    
+    public override void AttackNow()
+    {
+        base.AttackNow();
+
+        col.radius = attRange;
+    }
 }

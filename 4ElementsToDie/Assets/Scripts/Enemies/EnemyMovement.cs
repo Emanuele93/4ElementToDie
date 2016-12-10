@@ -3,7 +3,7 @@ using System.Collections;
 
 public class EnemyMovement {
 
-	public static bool[] Move(Transform enemyTr, int enemySpeed, bool enemyFacingRight, bool enemyFacingUp, Transform playerTr) {
+	public static bool[] Move(Transform enemyTr, float enemySpeed, bool enemyFacingRight, bool enemyFacingUp, Transform playerTr) {
 
 		Vector3 chasingDirection = 
 			(playerTr.position - enemyTr.position).normalized;
@@ -47,9 +47,9 @@ public class EnemyMovement {
 	// A circle is drawed with center enemy position and radio r.
 	// The point to check is player position.
 	public static bool calculateDistance(Transform enemyTr, Transform playerTr) {
-		float center_x = enemyTr.position.x; float center_y = enemyTr.position.y; 
-		float x = playerTr.position.x; float y = playerTr.position.y;
-		float radius = 5f;
-		return ( Mathf.Pow(x - center_x,2) + Mathf.Pow(y - center_y,2) ) <= Mathf.Pow(radius,2);
+		double center_x = enemyTr.position.x; double center_y = enemyTr.position.y; 
+		double x = playerTr.position.x; double y = playerTr.position.y;
+		double radius = Constants.MAX_EnemyAggroRange;
+		return (System.Math.Pow(x - center_x,2) + System.Math.Pow(y - center_y,2) ) <= System.Math.Pow(radius,2);
 	}
 }
