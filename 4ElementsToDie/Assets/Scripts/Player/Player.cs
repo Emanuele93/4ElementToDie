@@ -4,160 +4,156 @@ using POLIMIGameCollective;
 
 
 public class Player : MonoBehaviour {
-	// Player base stats, they're fixed through the game so we can declare them as constants.
-	private const int baseVitality = 10;
-	private const int baseAttack = 3;
-	private const int baseDefense = 3;
-	private const int baseSpeed = 3;
-
-	// Player base hidden stats, they're fixed through the game.
-	private const int baseLuck = 3; 
-	private const int baseAttackSpeed = 1;
-	private const int baseAttackRange = 3;
-
-	// Player equipment slots.
-	private const int numberEquipmentSlots = 3;
-	private int[] equipmentSlots = new int[numberEquipmentSlots];
-
-	// Player onGame visible stats.
-	public int mVitality {get; private set;}
-	public int mAttack {get; private set;}
-	public int mDefense {get; private set;}
-	public int mSpeed {get; private set;}
-
-	// Player onGame hidden stats.
-	public int mLuck { get; private set;}
-	public int mAttackSpeed { get; private set;}
-	public int mAttackRange { get; private set;}
-
-	private string attackTag = "FromPlayer";
-
-	bool isInCooldown;
-	WaitForSeconds m_cooldownTime;
-
-	// Unity objects and variables.
+    
+	// Unity objects references
 	Transform tr;
-	Animator mAnimator;
-	CharacterManager charManager;
+	Animator animator;
+    CharacterManager charManager;
 
-	// Facing variables.
-	bool mFacingRight;
-	bool mFacingUp;
+    // Movement/Attack state variables
+    bool isFacingRight;
+	bool isFacingUp;
+    bool isInCooldown;
 
-	[Header ("Attack transforms")]
-	public Transform m_AreaTransform;
-	public Transform m_RangeTransform;
+    [Header ("Attack transforms")]
 	public Transform m_SlashTransform;
 	public Transform m_ThrustTransform;
+    public Transform m_AreaTransform;
+    public Transform m_RangedTransform;
 
-	[Header ("Attack prefabs")]
-	public GameObject m_AreaPrefab;
-	public GameObject m_RangePrefab;
-	public GameObject m_SlashPrefab;
-	public GameObject m_ThrustPrefab;
+    [Header ("Attack prefabs")]
+    public GameObject m_SlashPrefab;
+    public GameObject m_ThrustPrefab;
+    public GameObject m_AreaPrefab;
+    public GameObject m_RangedPrefab;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		tr = GetComponent<Transform> () as Transform;
-		mAnimator = GetComponent<Animator> () as Animator;
+		animator = GetComponent<Animator> () as Animator;
 		charManager = GetComponent<CharacterManager> () as CharacterManager;
-
-		FillWithBaseStats ();
-		m_cooldownTime = new WaitForSeconds(mAttackSpeed);
-	}
+        
+        isFacingRight = true;
+        isFacingUp = false;
+        isInCooldown = false;
+    }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
 	// Fixed update because the player can
 	void FixedUpdate() {
-//		if (mVitality == 0) {
-//			StartCoroutine (playerDead ());
-//		}
 
-		bool[] facings = PlayerMovement.captureMovement (tr,  mSpeed , mFacingRight, mFacingUp);
-		mFacingRight = facings [0]; mFacingUp = facings [1];
-
-		PlayerAnimation.Move (mAnimator);
+        //Moving
+        Move();
 			
-		// Attacking.
-		// Right attack.
+		// Attacking
 		if (!isInCooldown) {
-			if ( (Input.GetKeyDown (KeyCode.L)) || (Input.GetKeyDown (KeyCode.RightArrow)) ){
-				GameObject go = ObjectPoolingManager.Instance.GetObject (m_ThrustPrefab.name);
-				go.transform.position = m_ThrustTransform.position;
-				go.transform.rotation = Quaternion.Euler (0f,0f,0f);
-				go.tag = attackTag;
-				GameplayManager.Instance.attackersDict [go.GetInstanceID ()] = charManager;
-				StartCoroutine (WaitForCooldown ());
 
-			}
+            // RIGHT attack
+            if ((Input.GetKeyDown(KeyCode.L)) || (Input.GetKeyDown(KeyCode.RightArrow)))
+            {
+                Attack(Quaternion.Euler(0f, 0f, 0f));
+            }
 
-			// Left attack.
-			if ( (Input.GetKeyDown (KeyCode.J)) || (Input.GetKeyDown (KeyCode.LeftArrow)) ){
-				GameObject go = ObjectPoolingManager.Instance.GetObject (m_ThrustPrefab.name);
-				go.transform.position = m_ThrustTransform.position;
-				go.transform.rotation = Quaternion.Euler (0f,0f,180f);
-				go.tag = attackTag;
-				GameplayManager.Instance.attackersDict [go.GetInstanceID ()] = charManager;
-				StartCoroutine (WaitForCooldown ());
-			}
+			// LEFT attack
+			if ( (Input.GetKeyDown (KeyCode.J)) || (Input.GetKeyDown (KeyCode.LeftArrow)) )
+            {
+                Attack(Quaternion.Euler(0f, 0f, 180f));
+            }
 
-			// Up attack.
-			if ( (Input.GetKeyDown (KeyCode.I)) || (Input.GetKeyDown (KeyCode.UpArrow)) ){
-				GameObject go = ObjectPoolingManager.Instance.GetObject (m_ThrustPrefab.name);
-				go.transform.position = m_ThrustTransform.position;
-				go.transform.rotation = Quaternion.Euler (0f,0f,90f);
-				go.tag = attackTag;
-				GameplayManager.Instance.attackersDict [go.GetInstanceID ()] = charManager;
-				StartCoroutine (WaitForCooldown ());
-			}
+            // UP attack
+            if ( (Input.GetKeyDown (KeyCode.I)) || (Input.GetKeyDown (KeyCode.UpArrow)) )
+            {
+                Attack(Quaternion.Euler(0f, 0f, 90f));
+            }
 
 			// Down attack.
-			if ( (Input.GetKeyDown (KeyCode.K)) || (Input.GetKeyDown (KeyCode.DownArrow)) ){
-				GameObject go = ObjectPoolingManager.Instance.GetObject (m_ThrustPrefab.name);
-				go.transform.position = m_ThrustTransform.position;
-				go.transform.rotation = Quaternion.Euler (0f,0f,270f);
-				go.tag = attackTag;
-				GameplayManager.Instance.attackersDict [go.GetInstanceID ()] = charManager;
-				StartCoroutine (WaitForCooldown ());
-			}
-		} 
+			if ( (Input.GetKeyDown (KeyCode.K)) || (Input.GetKeyDown (KeyCode.DownArrow)))
+            {
+                Attack(Quaternion.Euler(0f, 0f, 270f));
+            }
+        }
 
-	}
+        // Picking up drops
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Drop drop = GetClosestDropInRange();
+            if (drop != null)
+            {
+                GameplayManager.Instance.PickUpDrop(drop);
+            }
+        }
+    }
 
-	// Fills all stats with the base values.
-	void FillWithBaseStats(){
-		mVitality = baseVitality;
-		mAttack = baseAttack;
-		mDefense = baseDefense;
-		mSpeed = baseSpeed;
-		mLuck = baseLuck;
-		mAttackSpeed = baseAttackSpeed;
-		mAttackRange = baseAttackRange;
+    void Move()
+    {
+        float movSpeed = (float)charManager.Stats[(int)StatType.SPD].FinalStat;
+        bool[] facings = PlayerMovement.captureMovement(tr, movSpeed, isFacingRight, isFacingUp);
+        isFacingRight = facings[0]; isFacingUp = facings[1];
 
-		for (int i = 0; i < numberEquipmentSlots; i++) {
-			equipmentSlots [i] = 0;
-		}
+        PlayerAnimation.Move(animator);
+    }
 
-		mFacingRight = true;
-		mFacingUp = false;
-		isInCooldown = false;
-	}
+    void Attack(Quaternion attackDirection)
+    {
+        GameObject go = null;
 
-	IEnumerator playerDead() {
-		//yield return new WaitForSeconds (.1f);
-		PlayerAnimation.Dead(mAnimator, true);
-		yield return new WaitForSeconds (2.2f); // Waiting for the animation before disappear
-		gameObject.SetActive (false);
-	}
+        //choose the correct attack type;
+        switch (charManager.AttackType)
+        {
+            case AttackType.Slashing:
+                go = ObjectPoolingManager.Instance.GetObject(m_SlashPrefab.name);
+                go.transform.position = m_SlashTransform.position;
+                break;
+            case AttackType.Thrusting:
+                go = ObjectPoolingManager.Instance.GetObject(m_ThrustPrefab.name);
+                go.transform.position = m_ThrustTransform.position;
+                break;
+            case AttackType.Area:
+                go = ObjectPoolingManager.Instance.GetObject(m_AreaPrefab.name);
+                go.transform.position = m_AreaTransform.position;
+                break;
+            case AttackType.Ranged:
+                go = ObjectPoolingManager.Instance.GetObject(m_RangedPrefab.name);
+                go.transform.position = m_RangedTransform.position;
+                break;
+        }
+        go.transform.rotation = attackDirection;
+        GameplayManager.Instance.attackersDict[go.GetInstanceID()] = charManager;
+        StartCoroutine(WaitForCooldown());
+    }
+    
+    Drop GetClosestDropInRange()
+    {
+        // TODO: optimize (look only in range and then calculate the closest, not viceversa)
+        Drop[] drops = (Drop[])GameObject.FindObjectsOfType(typeof(Drop));
+
+        Drop closestDrop = null;
+        double closestDistanceSqr = System.Double.PositiveInfinity;
+        Vector3 currentPos = transform.position;
+
+        foreach (Drop drop in drops)
+        {
+            float sqrDistance = (drop.transform.position - currentPos).sqrMagnitude;
+            if (sqrDistance < closestDistanceSqr)
+            {
+                closestDrop = drop;
+                closestDistanceSqr = sqrDistance;
+            }
+        }
+        if (closestDistanceSqr <= Constants.MAX_PickupDropRange)
+        {
+            return closestDrop;
+        }
+        return null;
+    }
 
 	IEnumerator WaitForCooldown() {
-		isInCooldown = true;
-		yield return m_cooldownTime;
-		isInCooldown = false;
 
+		isInCooldown = true;
+        double attSpeed = charManager.Stats[(int)StatType.ATTSpd].FinalStat;
+        double cooldownTime = 1 / attSpeed;
+
+		yield return (cooldownTime);
+
+		isInCooldown = false;
 	}
 }
