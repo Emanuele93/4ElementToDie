@@ -9,7 +9,6 @@ public class keyObjectEarth : keyObject
         if (other.tag == "Player")
         {
             //GameManager addEarthKey();
-            Debug.Log("EarthKey");
             Destroy(gameObject);
         }
     }

@@ -9,7 +9,6 @@ public class keyObjectWater : keyObject
         if (other.tag == "Player")
         {
             //GameManager addWaterKey();
-            Debug.Log("WaterKey");
             Destroy(gameObject);
         }
     }

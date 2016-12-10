@@ -8,8 +8,7 @@ public class keyObjectFire : keyObject
     {
         if (other.tag == "Player")
         {
-            //GameManager addFireKey();
-            Debug.Log("FireKey");
+            //GameManager addFireKey()
             Destroy(gameObject);
         }
     }
