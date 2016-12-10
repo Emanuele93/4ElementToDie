@@ -5,6 +5,12 @@ using System.Collections.Generic;
 public class Character : ScriptableObject
 {
 
+    [Header("Sprite & Animations")]
+    public Sprite sprite;
+    public Animation idleAnimation;
+    public Animation moveLeftRightAnimation;
+    public Animation moveUpDownAnimation;
+
     [Header("Element")]
     public ElementType element;
 
@@ -18,7 +24,10 @@ public class Character : ScriptableObject
     public double[] growingRatios = new double[System.Enum.GetValues(typeof(StatType)).Length];
 
     [Header("Items")]
-    public Equipment[] equipments;
+    public Weapon weapon;
+    public Armor armor;
+    public Accessory accessory;
+    public Garment garment;
     public Item[] inventory;
 
     [Header("Abilities")]

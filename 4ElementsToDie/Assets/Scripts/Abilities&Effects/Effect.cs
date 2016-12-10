@@ -19,5 +19,7 @@ public class Effect : ScriptableObject {
     [Header("Effect bonuses")]
     [Range(-5, 5)]
     public double[] statBuffs = new double[System.Enum.GetValues(typeof(StatType)).Length];
+    [Range(-5, 5)]
+    public double damage;
 
 }
