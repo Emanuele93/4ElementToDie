@@ -80,7 +80,7 @@ public class Enemy : MonoBehaviour {
         if (player.transform.position.y > transform.position.y)
             enemySpriteRender.sortingLayerName = "enemyDown";
         else
-            enemySpriteRender.sortingLayerName = "enwmyUp";
+            enemySpriteRender.sortingLayerName = "enemyUp";
 	}
 
 
