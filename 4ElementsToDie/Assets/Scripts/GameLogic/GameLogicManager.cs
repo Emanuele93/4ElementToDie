@@ -6,29 +6,11 @@ public enum StatType { ATT, DEF, VIT, SPD, ATTSpd, RES, LCK, ATTRng, FirePOW, Ea
 public enum EquipType { Weapon, Armor, Accessory, Garment }
 public enum AttackType { Slashing, Thrusting, Area, Ranged }
 
+// Singleton, maybe?
 public static class GameLogicManager {
     
     [Header("Basic Characters")]
     public static Character[] playableCharacters;
-
-    //Singleton, non static version
-    #region Singleton
-    /*
-    public static GameLogicManager Instance = null;
-
-    void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-    */
-    #endregion
 
     private static double CalculateElementalFactor (CharacterManager attacker, CharacterManager defender)
     {
@@ -43,7 +25,7 @@ public static class GameLogicManager {
             for (int j = 0; j < System.Enum.GetValues(typeof(ElementType)).Length; j++)
             {
                 n +=
-                    Constants.ELEMENTS_TABLE[i, j] *
+                    Constants.ElementsTable[i, j] *
                     attacker.Stats[ (int)(StatType.FirePOW) + i ].FinalStat *
                     defender.Stats[ (int)(StatType.FirePOW) + j ].FinalStat;
             }
@@ -51,7 +33,7 @@ public static class GameLogicManager {
         return n / (a * d);
     }
     
-    public static double CalculateDamage(CharacterManager attacker, CharacterManager defender)
+    public static double CalculateDamage (CharacterManager attacker, CharacterManager defender)
     {
         double effectiveAttack = attacker.Stats[(int)StatType.ATT].FinalStat;
         double effectiveDefense = defender.Stats[(int)StatType.DEF].FinalStat;
