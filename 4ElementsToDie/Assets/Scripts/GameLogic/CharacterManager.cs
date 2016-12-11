@@ -106,8 +106,6 @@ public class CharacterManager : MonoBehaviour {
             m_stats[i].InitStat((StatType)i, c.baseStats[i], c.growingRatios[i]);
         }
 
-		Debug.Log ("Finished");
-
         //damage
         m_damage = 0.0;
 
