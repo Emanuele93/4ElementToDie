@@ -145,12 +145,12 @@ public class CharacterManager : MonoBehaviour
 
         m_keys = new int[System.Enum.GetValues(typeof(ElementType)).Length];
         for (int i = 0; i < m_keys.Length; i++)
-            m_keys[i] = 1;
+            m_keys[i] = 5;
 
         m_stones = new int[System.Enum.GetValues(typeof(ElementType)).Length];
         for (int i = 0; i < m_stones.Length; i++)
-            m_stones[i] = 0;
-        m_stones[(int)ElementType.Fire] = 1;
+            m_stones[i] = 1;
+        //m_stones[(int)ElementType.Fire /*Capire l'elemento del player???*/] = 1;
 
         //abilities
         m_abilities = new List<Ability>();

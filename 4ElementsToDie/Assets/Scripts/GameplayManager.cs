@@ -9,7 +9,6 @@ public class GameplayManager : Singleton<GameplayManager> {
     
     ///////// TESTING
     public Character testCharacter;
-    public Enemy enemy;
     ///////////////
 	/// 
 	/// 
@@ -55,7 +54,6 @@ public class GameplayManager : Singleton<GameplayManager> {
 
         //TESTING
 		m_player.GetComponent<CharacterManager>().InitCharacter(WaterPlayer);
-		enemy.GetComponent<CharacterManager>().InitCharacter(AirPlayer);
     }
 	
 	// Update is called once per frame
