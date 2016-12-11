@@ -38,7 +38,6 @@ public static class GameLogicManager {
         double effectiveAttack = attacker.Stats[(int)StatType.ATT].FinalStat;
         double effectiveDefense = defender.Stats[(int)StatType.DEF].FinalStat;
         double elementalFactor = CalculateElementalFactor(attacker, defender);
-		Debug.Log (effectiveAttack +  " - " + effectiveDefense + " - " + elementalFactor); 
         return elementalFactor * (effectiveAttack / effectiveDefense);
     }
 }

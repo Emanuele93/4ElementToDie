@@ -102,7 +102,6 @@ public class GameplayManager : Singleton<GameplayManager> {
     {
         double damage = GameLogicManager.CalculateDamage(attacker, defender);
         defender.ApplyDamage(damage);
-        Debug.Log(attacker.tag + " attacks " + defender.tag + " for " + damage + " points of damage");
         //AbilityManager.Instance.CheckAbilityActivation(TriggerType.OnInflictedAttack, attacker, defender);
         //AbilityManager.Instance.CheckAbilityActivation(TriggerType.OnReceivedAttack, defender, attacker);
         if (defender.isDead())
