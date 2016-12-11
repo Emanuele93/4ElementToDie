@@ -152,7 +152,7 @@ public class Player : MonoBehaviour {
         double attSpeed = charManager.Stats[(int)StatType.ATTSpd].FinalStat;
         double cooldownTime = 1 / attSpeed;
 
-		yield return (cooldownTime);
+		yield return new WaitForSeconds ((float) cooldownTime);
 
 		isInCooldown = false;
 	}

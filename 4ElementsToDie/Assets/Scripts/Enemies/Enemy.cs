@@ -5,6 +5,7 @@ using POLIMIGameCollective;
 public class Enemy : MonoBehaviour {
 
     [Header("Difficulty")]
+    [Range (1,10)]
     public int difficulty;
 
     // Unity objects references
@@ -43,6 +44,7 @@ public class Enemy : MonoBehaviour {
         isFacingRight = true;
         isFacingUp = false;
         isInCooldown = false;
+
     }
 	
 	// Fixed update because the Enemy can
@@ -114,7 +116,7 @@ public class Enemy : MonoBehaviour {
         double attSpeed = charManager.Stats[(int)StatType.ATTSpd].FinalStat;
         double cooldownTime = 1 / attSpeed;
 
-        yield return (cooldownTime);
+		yield return new WaitForSeconds ((float)cooldownTime);
 
         isInCooldown = false;
     }
