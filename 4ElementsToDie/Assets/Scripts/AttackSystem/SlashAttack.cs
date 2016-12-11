@@ -14,6 +14,13 @@ public class SlashAttack : Attack {
 		col.SetPath (0,setColliderPoints ());
 		col.isTrigger = true;
 	}
+
+	public override void AttackNow()
+	{
+		base.AttackNow();
+
+		col.SetPath (0, setColliderPoints ());
+	}
 		
 	Vector2[] setColliderPoints() {
         // Thanks to my friend salim :D.
