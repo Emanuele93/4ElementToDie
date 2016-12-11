@@ -43,6 +43,7 @@ public class Enemy : MonoBehaviour {
         isFacingRight = true;
         isFacingUp = false;
         isInCooldown = false;
+
     }
 	
 	// Fixed update because the Enemy can
@@ -114,7 +115,7 @@ public class Enemy : MonoBehaviour {
         double attSpeed = charManager.Stats[(int)StatType.ATTSpd].FinalStat;
         double cooldownTime = 1 / attSpeed;
 
-        yield return (cooldownTime);
+		yield return new WaitForSeconds ((float)cooldownTime);
 
         isInCooldown = false;
     }
