@@ -8,7 +8,7 @@ public class keyObjectAir : keyObject
     {
         if (other.tag == "Player")
         {
-            //GameManager addAirKey();
+            other.gameObject.GetComponent<CharacterManager>().Keys[(int)ElementType.Air]++;
             Destroy(gameObject);
         }
     }

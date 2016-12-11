@@ -29,4 +29,16 @@ public class chestEnemiesActivatorFire : chestEnemiesActivator
             objects.Add(go);
         }
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Player" && player.Keys[(int)ElementType.Fire] > 0)
+        {
+            player.Keys[(int)ElementType.Fire]--;
+            buttom.SetActive(true);
+            inChestArea = true;
+        }
+        else return;
+    }
+
 }

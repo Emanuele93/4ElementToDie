@@ -12,10 +12,10 @@ public abstract class roomFactory : MonoBehaviour
     public GameObject angleWall;
     public GameObject floor;
 
+    public CharacterManager character;
     public GameObject cameraMenager;
 
     public GameObject obstacleObject;
-    public GameObject enemiesActivator;
     public GameObject miniMapActivator;
     public GameObject enemyObjectCollection;
     private GameObject miniMap;
@@ -318,6 +318,7 @@ public abstract class roomFactory : MonoBehaviour
                 activX = i;
                 activY = j;
                 GameObject activator = getChest();
+                activator.GetComponent<chestEnemiesActivator>().player = character;
                 activator.GetComponent<chestEnemiesActivator>().addItemOnChest(enemyObjectCollection);
                 activator.transform.position = new Vector3(activX - 6, activY - 3, 0);
                 activator.transform.parent = enemies.transform;

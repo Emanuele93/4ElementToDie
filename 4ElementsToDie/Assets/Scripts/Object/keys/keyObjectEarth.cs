@@ -8,7 +8,7 @@ public class keyObjectEarth : keyObject
     {
         if (other.tag == "Player")
         {
-            //GameManager addEarthKey();
+            other.gameObject.GetComponent<CharacterManager>().Keys[(int)ElementType.Earth]++;
             Destroy(gameObject);
         }
     }

@@ -8,7 +8,7 @@ public class keyObjectFire : keyObject
     {
         if (other.tag == "Player")
         {
-            //GameManager addFireKey()
+            other.gameObject.GetComponent<CharacterManager>().Keys[(int)ElementType.Fire]++;
             Destroy(gameObject);
         }
     }

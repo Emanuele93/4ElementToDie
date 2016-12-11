@@ -5,6 +5,7 @@ using POLIMIGameCollective;
 public class Enemy : MonoBehaviour {
 
     [Header("Difficulty")]
+    [Range (1,10)]
     public int difficulty;
 
     // Unity objects references

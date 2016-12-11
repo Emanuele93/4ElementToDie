@@ -8,7 +8,7 @@ public class keyObjectWater : keyObject
     {
         if (other.tag == "Player")
         {
-            //GameManager addWaterKey();
+            other.gameObject.GetComponent<CharacterManager>().Keys[(int)ElementType.Water]++;
             Destroy(gameObject);
         }
     }

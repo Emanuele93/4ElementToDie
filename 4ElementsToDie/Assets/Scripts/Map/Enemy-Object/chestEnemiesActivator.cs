@@ -4,10 +4,11 @@ using System.Collections.Generic;
 
 public abstract class chestEnemiesActivator : MonoBehaviour
 {
-    private List<GameObject> childs = new List<GameObject>();
-    protected List<GameObject> objects = new List<GameObject>();
+    private List<GameObject> enemies = new List<GameObject>();
     public GameObject buttom;
     protected bool inChestArea;
+    public CharacterManager player;
+    protected List<GameObject> objects = new List<GameObject>();
 
 
     // Use this for initialization
@@ -21,7 +22,7 @@ public abstract class chestEnemiesActivator : MonoBehaviour
     {
         if (inChestArea && Input.GetKeyDown(KeyCode.F))
         {
-            foreach (GameObject child in childs)
+            foreach (GameObject child in enemies)
             {
                 child.SetActive(true);
             }
@@ -29,24 +30,15 @@ public abstract class chestEnemiesActivator : MonoBehaviour
             {
                 child.SetActive(true);
                 child.transform.parent = transform.parent;
+                child.transform.position = new Vector3(child.transform.position.x + Random.Range(-1f, 1f), child.transform.position.y + Random.Range(-1f, 1f), 0);
             }
             Destroy(gameObject);
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.tag == "Player")
-        {
-            buttom.SetActive(true);
-            inChestArea = true;
-        }
-        else return;
-    }
-
     public void addChild(GameObject child)
     {
-        childs.Add(child);
+        enemies.Add(child);
     }
 
     public abstract void addItemOnChest(GameObject enemyObjectCollection);

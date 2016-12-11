@@ -29,4 +29,16 @@ public class chestEnemiesActivatorAir : chestEnemiesActivator
             objects.Add(go);
         }
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Player" && player.Keys[(int)ElementType.Air] > 0)
+        {
+            player.Keys[(int)ElementType.Air]--;
+            buttom.SetActive(true);
+            inChestArea = true;
+        }
+        else return;
+    }
+
 }

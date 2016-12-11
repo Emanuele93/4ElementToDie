@@ -29,4 +29,15 @@ public class chestEnemiesActivatorWater : chestEnemiesActivator
             objects.Add(go);
         }
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Player" && player.Keys[(int)ElementType.Water] > 0)
+        {
+            player.Keys[(int)ElementType.Water]--;
+            buttom.SetActive(true);
+            inChestArea = true;
+        }
+        else return;
+    }
 }
