@@ -11,6 +11,13 @@ public class GameplayManager : Singleton<GameplayManager> {
     public Character testCharacter;
     public Enemy enemy;
     ///////////////
+	/// 
+	/// 
+	// Characters
+	public Character AirPlayer;
+	public Character FirePlayer;
+	public Character EarthPlayer;
+	public Character WaterPlayer;
 
     [Header("Game Screens")]
     public GameObject m_characterSelectionScreen;
@@ -47,8 +54,8 @@ public class GameplayManager : Singleton<GameplayManager> {
         //MusicManager.Instance.PlayMusic ("GameplayMusic");
 
         //TESTING
-        m_player.GetComponent<CharacterManager>().InitCharacter(testCharacter);
-        enemy.GetComponent<CharacterManager>().InitCharacter(testCharacter);
+		m_player.GetComponent<CharacterManager>().InitCharacter(WaterPlayer);
+		enemy.GetComponent<CharacterManager>().InitCharacter(AirPlayer);
     }
 	
 	// Update is called once per frame

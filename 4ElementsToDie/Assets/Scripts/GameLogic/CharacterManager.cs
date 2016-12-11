@@ -104,7 +104,10 @@ public class CharacterManager : MonoBehaviour {
         {
             m_stats[i] = gameObject.AddComponent<Stat>() as Stat;
             m_stats[i].InitStat((StatType)i, c.baseStats[i], c.growingRatios[i]);
+			Debug.Log (m_stats [i].FinalStat);
         }
+
+		Debug.Log ("Finished");
 
         //damage
         m_damage = 0.0;
