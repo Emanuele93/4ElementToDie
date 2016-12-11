@@ -46,6 +46,7 @@ public class RangedAttack : Attack
             (attacker.tag == "Player" || other.tag == "Player"))
         {
             GameplayManager.Instance.ExecuteAttack(attacker, defender);
+			gameObject.SetActive(false);
         }
     }
 }

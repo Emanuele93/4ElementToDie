@@ -11,6 +11,13 @@ public class GameplayManager : Singleton<GameplayManager> {
     public Character testCharacter;
     public Enemy enemy;
     ///////////////
+	/// 
+	/// 
+	// Characters
+	public Character AirPlayer;
+	public Character FirePlayer;
+	public Character EarthPlayer;
+	public Character WaterPlayer;
 
     [Header("Game Screens")]
     public GameObject m_characterSelectionScreen;
@@ -47,8 +54,8 @@ public class GameplayManager : Singleton<GameplayManager> {
         //MusicManager.Instance.PlayMusic ("GameplayMusic");
 
         //TESTING
-        m_player.GetComponent<CharacterManager>().InitCharacter(testCharacter);
-        enemy.GetComponent<CharacterManager>().InitCharacter(testCharacter);
+		m_player.GetComponent<CharacterManager>().InitCharacter(WaterPlayer);
+		enemy.GetComponent<CharacterManager>().InitCharacter(AirPlayer);
     }
 	
 	// Update is called once per frame
@@ -95,7 +102,6 @@ public class GameplayManager : Singleton<GameplayManager> {
     {
         double damage = GameLogicManager.CalculateDamage(attacker, defender);
         defender.ApplyDamage(damage);
-        Debug.Log(attacker.tag + " attacks " + defender.tag + " for " + damage + " points of damage");
         //AbilityManager.Instance.CheckAbilityActivation(TriggerType.OnInflictedAttack, attacker, defender);
         //AbilityManager.Instance.CheckAbilityActivation(TriggerType.OnReceivedAttack, defender, attacker);
         if (defender.isDead())
