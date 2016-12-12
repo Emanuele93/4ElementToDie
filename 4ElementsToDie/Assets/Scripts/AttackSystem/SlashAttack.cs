@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent (typeof (PolygonCollider2D),typeof(Rigidbody2D))]
+[RequireComponent (typeof (PolygonCollider2D),typeof(Rigidbody2D), typeof(SpriteRenderer))]
 public class SlashAttack : Attack {
 	PolygonCollider2D col;
 	const int numberOfPoints = 16;
+
+	public Sprite attackSprite;
 
 	protected override void Start () {
 		base.Start ();
@@ -13,6 +15,8 @@ public class SlashAttack : Attack {
 
 		col.SetPath (0,setColliderPoints ());
 		col.isTrigger = true;
+
+		sr.sprite = attackSprite;
 	}
 
 	public override void AttackNow()

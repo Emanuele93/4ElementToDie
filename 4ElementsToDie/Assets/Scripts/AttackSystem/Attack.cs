@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent (typeof(Rigidbody2D))]
+[RequireComponent (typeof(Rigidbody2D), typeof(SpriteRenderer))]
 public  class Attack : MonoBehaviour {
 	
 	protected Rigidbody2D rb;
 	protected Transform tr;
+	protected SpriteRenderer sr;
 
     protected float attRange;
 
@@ -14,6 +15,7 @@ public  class Attack : MonoBehaviour {
 	protected virtual void Start() {
 		tr = GetComponent<Transform> () as Transform;
 		rb = GetComponent<Rigidbody2D> () as Rigidbody2D;
+		sr = GetComponent<SpriteRenderer> () as SpriteRenderer;
 	}
 
     void FixedUpdate()
