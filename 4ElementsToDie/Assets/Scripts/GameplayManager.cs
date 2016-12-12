@@ -9,15 +9,21 @@ public class GameplayManager : Singleton<GameplayManager> {
     
     ///////// TESTING
     public Character testCharacter;
-    public Enemy enemy;
     ///////////////
 
     // confirmed selection from Character Selection Menu
     public static Character chosenCharacter;
 
-    [Header("Game Screens")]
+    // Characters
+    public Character AirPlayer;
+	public Character FirePlayer;
+	public Character EarthPlayer;
+	public Character WaterPlayer;
+
+    [Header("UI Screens")]
     public GameObject m_ingameMenuScreen;
-    private Text m_overlayText;
+    public GameObject m_overlayScreen;
+    public Text m_overlayText;
 
     [Header("Player")]
     public Player m_player;
@@ -49,10 +55,12 @@ public class GameplayManager : Singleton<GameplayManager> {
         
         m_ingameMenuScreen.SetActive(false);
 
+        m_ingameMenuScreen.SetActive(false);
+
         m_player.GetComponent<CharacterManager>().InitCharacter(chosenCharacter);
         
         //TESTING
-        enemy.GetComponent<CharacterManager>().InitCharacter(testCharacter);
+        // m_player.GetComponent<CharacterManager>().InitCharacter(WaterPlayer);
     }
 	
 	// Update is called once per frame
@@ -71,31 +79,31 @@ public class GameplayManager : Singleton<GameplayManager> {
             else Debug.Log("Randomly selected an empty slot. Can't discard.");
         }
         //////////////////////
-            
+
         if (Input.GetKeyDown(KeyCode.P))
         {
             m_ingameMenuScreen.SetActive(!m_ingameMenuScreen.activeInHierarchy);
         }
 
-//		if (Input.GetKeyDown (KeyCode.Alpha1))
-//			SfxManager.Instance.Play ("creature");
-//		else if (Input.GetKeyDown (KeyCode.Alpha2))
-//			SfxManager.Instance.Play ("jump");
-//		else if (Input.GetKeyDown (KeyCode.Alpha3))
-//			SfxManager.Instance.Play ("laser");
-//		else if (Input.GetKeyDown (KeyCode.Alpha4))
-//			SfxManager.Instance.Play ("lose");
-//		else if (Input.GetKeyDown (KeyCode.Alpha5))
-//			SfxManager.Instance.Play ("pickup");
-//		else if (Input.GetKeyDown (KeyCode.Alpha6))
-//			SfxManager.Instance.Play ("radar");
-//		else if (Input.GetKeyDown (KeyCode.Alpha7))
-//			SfxManager.Instance.Play ("rumble");
-//		else if (Input.GetKeyDown (KeyCode.Space)) {
-//			MusicManager.Instance.StopAll ();
-//			MusicManager.Instance.PlayMusic ("MenuMusic");
-//			SceneManager.LoadScene ("Menu");
-//		}
+        //		if (Input.GetKeyDown (KeyCode.Alpha1))
+        //			SfxManager.Instance.Play ("creature");
+        //		else if (Input.GetKeyDown (KeyCode.Alpha2))
+        //			SfxManager.Instance.Play ("jump");
+        //		else if (Input.GetKeyDown (KeyCode.Alpha3))
+        //			SfxManager.Instance.Play ("laser");
+        //		else if (Input.GetKeyDown (KeyCode.Alpha4))
+        //			SfxManager.Instance.Play ("lose");
+        //		else if (Input.GetKeyDown (KeyCode.Alpha5))
+        //			SfxManager.Instance.Play ("pickup");
+        //		else if (Input.GetKeyDown (KeyCode.Alpha6))
+        //			SfxManager.Instance.Play ("radar");
+        //		else if (Input.GetKeyDown (KeyCode.Alpha7))
+        //			SfxManager.Instance.Play ("rumble");
+        //		else if (Input.GetKeyDown (KeyCode.Space)) {
+        //			MusicManager.Instance.StopAll ();
+        //			MusicManager.Instance.PlayMusic ("MenuMusic");
+        //			SceneManager.LoadScene ("Menu");
+        //		}
     }
 
     #region Attack Management
@@ -103,7 +111,6 @@ public class GameplayManager : Singleton<GameplayManager> {
     {
         double damage = GameLogicManager.CalculateDamage(attacker, defender);
         defender.ApplyDamage(damage);
-        Debug.Log(attacker.tag + " attacks " + defender.tag + " for " + damage + " points of damage");
         //AbilityManager.Instance.CheckAbilityActivation(TriggerType.OnInflictedAttack, attacker, defender);
         //AbilityManager.Instance.CheckAbilityActivation(TriggerType.OnReceivedAttack, defender, attacker);
         if (defender.isDead())
@@ -204,7 +211,11 @@ public class GameplayManager : Singleton<GameplayManager> {
         //ClearArea();
         m_ingameMenuScreen.SetActive(false);
         m_overlayText.text = "GAME OVER";
+        m_ingameMenuScreen.SetActive(false);
+        m_overlayScreen.SetActive(true);
         yield return new WaitForSeconds(5);
+        m_ingameMenuScreen.SetActive(false);
+        m_overlayScreen.SetActive(false);
         SceneManager.LoadScene("Main Menu");
     }
 
@@ -213,7 +224,11 @@ public class GameplayManager : Singleton<GameplayManager> {
         //ClearArea();
         m_ingameMenuScreen.SetActive(false);
         m_overlayText.text = "CONGRATULATIONS";
+        m_ingameMenuScreen.SetActive(false);
+        m_overlayScreen.SetActive(true);
         yield return new WaitForSeconds(5);
+        m_ingameMenuScreen.SetActive(false);
+        m_overlayScreen.SetActive(false);
         SceneManager.LoadScene("Main Menu");
     }
     #endregion

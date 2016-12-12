@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public abstract class Equipment : Item {
-    
+public abstract class Equipment : Item
+{
+
     [Header("Element")]
     public ElementType element;
 

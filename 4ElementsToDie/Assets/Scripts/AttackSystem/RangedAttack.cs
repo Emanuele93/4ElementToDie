@@ -42,11 +42,11 @@ public class RangedAttack : Attack
         {
             gameObject.SetActive(false);
         }
-        else if (attacker.tag != defender.tag &&
-            (attacker.tag == "Player" || defender.tag == "Player"))
+        else if (attacker.tag != other.tag &&
+            (attacker.tag == "Player" || other.tag == "Player"))
         {
             GameplayManager.Instance.ExecuteAttack(attacker, defender);
-            gameObject.SetActive(false);
+			gameObject.SetActive(false);
         }
     }
 }

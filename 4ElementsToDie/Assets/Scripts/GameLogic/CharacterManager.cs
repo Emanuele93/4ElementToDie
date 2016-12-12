@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class CharacterManager : MonoBehaviour {
+public class CharacterManager : MonoBehaviour
+{
 
     private Character m_baseCharacterData;
 
@@ -11,7 +12,7 @@ public class CharacterManager : MonoBehaviour {
 
     private Stat[] m_stats;
     private double m_damage;
-    
+
     private Weapon m_weapon;
     private Armor m_armor;
     private Accessory m_accessory;
@@ -143,6 +144,17 @@ public class CharacterManager : MonoBehaviour {
         }
         m_keys = new int[System.Enum.GetValues(typeof(ElementType)).Length];
         m_stones = new int[System.Enum.GetValues(typeof(ElementType)).Length];
+
+        //keys
+        m_keys = new int[System.Enum.GetValues(typeof(ElementType)).Length];
+        for (int i = 0; i < m_keys.Length; i++)
+        {
+            m_keys[i] = 5;
+        }
+
+        //stones
+        m_stones = new int[System.Enum.GetValues(typeof(ElementType)).Length];
+        m_stones[(int) m_element] += 1;
 
         //abilities
         m_abilities = new List<Ability>();
@@ -281,7 +293,7 @@ public class CharacterManager : MonoBehaviour {
     public bool RemoveItem(Item item)
     {
         bool itemFound = false;
-        if(item != null)
+        if (item != null)
         {
             for (int i = 0; !itemFound && i < m_inventory.Length; i++)
             {
@@ -330,7 +342,7 @@ public class CharacterManager : MonoBehaviour {
             m_activeEffects.Add(effect);
             for (int i = 0; i < m_stats.Length; i++)
             {
-                m_stats[i].UpdateEffectBuff( effect.statBuffs[i] );
+                m_stats[i].UpdateEffectBuff(effect.statBuffs[i]);
             }
         }
     }
@@ -342,7 +354,7 @@ public class CharacterManager : MonoBehaviour {
             m_activeEffects.Remove(effect);
             for (int i = 0; i < m_stats.Length; i++)
             {
-                m_stats[i].UpdateEffectBuff( 1.0 / effect.statBuffs[i]);
+                m_stats[i].UpdateEffectBuff(1.0 / effect.statBuffs[i]);
             }
         }
     }

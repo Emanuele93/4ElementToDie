@@ -26,17 +26,12 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
     private int selection;
     private Item selectedItem;
 
-    void Start()
-    {
-        player = GameplayManager.Instance.m_player.GetComponent<CharacterManager>();
-        gameObject.SetActive(false);
-    }
-
     void OnEnable()
     {
+        player = GameplayManager.Instance.m_player.GetComponent<CharacterManager>();
         DrawPlayer();
         DrawItems();
-        //Select(0);
+        Select(0);
     }
 
     public void Select(int index)
@@ -81,7 +76,7 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
 
             if (selectedItem != null)
             {
-                commandInfoText.text = "Press U to unequip, press T to throw away";
+                commandInfoText.text = "Press U to unequip";
             }
             else
             {
@@ -300,13 +295,6 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
             if (Input.GetKeyDown(KeyCode.U))
             {
                 player.Unequip((Equipment)selectedItem);
-                DrawItems();
-                Select(selection);
-            }
-
-            else if (Input.GetKeyDown(KeyCode.T))
-            {
-                player.RemoveItem(selectedItem);
                 DrawItems();
                 Select(selection);
             }

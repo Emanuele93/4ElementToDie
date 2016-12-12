@@ -7,13 +7,20 @@ public class ThrustAttack : Attack {
 	const int numberOfPoints = 3;
 
 	protected override void Start ()
-    {
+	{
 		base.Start ();
 
 		col = GetComponent<PolygonCollider2D> () as PolygonCollider2D;
 
 		col.SetPath (0,setColliderPoints ());
 		col.isTrigger = true;
+	}
+
+	public override void AttackNow()
+	{
+		base.AttackNow();
+
+		col.SetPath (0,setColliderPoints ());
 	}
 
     Vector2[] setColliderPoints() {

@@ -10,7 +10,7 @@ public class Character : ScriptableObject
     public RuntimeAnimatorController idleAnimation;
     public RuntimeAnimatorController moveLeftRightAnimation;
     public RuntimeAnimatorController moveUpDownAnimation;
-
+    
     [Header("General")]
     public string characterName;
     public ElementType element;

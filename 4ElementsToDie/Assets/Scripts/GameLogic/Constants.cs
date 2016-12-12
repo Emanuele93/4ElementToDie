@@ -1,5 +1,5 @@
 ﻿public static class Constants {
-    
+
     public const int MAX_InventorySize = 4;
     public const int NO_EquipmentTypes = 4;
     public const double MAX_PickupDropRange = 5.0;
@@ -16,6 +16,6 @@
         { 1.0, 2.0, 1.0, 0.5 }, // F
         { 0.5, 1.0, 2.0, 1.0 }, // E
         { 1.0, 0.5, 1.0, 2.0 }, // W
-        { 2.0, 1.0, 0.5, 10 }   // A
+        { 2.0, 1.0, 0.5, 1.0 }  // A
     };
 }
