@@ -23,6 +23,9 @@ public class doorWater : MonoBehaviour
             mouvement = transform.rotation * mouvement + transform.position;
             Camera.main.transform.position = new Vector3(mouvement.x, mouvement.y, Camera.main.transform.position.z);
 
+			// Changing the sound.
+			GameplayManager.Instance.PlayMusic(Constants.MUSIC_WaterArea);
+
             transform.parent.gameObject.SetActive(false);
             where.SetActive(true);
         }

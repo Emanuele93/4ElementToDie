@@ -18,4 +18,11 @@
         { 1.0, 0.5, 1.0, 2.0 }, // W
         { 2.0, 1.0, 0.5, 1.0 }  // A
     };
+
+	public const string MUSIC_Menu = "MenuMusic";
+	public const string MUSIC_Background = "BackgroundMusic";
+	public const string MUSIC_AirArea = "AirAreaMusic";
+	public const string MUSIC_EarthArea = "EarthAreaMusic";
+	public const string MUSIC_FireArea = "FireAreaMusic";
+	public const string MUSIC_WaterArea = "WaterAreaMusic";
 }
