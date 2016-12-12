@@ -31,6 +31,8 @@ public class CharSelectMenuManager : Singleton<CharSelectMenuManager>
     private void ConfirmSelection()
     {
         GameplayManager.chosenCharacter = playableCharacters[selection];
+		MusicManager.Instance.StopAll ();
+		MusicManager.Instance.PlayMusic (Constants.MUSIC_Background);
         SceneManager.LoadScene("Gameplay");
     }
     

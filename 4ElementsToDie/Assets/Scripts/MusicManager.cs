@@ -26,7 +26,7 @@ namespace POLIMIGameCollective {
 
 			for (int i = 0; i < m_audio_sources.Length; i++) {
 				AudioSource s = m_audio_sources [i];
-				if (m_useGONames)
+				if (m_useGONames) 
 					music_list [s.gameObject.name] = s;
 				else
 					music_list [s.clip.name] = s;
@@ -41,6 +41,18 @@ namespace POLIMIGameCollective {
 
 				if (!music_list [name].isPlaying)
 					music_list[name].Play();
+
+			} else Debug.LogWarning("No sound of name " + name + " exists");
+		}
+
+		public void StopMusic(string name, float pitchVariance = 0)
+		{
+			if (music_list.ContainsKey(name))
+			{
+				if (pitchVariance != 0) music_list[name].pitch = 1 + Random.Range(-pitchVariance, pitchVariance);
+
+				if (!music_list [name].isPlaying)
+					music_list[name].Stop();
 
 			} else Debug.LogWarning("No sound of name " + name + " exists");
 		}
