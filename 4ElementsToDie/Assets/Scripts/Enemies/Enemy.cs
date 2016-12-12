@@ -75,10 +75,10 @@ public class Enemy : MonoBehaviour {
         isFacingRight = facings[0];
         isFacingUp = facings[1];
         
-        if (player.transform.position.y > transform.position.y)
-            spriteRend.sortingLayerName = "enemyDown";
-        else
-            spriteRend.sortingLayerName = "enemyUp";
+//        if (player.transform.position.y > transform.position.y)
+//            spriteRend.sortingLayerName = "enemyDown";
+//        else
+//            spriteRend.sortingLayerName = "enemyUp";
     }
 
 	void Attack(Quaternion attackDirection) {
