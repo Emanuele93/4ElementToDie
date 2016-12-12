@@ -107,22 +107,22 @@ public class superMap : MonoBehaviour
             map[i, j] = -3;
             if (j < map.GetLength(1) - 1 && map[i, j + 1] >= 2)
             {
-                boosRoomObject = Instantiate(bossRoom, new Vector3((j + 1) * 16 + marginX - 21, -i * 10 + marginY, 0f), Quaternion.Euler(0, 0, 0)) as GameObject;
+                boosRoomObject = Instantiate(bossRoom, new Vector3((j + 1) * 16 + marginX - 20.5f, -i * 10 + marginY, 0f), Quaternion.Euler(0, 0, 0)) as GameObject;
                 doorObject = Instantiate(bossDoor, new Vector3((j + 1) * 16 + marginX - 7.25f, -i * 10 + marginY, 0f), Quaternion.Euler(0, 0, 90)) as GameObject;
             }
             else if (j > 0 && map[i, j - 1] >= 2)
             {
-                boosRoomObject = Instantiate(bossRoom, new Vector3((j - 1) * 16 + marginX + 21, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+                boosRoomObject = Instantiate(bossRoom, new Vector3((j - 1) * 16 + marginX + 20.5f, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
                 doorObject = Instantiate(bossDoor, new Vector3((j - 1) * 16 + marginX + 7.25f, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, -90)) as GameObject;
             }
             else if (i < map.GetLength(0) - 1 && map[i + 1, j] >= 2)
             {
-                boosRoomObject = Instantiate(bossRoom, new Vector3(j * 16 + marginX, -(i + 1) * 10 + marginY + 14, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+                boosRoomObject = Instantiate(bossRoom, new Vector3(j * 16 + marginX, -(i + 1) * 10 + marginY + 13.5f, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
                 doorObject = Instantiate(bossDoor, new Vector3(j * 16 + marginX, -(i + 1) * 10 + marginY + 4.25f, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
             }
             else if (i > 0 && map[i - 1, j] >= 2)
             {
-                boosRoomObject = Instantiate(bossRoom, new Vector3(j * 16 + marginX, -(i - 1) * 10 + marginY - 14, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+                boosRoomObject = Instantiate(bossRoom, new Vector3(j * 16 + marginX, -(i - 1) * 10 + marginY - 13.5f, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
                 doorObject = Instantiate(bossDoor, new Vector3(j * 16 + marginX, -(i - 1) * 10 + marginY - 4.25f, 0), Quaternion.Euler(0, 0, 180)) as GameObject;
             }
             boosRoomObject.transform.parent = transform;

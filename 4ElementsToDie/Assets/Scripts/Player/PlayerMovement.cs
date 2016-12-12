@@ -3,20 +3,13 @@ using System.Collections;
 
 public class PlayerMovement {
 
-	public static bool[] captureMovement(Transform playerTr, int playerSpeed, bool playerFacingRight, bool playerFacingUp) {
+	public static bool[] captureMovement(Transform playerTr, float playerSpeed, bool playerFacingRight, bool playerFacingUp) {
 
 		// Input capturing.
 		float mHorizontalMov = Input.GetAxis ("HorizontalMov");
 		float mVerticalMov = Input.GetAxis ("VerticalMov");
-		float divide = 1f; // Divide factor to normalize speed.
-	
 
-		// Moving the player.
-		if (mHorizontalMov != 0 && mVerticalMov != 0) {
-			divide = Mathf.Sqrt (2);
-		}
-
-		playerTr.position += Time.fixedDeltaTime * playerSpeed * (playerTr.right * mHorizontalMov + playerTr.up * mVerticalMov) / divide;
+		playerTr.position += Time.fixedDeltaTime * playerSpeed * ((playerTr.right * mHorizontalMov + playerTr.up * mVerticalMov).normalized);
 
 		// Flip Player horizontally
 		if ( (mHorizontalMov < 0) && (playerFacingRight) ){
@@ -46,7 +39,7 @@ public class PlayerMovement {
 			playerFacingUp = !playerFacingUp;
 
 		}
-
+			
 		return new bool[]{playerFacingRight,playerFacingUp};
 	}
 }

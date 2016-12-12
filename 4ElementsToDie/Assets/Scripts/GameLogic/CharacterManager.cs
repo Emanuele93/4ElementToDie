@@ -10,15 +10,28 @@ public class CharacterManager : MonoBehaviour
     private ElementType m_element;
     private AttackType m_attackType;
 
-    private Stat[] m_stats = new Stat[System.Enum.GetValues(typeof(StatType)).Length];
+    private Stat[] m_stats;
+    private double m_damage;
 
-    private Equipment[] m_equipments;
+    private Weapon m_weapon;
+    private Armor m_armor;
+    private Accessory m_accessory;
+    private Garment m_garment;
+
     private Item[] m_inventory;
+    private int[] m_keys;
+    private int[] m_stones;
 
     private List<Ability> m_abilities;
     private List<Effect> m_activeEffects;
 
     #region Getters/Setters
+    public Character BaseCharacterData
+    {
+        get { return m_baseCharacterData; }
+        set { m_baseCharacterData = value; }
+    }
+
     public ElementType Element
     {
         get { return m_element; }
@@ -36,173 +49,290 @@ public class CharacterManager : MonoBehaviour
         get { return m_stats; }
         set { m_stats = value; }
     }
-    public Equipment[] Equipments
+
+    public double Damage
     {
-        get { return m_equipments; }
-        set { m_equipments = value; }
+        get { return m_damage; }
+    }
+
+    public Weapon Weapon
+    {
+        get { return m_weapon; }
+    }
+
+    public Armor Armor
+    {
+        get { return m_armor; }
+    }
+
+    public Accessory Accessory
+    {
+        get { return m_accessory; }
+    }
+
+    public Garment Garment
+    {
+        get { return m_garment; }
     }
 
     public Item[] Inventory
     {
         get { return m_inventory; }
-        set { m_inventory = value; }
+    }
+
+    public int[] Keys
+    {
+        get { return m_keys; }
+        set { m_keys = value; }
+    }
+
+    public int[] Stones
+    {
+        get { return m_stones; }
+        set { m_stones = value; }
     }
 
     public List<Ability> Abilities
     {
         get { return m_abilities; }
-        set { m_abilities = value; }
     }
 
     public List<Effect> ActiveEffects
     {
         get { return m_activeEffects; }
-        set { m_activeEffects = value; }
     }
     #endregion
 
-    #region Constructor
-    public CharacterManager(Character c)
+    #region Initializer
+    public void InitCharacter(Character c)
     {
+        //base character info
         m_baseCharacterData = c;
+
+        //sprite & animations
+        gameObject.GetComponent<SpriteRenderer>().sprite = c.sprite;
+        // TODO : animations
+
+        //element
         m_element = c.element;
+
+        //attack type
         m_attackType = c.defaultAttackType;
+
+        //stats
+        m_stats = new Stat[System.Enum.GetValues(typeof(StatType)).Length];
         for (int i = 0; i < m_stats.Length; i++)
         {
-            m_stats[i] = new Stat((StatType)i, c.baseStats[i], c.growingRatios[i]);
+            m_stats[i] = gameObject.AddComponent<Stat>() as Stat;
+            m_stats[i].InitStat((StatType)i, c.baseStats[i], c.growingRatios[i]);
         }
-        for (int i = 0; i < c.equipments.Length; i++)
+
+        //damage
+        m_damage = 0.0;
+
+        //equipments
+        Equip(c.weapon);
+        Equip(c.armor);
+        Equip(c.accessory);
+        Equip(c.garment);
+
+        //inventory
+        m_inventory = new Item[Constants.MAX_InventorySize];
+        foreach (Item i in c.inventory)
         {
-            Equip(c.equipments[i]);
+            AddItem(i);
         }
-        m_inventory = c.inventory;
-        m_abilities = c.abilities;
+
+        //keys
+        m_keys = new int[System.Enum.GetValues(typeof(ElementType)).Length];
+        for (int i = 0; i < m_keys.Length; i++)
+        {
+            m_keys[i] = 5;
+        }
+
+        //stones
+        m_stones = new int[System.Enum.GetValues(typeof(ElementType)).Length];
+        m_stones[(int) m_element] += 1;
+
+        //abilities
+        m_abilities = new List<Ability>();
+        foreach (Ability a in c.abilities)
+        {
+            AddAbility(a);
+        }
     }
     #endregion
 
-    #region Equipment Adder/Remover
+    #region Equipment Methods
     public void Equip(Equipment equip)
     {
-        //look for the right slot to equip
-        EquipType slot;
-        if (equip is Weapon)
+        if (equip != null)
         {
-            slot = EquipType.Weapon;
-            m_attackType = ((Weapon)equip).attackType;
-        }
-        else if (equip is Armor)
-        {
-            slot = EquipType.Armor;
-        }
-        else if (equip is Accessory)
-        {
-            slot = EquipType.Accessory;
-        }
-        else if (equip is Garment)
-        {
-            slot = EquipType.Garment;
-        }
-        else
-        {
-            throw new System.Exception("Error: unknown Equipment type");
-        }
-        if (m_equipments[(int)slot] != null)
-        {
-            //stats
-            for (int i = 0; i < m_stats.Length; i++)
+            if (equip is Weapon)
             {
-                m_stats[i].UpdateEquipBuff( equip.statBuffs[i] - m_equipments[(int)slot].statBuffs[i] );
+                if (m_weapon != null)
+                {
+                    Unequip(m_weapon);
+                }
+                m_weapon = (Weapon)equip;
+                //also set the attack type if equipping a Weapon
+                m_attackType = m_weapon.attackType;
             }
-            //abilities
-            for (int i= 0; i < m_equipments.Length; i++)
+            else if (equip is Armor)
             {
-                RemoveAbility(m_equipments[(int)slot].abilities[i]);
+                if (m_armor != null)
+                {
+                    Unequip(m_armor);
+                }
+                m_armor = (Armor)equip;
             }
-            for (int i = 0; i < equip.abilities.Count; i++)
+            else if (equip is Accessory)
             {
-                AddAbility(equip.abilities[i]);
+                if (m_accessory != null)
+                {
+                    Unequip(m_accessory);
+                }
+                m_accessory = (Accessory)equip;
             }
-        }
-        else
-        {
-            //stats
-            for (int i = 0; i < m_stats.Length; i++)
+            else if (equip is Garment)
             {
-                m_stats[i].UpdateEquipBuff( equip.statBuffs[i] );
+                if (m_garment != null)
+                {
+                    Unequip(m_garment);
+                }
+                m_garment = (Garment)equip;
             }
-            //abilities
-            for (int i = 0; i < equip.abilities.Count; i++)
-            {
-                AddAbility(equip.abilities[i]);
-            }
-        }
-        //set the new equipment
-        m_equipments[(int)slot] = equip;
-    }
 
-    public void Unequip(EquipType type)
-    {
-        if (m_equipments[(int)type] != null)
-        {
-            //reset to the default attack type if removing a Weapon
-            if (type == EquipType.Weapon)
-                m_attackType = m_baseCharacterData.defaultAttackType;
             //stats
             for (int i = 0; i < m_stats.Length; i++)
             {
-                m_stats[i].UpdateEquipBuff( - m_equipments[(int)type].statBuffs[i] );
+                m_stats[i].UpdateEquipBuff(equip.statBuffs[i]);
             }
-            //abilities
-            for (int i = 0; i < m_equipments[(int)type].abilities.Count; i++)
-            {
-                RemoveAbility(m_equipments[(int)type].abilities[i]);
-            }
-        }
-        //remove the equipment
-        m_equipments[(int)type] = null;
-    }
-    #endregion
 
-    #region Item Adder/Remover
-    public void AddItem(Item item)
-    {
-        bool isFull = true;
-        for (int i = 0; !isFull || i < m_inventory.Length; i++)
-        {
-            if (m_inventory[i] == null)
+            //abilities
+            foreach (Ability a in equip.abilities)
             {
-                isFull = false;
-                m_inventory[i] = item;
+                AddAbility(a);
             }
         }
     }
 
-    public void RemoveItem(int slot)
+    public void Unequip(Equipment equip)
     {
-        try
+        if (equip != null)
         {
-            m_inventory[slot] = null;
-        }
-        catch
-        {
-            throw new System.Exception("Error: invalid inventory index");
+            bool freeSlotFound = false;
+            for (int i = 0; !freeSlotFound && i < m_inventory.Length; i++)
+            {
+                if (m_inventory[i] == null)
+                {
+                    freeSlotFound = true;
+                }
+            }
+
+            if (freeSlotFound)
+            {
+                if (equip is Weapon)
+                {
+                    m_weapon = null;
+                    //also reset the attack type if unequipping a Weapon
+                    m_attackType = m_baseCharacterData.defaultAttackType;
+                }
+                else if (equip is Armor)
+                {
+                    m_armor = null;
+                }
+                else if (equip is Accessory)
+                {
+                    m_accessory = null;
+                }
+                else if (equip is Garment)
+                {
+                    m_garment = null;
+                }
+
+                //stats
+                for (int i = 0; i < m_stats.Length; i++)
+                {
+                    m_stats[i].UpdateEquipBuff(-equip.statBuffs[i]);
+                }
+
+                //abilities
+                foreach (Ability a in equip.abilities)
+                {
+                    RemoveAbility(a);
+                }
+
+                AddItem(equip);
+            }
         }
     }
     #endregion
 
-    #region Ability Adder/Remover
+    #region Inventory Methods
+    public bool AddItem(Item item)
+    {
+        bool freeSlotFound = false;
+        if (item != null)
+        {
+            for (int i = 0; !freeSlotFound && i < m_inventory.Length; i++)
+            {
+                if (m_inventory[i] == null)
+                {
+                    freeSlotFound = true;
+                    m_inventory[i] = item;
+                }
+            }
+        }
+
+        return freeSlotFound;
+    }
+
+    public bool RemoveItem(Item item)
+    {
+        bool itemFound = false;
+        if (item != null)
+        {
+            for (int i = 0; !itemFound && i < m_inventory.Length; i++)
+            {
+                if (m_inventory[i] == item)
+                {
+                    itemFound = true;
+                    m_inventory[i] = null;
+                }
+            }
+        }
+        return itemFound;
+    }
+    #endregion
+
+    #region Ability Methods
     public void AddAbility(Ability ability)
     {
-        m_abilities.Add(ability);
+        if (ability != null)
+        {
+            m_abilities.Add(ability);
+            if (ability.trigger == TriggerType.Passive)
+            {
+                AddActiveEffect(ability.effect);
+            }
+        }
     }
 
     public void RemoveAbility(Ability ability)
     {
-        m_abilities.Remove(ability);
+        if (m_abilities.Contains(ability) && ability != null)
+        {
+            m_abilities.Remove(ability);
+            if (ability.trigger == TriggerType.Passive || ability.target == TargetType.Self)
+            {
+                RemoveActiveEffect(ability.effect);
+            }
+        }
     }
     #endregion
-    
-    #region ActiveEffect Adder/Remover
+
+    #region ActiveEffect Methods
     public void AddActiveEffect(Effect effect)
     {
         if (effect != null)
@@ -210,7 +340,7 @@ public class CharacterManager : MonoBehaviour
             m_activeEffects.Add(effect);
             for (int i = 0; i < m_stats.Length; i++)
             {
-                m_stats[i].UpdateEffectBuff( effect.statBuffs[i] );
+                m_stats[i].UpdateEffectBuff(effect.statBuffs[i]);
             }
         }
     }
@@ -219,12 +349,25 @@ public class CharacterManager : MonoBehaviour
     {
         if (m_activeEffects.Contains(effect) && effect != null)
         {
+            m_activeEffects.Remove(effect);
             for (int i = 0; i < m_stats.Length; i++)
             {
-                m_stats[i].UpdateEffectBuff( 1.0 / effect.statBuffs[i]);
+                m_stats[i].UpdateEffectBuff(1.0 / effect.statBuffs[i]);
             }
         }
-        m_activeEffects.Remove(effect);
+    }
+    #endregion
+
+    #region Damage Methods
+    public void ApplyDamage(double damage)
+    {
+        m_damage += damage;
+        System.Math.Max(damage, 0.0);
+    }
+
+    public bool isDead()
+    {
+        return (m_damage >= m_stats[(int)StatType.VIT].FinalStat);
     }
     #endregion
 

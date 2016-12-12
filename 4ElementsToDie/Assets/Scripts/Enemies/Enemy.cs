@@ -1,83 +1,123 @@
 ﻿using UnityEngine;
 using System.Collections;
+using POLIMIGameCollective;
 
 public class Enemy : MonoBehaviour {
 
-	// Enemy base stats, they're fixed through the game so we can declare them as constants.
-	private const int baseVitality = 2;
-	private const int baseAttack = 2;
-	private const int baseDefense = 2;
-	private const int baseSpeed = 2;
+    [Header("Difficulty")]
+    [Range (1,10)]
+    public int difficulty;
 
-	// Enemy base hidden stats, they're fixed through the game.
-	private const int baseLuck = 2; 
-	private const int baseAttackSpeed = 2;
-	private const int baseAttackRange = 2;
+    // Unity objects references
+    Transform tr;
+    Animator animator;
+    SpriteRenderer spriteRend;
+    CharacterManager charManager;
+    GameObject player;
 
-	// Enemy onGame visible stats.
-	public int mVitality {get; private set;}
-	public int mAttack {get; private set;}
-	public int mDefense {get; private set;}
-	public int mSpeed {get; private set;}
+    // Movement/Attack state variables
+    bool isFacingRight;
+    bool isFacingUp;
+    bool isAggressive;
+    bool isInCooldown;
 
-	// Enemy onGame hidden stats.
-	public int mLuck { get; private set;}
-	public int mAttackSpeed { get; private set;}
-	public int mAttackRange { get; private set;}
+    [Header ("Attack transforms")]
+    public Transform m_SlashTransform;
+    public Transform m_ThrustTransform;
+    public Transform m_AreaTransform;
+	public Transform m_RangedTransform;
 
-	// Unity objects and variables.
-	Transform tr;
-	float mHorizontalAttack = 0f;
-	float mVerticalAttack = 0f;
-	Animator mAnimator;
-	GameObject player;
-
-	// Facing and chasing variables.
-	bool mFacingRight;
-	bool mFacingUp;
-	bool chasePlayer;
-
+	[Header ("Attack prefabs")]
+    public GameObject m_SlashPrefab;
+    public GameObject m_ThrustPrefab;
+    public GameObject m_AreaPrefab;
+	public GameObject m_RangedPrefab;
 
 	// Use this for initialization
 	void Start () {
 		tr = GetComponent<Transform> () as Transform;
-		mAnimator = GetComponent<Animator> () as Animator;
-		player  = GameObject.FindGameObjectWithTag ("Player");
-		FillWithBaseStats ();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+		animator = GetComponent<Animator> () as Animator;
+        spriteRend = GetComponent<SpriteRenderer>() as SpriteRenderer;
+        charManager = GetComponent<CharacterManager> () as CharacterManager;
+        player = GameObject.FindGameObjectWithTag ("Player");
+        
+        isFacingRight = true;
+        isFacingUp = false;
+        isInCooldown = false;
 
+    }
+	
 	// Fixed update because the Enemy can
 	void FixedUpdate() {
-		chasePlayer = false;
 
-		if (EnemyMovement.calculateDistance (tr, player.transform)) {
-			bool[] facings = EnemyMovement.Move (tr, mSpeed, mFacingRight, mFacingUp, player.transform);
-			mFacingRight = facings [0];
-			mFacingUp = facings [1];
-			chasePlayer = true;
+        isAggressive = EnemyMovement.calculateDistance(tr, player.transform);
+
+        if (isAggressive) {
+
+            // Moving
+            Move();
+
+            // Attacking
+            if (!isInCooldown)
+            {
+                // TODO: adjust attack direction to the one of the player
+                Attack(Quaternion.Euler(0f, 0f, 0f));
+            }
 		} 
 			
-		EnemyAnimation.Animate (mAnimator, chasePlayer);
-			
-		// Attacking.
+		EnemyAnimation.Animate (animator, isAggressive);
 	}
 
-	// Fills all stats with the base values.
-	void FillWithBaseStats(){
-		mVitality = baseVitality;
-		mAttack = baseAttack;
-		mDefense = baseDefense;
-		mSpeed = baseSpeed;
-		mLuck = baseLuck;
-		mAttackSpeed = baseAttackSpeed;
-		mAttackRange = baseAttackRange;
+    void Move()
+    {
+        float movSpeed = (float)charManager.Stats[(int)StatType.SPD].FinalStat;
+        bool[] facings = EnemyMovement.Move(tr, movSpeed, isFacingRight, isFacingUp, player.transform);
+        isFacingRight = facings[0];
+        isFacingUp = facings[1];
+        
+        if (player.transform.position.y > transform.position.y)
+            spriteRend.sortingLayerName = "enemyDown";
+        else
+            spriteRend.sortingLayerName = "enemyUp";
+    }
 
-		mFacingRight = true;
-		mFacingUp = false;
-	}
+	void Attack(Quaternion attackDirection) {
+        GameObject go = null;
+
+        //choose the correct attack type;
+        switch (charManager.AttackType)
+        {
+            case AttackType.Slashing:
+                go = ObjectPoolingManager.Instance.GetObject(m_SlashPrefab.name);
+                go.transform.position = m_SlashTransform.position;
+                break;
+            case AttackType.Thrusting:
+                go = ObjectPoolingManager.Instance.GetObject(m_ThrustPrefab.name);
+                go.transform.position = m_ThrustTransform.position;
+                break;
+            case AttackType.Area:
+                go = ObjectPoolingManager.Instance.GetObject(m_AreaPrefab.name);
+                go.transform.position = m_AreaTransform.position;
+                break;
+            case AttackType.Ranged:
+                go = ObjectPoolingManager.Instance.GetObject(m_RangedPrefab.name);
+                go.transform.position = m_RangedTransform.position;
+                break;
+        }
+        go.transform.rotation = attackDirection;
+        GameplayManager.Instance.attackersDict[go.GetInstanceID()] = charManager;
+        StartCoroutine(WaitForCooldown());
+    }
+
+    IEnumerator WaitForCooldown()
+    {
+
+        isInCooldown = true;
+        double attSpeed = charManager.Stats[(int)StatType.ATTSpd].FinalStat;
+        double cooldownTime = 1 / attSpeed;
+
+		yield return new WaitForSeconds ((float)cooldownTime);
+
+        isInCooldown = false;
+    }
 }
