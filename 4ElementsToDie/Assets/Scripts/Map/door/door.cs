@@ -23,6 +23,10 @@ public class door : MonoBehaviour
             mouvement = transform.rotation * mouvement + transform.position;
             Camera.main.transform.position = new Vector3(mouvement.x, mouvement.y, Camera.main.transform.position.z);
 
+			// Changing the sound.
+			GameplayManager.Instance.StopAllMusic();
+			GameplayManager.Instance.PlayMusic(Constants.MUSIC_Background);
+
             transform.parent.gameObject.SetActive(false);
             where.SetActive(true);
         }

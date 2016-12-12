@@ -7,13 +7,14 @@ using UnityEngine.SceneManagement;
 
 public class GameplayManager : Singleton<GameplayManager> {
     
-    ///////// TESTING
-    public Character testCharacter;
-    ///////////////
+	[Header("Sounds and Audio Effects")]
+    // Sound manager.
+	public MusicManager musicManager;
 
     // confirmed selection from Character Selection Menu
     public static Character chosenCharacter;
 
+	[Header("Characters Stats")]
     // Characters
     public Character AirPlayer;
 	public Character FirePlayer;
@@ -51,16 +52,10 @@ public class GameplayManager : Singleton<GameplayManager> {
         ObjectPoolingManager.Instance.CreatePool (m_AreaAttack, 30, 30);
         ObjectPoolingManager.Instance.CreatePool(m_RangedAttack, 100, 100);
         ObjectPoolingManager.Instance.CreatePool (m_drop, 100, 100);
-        //MusicManager.Instance.PlayMusic ("GameplayMusic");
-        
-        m_ingameMenuScreen.SetActive(false);
-
+       	
         m_ingameMenuScreen.SetActive(false);
 
         m_player.GetComponent<CharacterManager>().InitCharacter(chosenCharacter);
-        
-        //TESTING
-        // m_player.GetComponent<CharacterManager>().InitCharacter(WaterPlayer);
     }
 	
 	// Update is called once per frame
@@ -233,4 +228,22 @@ public class GameplayManager : Singleton<GameplayManager> {
     }
     #endregion
 
+	#region Game Music Management.
+	public void PlayMusic(string musicName, float pitchVariance = 0) {
+		MusicManager.Instance.PlayMusic (musicName, pitchVariance);
+	}
+
+	public void PlayMusicWithBackground(string musicName, float pitchVariance = 0) {
+		MusicManager.Instance.PlayMusic (Constants.MUSIC_Background);
+		MusicManager.Instance.PlayMusic (musicName, pitchVariance);
+	}
+
+	public void StopMusic(string musicName, float pitchVariance = 0) {
+		MusicManager.Instance.StopMusic (musicName, pitchVariance);
+	}
+
+	public void StopAllMusic() {
+		MusicManager.Instance.StopAll ();
+	}
+	#endregion
 }
