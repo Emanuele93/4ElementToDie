@@ -40,8 +40,9 @@ public  class Attack : MonoBehaviour {
         CharacterManager attacker = GameplayManager.Instance.attackersDict [gameObject.GetInstanceID ()];
         CharacterManager defender = other.GetComponent<CharacterManager>() as CharacterManager;
         
-        if ( attacker.tag != other.tag &&
-            (attacker.tag == "Player" || other.tag == "Player") )
+
+		if ( (attacker.tag == "Player"  && other.tag == "Enemy") || 
+             (attacker.tag == "Enemy" && other.tag == "Player") )
         {
             GameplayManager.Instance.ExecuteAttack(attacker, defender);
         }
