@@ -14,6 +14,7 @@ public abstract class roomFactory : MonoBehaviour
 
     public CharacterManager character;
     public GameObject cameraMenager;
+    public Character typeOfPlayer;
 
     public GameObject obstacleObject;
     public GameObject miniMapActivator;
@@ -346,6 +347,7 @@ public abstract class roomFactory : MonoBehaviour
                         roomStructure[i, j] = 2;
 
                         GameObject enemy = getEnemy(difficulty);
+                        enemy.GetComponent<CharacterManager>().InitCharacter(typeOfPlayer);
                         difficulty -= enemy.GetComponent<Enemy>().difficulty;
                         enemy.transform.position = new Vector3(i - 6, j - 3, 0);
                         enemy.transform.parent = enemies.transform;
@@ -380,6 +382,7 @@ public abstract class roomFactory : MonoBehaviour
             {
                 roomStructure[i, j] = 2;
                 GameObject enemy = getEnemy(difficulty);
+                enemy.GetComponent<CharacterManager>().InitCharacter(typeOfPlayer);
                 difficulty -= enemy.GetComponent<Enemy>().difficulty;
                 enemy.transform.position = new Vector3(i - 6, j - 3, 0);
                 enemy.transform.parent = enemies.transform;
