@@ -12,12 +12,13 @@ public class GameplayManager : Singleton<GameplayManager> {
     public Enemy enemy;
     ///////////////
 
+    // confirmed selection from Character Selection Menu
+    public static Character chosenCharacter;
+
     [Header("Game Screens")]
-    public GameObject m_characterSelectionScreen;
-    public GameObject m_gameplayScreen;
-    private Text m_overlayText;
     public GameObject m_ingameMenuScreen;
-    
+    private Text m_overlayText;
+
     [Header("Player")]
     public Player m_player;
 
@@ -45,9 +46,12 @@ public class GameplayManager : Singleton<GameplayManager> {
         ObjectPoolingManager.Instance.CreatePool(m_RangedAttack, 100, 100);
         ObjectPoolingManager.Instance.CreatePool (m_drop, 100, 100);
         //MusicManager.Instance.PlayMusic ("GameplayMusic");
+        
+        m_ingameMenuScreen.SetActive(false);
 
+        m_player.GetComponent<CharacterManager>().InitCharacter(chosenCharacter);
+        
         //TESTING
-        m_player.GetComponent<CharacterManager>().InitCharacter(testCharacter);
         enemy.GetComponent<CharacterManager>().InitCharacter(testCharacter);
     }
 	
@@ -68,6 +72,10 @@ public class GameplayManager : Singleton<GameplayManager> {
         }
         //////////////////////
             
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            m_ingameMenuScreen.SetActive(!m_ingameMenuScreen.activeInHierarchy);
+        }
 
 //		if (Input.GetKeyDown (KeyCode.Alpha1))
 //			SfxManager.Instance.Play ("creature");
@@ -194,21 +202,19 @@ public class GameplayManager : Singleton<GameplayManager> {
     IEnumerator GameOver()
     {
         //ClearArea();
+        m_ingameMenuScreen.SetActive(false);
         m_overlayText.text = "GAME OVER";
-        m_gameplayScreen.SetActive(true);
         yield return new WaitForSeconds(5);
-        m_gameplayScreen.SetActive(false);
-        //SceneManager.LoadScene("MenuScreen");
+        SceneManager.LoadScene("Main Menu");
     }
 
     IEnumerator Victory()
     {
         //ClearArea();
+        m_ingameMenuScreen.SetActive(false);
         m_overlayText.text = "CONGRATULATIONS";
-        m_gameplayScreen.SetActive(true);
         yield return new WaitForSeconds(5);
-        m_gameplayScreen.SetActive(false);
-        //SceneManager.LoadScene("MenuScreen");
+        SceneManager.LoadScene("Main Menu");
     }
     #endregion
 

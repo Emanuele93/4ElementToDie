@@ -1,6 +1,7 @@
 ﻿public static class Constants {
     
     public const int MAX_InventorySize = 4;
+    public const int NO_EquipmentTypes = 4;
     public const double MAX_PickupDropRange = 5.0;
     public const double MAX_EnemyAggroRange = 5.0;
     public const double MIN_EffectBuffValue = 0.1;

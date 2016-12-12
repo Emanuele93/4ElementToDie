@@ -7,14 +7,13 @@ public class Character : ScriptableObject
 
     [Header("Sprite & Animations")]
     public Sprite sprite;
-    public Animation idleAnimation;
-    public Animation moveLeftRightAnimation;
-    public Animation moveUpDownAnimation;
+    public RuntimeAnimatorController idleAnimation;
+    public RuntimeAnimatorController moveLeftRightAnimation;
+    public RuntimeAnimatorController moveUpDownAnimation;
 
-    [Header("Element")]
+    [Header("General")]
+    public string characterName;
     public ElementType element;
-
-    [Header("AttackType")]
     public AttackType defaultAttackType;
 
     [Header("Stats")]
