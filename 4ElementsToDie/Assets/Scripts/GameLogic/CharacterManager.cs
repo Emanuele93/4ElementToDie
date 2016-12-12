@@ -143,14 +143,16 @@ public class CharacterManager : MonoBehaviour
             AddItem(i);
         }
 
+        //keys
         m_keys = new int[System.Enum.GetValues(typeof(ElementType)).Length];
         for (int i = 0; i < m_keys.Length; i++)
-            m_keys[i] = 1;
+        {
+            m_keys[i] = 5;
+        }
 
+        //stones
         m_stones = new int[System.Enum.GetValues(typeof(ElementType)).Length];
-        for (int i = 0; i < m_stones.Length; i++)
-            m_stones[i] = 0;
-        m_stones[(int)ElementType.Fire] = 1;
+        m_stones[(int) m_element] += 1;
 
         //abilities
         m_abilities = new List<Ability>();
@@ -219,38 +221,50 @@ public class CharacterManager : MonoBehaviour
     {
         if (equip != null)
         {
-            if (equip is Weapon)
+            bool freeSlotFound = false;
+            for (int i = 0; !freeSlotFound && i < m_inventory.Length; i++)
             {
-                m_weapon = null;
-                //also reset the attack type if unequipping a Weapon
-                m_attackType = m_baseCharacterData.defaultAttackType;
-            }
-            else if (equip is Armor)
-            {
-                m_armor = null;
-            }
-            else if (equip is Accessory)
-            {
-                m_accessory = null;
-            }
-            else if (equip is Garment)
-            {
-                m_garment = null;
+                if (m_inventory[i] == null)
+                {
+                    freeSlotFound = true;
+                }
             }
 
-            //stats
-            for (int i = 0; i < m_stats.Length; i++)
+            if (freeSlotFound)
             {
-                m_stats[i].UpdateEquipBuff(-equip.statBuffs[i]);
-            }
+                if (equip is Weapon)
+                {
+                    m_weapon = null;
+                    //also reset the attack type if unequipping a Weapon
+                    m_attackType = m_baseCharacterData.defaultAttackType;
+                }
+                else if (equip is Armor)
+                {
+                    m_armor = null;
+                }
+                else if (equip is Accessory)
+                {
+                    m_accessory = null;
+                }
+                else if (equip is Garment)
+                {
+                    m_garment = null;
+                }
 
-            //abilities
-            foreach (Ability a in equip.abilities)
-            {
-                RemoveAbility(a);
-            }
+                //stats
+                for (int i = 0; i < m_stats.Length; i++)
+                {
+                    m_stats[i].UpdateEquipBuff(-equip.statBuffs[i]);
+                }
 
-            //Add to inventory? Depends on implementation of Unequipping command
+                //abilities
+                foreach (Ability a in equip.abilities)
+                {
+                    RemoveAbility(a);
+                }
+
+                AddItem(equip);
+            }
         }
     }
     #endregion
@@ -258,43 +272,37 @@ public class CharacterManager : MonoBehaviour
     #region Inventory Methods
     public bool AddItem(Item item)
     {
-        bool found = false;
+        bool freeSlotFound = false;
         if (item != null)
         {
-            for (int i = 0; !found && i < m_inventory.Length; i++)
+            for (int i = 0; !freeSlotFound && i < m_inventory.Length; i++)
             {
                 if (m_inventory[i] == null)
                 {
-                    found = true;
+                    freeSlotFound = true;
                     m_inventory[i] = item;
-                    Debug.Log("Obtained " + item.itemName);
                 }
             }
-
-            if (!found)
-                Debug.Log("Inventory is full");
-
         }
 
-        return found;
+        return freeSlotFound;
     }
 
     public bool RemoveItem(Item item)
     {
-        bool found = false;
+        bool itemFound = false;
         if (item != null)
         {
-            for (int i = 0; !found && i < m_inventory.Length; i++)
+            for (int i = 0; !itemFound && i < m_inventory.Length; i++)
             {
                 if (m_inventory[i] == item)
                 {
-                    found = true;
+                    itemFound = true;
                     m_inventory[i] = null;
-                    Debug.Log("Discarded " + item.itemName);
                 }
             }
         }
-        return found;
+        return itemFound;
     }
     #endregion
 
