@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public abstract class Equipment : Item {
-
-    public enum Rarity { Common, Uncommon, Rare, Epic, Legendary }
-    [Header("General")]
-    public Rarity rarity;
+public abstract class Equipment : Item
+{
 
     [Header("Element")]
     public ElementType element;
