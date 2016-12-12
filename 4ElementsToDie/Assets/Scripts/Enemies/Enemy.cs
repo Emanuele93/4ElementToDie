@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour {
             if (!isInCooldown)
             {
                 // TODO: adjust attack direction to the one of the player
-                Attack(Quaternion.Euler(0f, 0f, 0f));
+                Attack();
             }
 		} 
 			
@@ -73,16 +73,18 @@ public class Enemy : MonoBehaviour {
         float movSpeed = (float)charManager.Stats[(int)StatType.SPD].FinalStat;
         bool[] facings = EnemyMovement.Move(tr, movSpeed, isFacingRight, isFacingUp, player.transform);
         isFacingRight = facings[0];
-        isFacingUp = facings[1];
-        
-        if (player.transform.position.y > transform.position.y)
-            spriteRend.sortingLayerName = "enemyDown";
-        else
-            spriteRend.sortingLayerName = "enemyUp";
+		isFacingUp = facings [1];
     }
 
-	void Attack(Quaternion attackDirection) {
+	void Attack() {
         GameObject go = null;
+
+		// Calculating the angle between the enemy and the player.
+		float deltaY = player.transform.position.y - tr.position.y; 
+		float deltaX = player.transform.position.x - tr.position.x;
+
+		// The rotation is the angle in Z to get the player.
+		float rotation =  Mathf.Atan2 (deltaY, deltaX) * 180 / Mathf.PI;
 
         //choose the correct attack type;
         switch (charManager.AttackType)
@@ -104,7 +106,7 @@ public class Enemy : MonoBehaviour {
                 go.transform.position = m_RangedTransform.position;
                 break;
         }
-        go.transform.rotation = attackDirection;
+		go.transform.rotation = Quaternion.Euler (new Vector3 (0, 0, rotation));
         GameplayManager.Instance.attackersDict[go.GetInstanceID()] = charManager;
         StartCoroutine(WaitForCooldown());
     }

@@ -4,7 +4,6 @@ using System.Collections;
 public class EnemyMovement {
 
 	public static bool[] Move(Transform enemyTr, float enemySpeed, bool enemyFacingRight, bool enemyFacingUp, Transform playerTr) {
-
 		Vector3 chasingDirection = 
 			(playerTr.position - enemyTr.position).normalized;
 
