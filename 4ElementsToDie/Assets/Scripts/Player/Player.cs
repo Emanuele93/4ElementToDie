@@ -27,6 +27,8 @@ public class Player : MonoBehaviour {
     public GameObject m_AreaPrefab;
     public GameObject m_RangedPrefab;
 
+	private Vector3 m_attackPosition = new Vector3(0f,0f,0f);
+
     // Use this for initialization
     void Start () {
 		tr = GetComponent<Transform> () as Transform;
@@ -50,25 +52,29 @@ public class Player : MonoBehaviour {
             // RIGHT attack
             if ((Input.GetKeyDown(KeyCode.L)) || (Input.GetKeyDown(KeyCode.RightArrow)))
             {
-                Attack(Quaternion.Euler(0f, 0f, 0f));
+				m_attackPosition.x = 1.25f; m_attackPosition.y = -0.5f;
+				Attack(m_attackPosition, Quaternion.Euler(0f, 0f, 0f));
             }
 
 			// LEFT attack
 			if ( (Input.GetKeyDown (KeyCode.J)) || (Input.GetKeyDown (KeyCode.LeftArrow)) )
             {
-                Attack(Quaternion.Euler(0f, 0f, 180f));
+				m_attackPosition.x = -1.25f; m_attackPosition.y = -0.5f;
+				Attack(m_attackPosition, Quaternion.Euler(0f, 0f, 180f));
             }
 
             // UP attack
             if ( (Input.GetKeyDown (KeyCode.I)) || (Input.GetKeyDown (KeyCode.UpArrow)) )
             {
-                Attack(Quaternion.Euler(0f, 0f, 90f));
+				m_attackPosition.x = 0f; m_attackPosition.y = 1f;
+				Attack(m_attackPosition, Quaternion.Euler(0f, 0f, 90f));
             }
 
 			// Down attack.
 			if ( (Input.GetKeyDown (KeyCode.K)) || (Input.GetKeyDown (KeyCode.DownArrow)))
             {
-                Attack(Quaternion.Euler(0f, 0f, 270f));
+				m_attackPosition.x = 0f; m_attackPosition.y = -1.5f;
+				Attack(m_attackPosition, Quaternion.Euler(0f, 0f, 270f));
             }
         }
 
@@ -92,7 +98,7 @@ public class Player : MonoBehaviour {
         PlayerAnimation.Move(animator);
     }
 
-    void Attack(Quaternion attackDirection)
+    void Attack(Vector3 attackPosition, Quaternion attackDirection)
     {
         GameObject go = null;
 
@@ -101,19 +107,19 @@ public class Player : MonoBehaviour {
         {
             case AttackType.Slashing:
                 go = ObjectPoolingManager.Instance.GetObject(m_SlashPrefab.name);
-                go.transform.position = m_SlashTransform.position;
+				go.transform.position = m_SlashTransform.position + attackPosition;
                 break;
             case AttackType.Thrusting:
                 go = ObjectPoolingManager.Instance.GetObject(m_ThrustPrefab.name);
-                go.transform.position = m_ThrustTransform.position;
+				go.transform.position = m_ThrustTransform.position + attackPosition;
                 break;
             case AttackType.Area:
                 go = ObjectPoolingManager.Instance.GetObject(m_AreaPrefab.name);
-                go.transform.position = m_AreaTransform.position;
+				go.transform.position = m_AreaTransform.position;
                 break;
             case AttackType.Ranged:
                 go = ObjectPoolingManager.Instance.GetObject(m_RangedPrefab.name);
-                go.transform.position = m_RangedTransform.position;
+                go.transform.position = m_RangedTransform.position + attackPosition;
                 break;
         }
         go.transform.rotation = attackDirection;
