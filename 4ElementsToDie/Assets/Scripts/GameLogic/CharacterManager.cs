@@ -113,8 +113,6 @@ public class CharacterManager : MonoBehaviour
 		SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer> () as SpriteRenderer;
 		spriteRenderer.sprite = c.sprite;
 
-		RuntimeAnimatorController anim;
-
 		Animator animator = gameObject.GetComponent<Animator> () as Animator;
 		animator.runtimeAnimatorController = (RuntimeAnimatorController)c.idleAnimation;
 
