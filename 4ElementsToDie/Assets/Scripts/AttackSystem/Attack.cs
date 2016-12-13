@@ -28,7 +28,6 @@ public  class Attack : MonoBehaviour {
     {
         // Attack Range stat
         attRange = (float)GameplayManager.Instance.attackersDict[gameObject.GetInstanceID()].Stats[(int)StatType.ATTRng].FinalStat;
-
         StartCoroutine(Fade());
     }
 

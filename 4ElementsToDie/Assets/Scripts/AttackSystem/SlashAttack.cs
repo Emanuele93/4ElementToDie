@@ -13,17 +13,19 @@ public class SlashAttack : Attack {
 
 		col = GetComponent<PolygonCollider2D> () as PolygonCollider2D;
 
-		col.SetPath (0,setColliderPoints ());
+		//col.SetPath (0,setColliderPoints ());
 		col.isTrigger = true;
 
-		sr.sprite = attackSprite;
+		//sr.sprite = attackSprite;
+
 	}
 
 	public override void AttackNow()
 	{
+		
 		base.AttackNow();
-
-		col.SetPath (0, setColliderPoints ());
+		transform.localScale = new Vector3 (attRange, attRange, 0);
+		//col.SetPath (0, setColliderPoints ());
 	}
 		
 	Vector2[] setColliderPoints() {
