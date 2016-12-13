@@ -197,11 +197,11 @@ public class GameplayManager : Singleton<GameplayManager> {
     {
         //ClearArea();
 		m_player.isDead = true;
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(1f);
         m_overlayText.text = "GAME OVER";
         m_ingameMenuScreen.SetActive(false);
         m_overlayScreen.SetActive(true);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1f);
         m_ingameMenuScreen.SetActive(false);
         m_overlayScreen.SetActive(false);
         SceneManager.LoadScene("Main Menu");
@@ -213,7 +213,7 @@ public class GameplayManager : Singleton<GameplayManager> {
         m_overlayText.text = "CONGRATULATIONS";
         m_ingameMenuScreen.SetActive(false);
         m_overlayScreen.SetActive(true);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2f);
         m_ingameMenuScreen.SetActive(false);
         m_overlayScreen.SetActive(false);
         SceneManager.LoadScene("Main Menu");

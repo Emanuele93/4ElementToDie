@@ -118,8 +118,7 @@ public class CharacterManager : MonoBehaviour
 		Animator animator = gameObject.GetComponent<Animator> () as Animator;
 		animator.runtimeAnimatorController = (RuntimeAnimatorController)c.idleAnimation;
 
-		//animator.runtimeAnimatorController = (RuntimeAnimatorController)Resources.Load("Animation/Char1Animator.controller", typeof(RuntimeAnimatorController ));
-        // TODO : animations
+		// TODO : animations
 
         //element
         m_element = c.element;
