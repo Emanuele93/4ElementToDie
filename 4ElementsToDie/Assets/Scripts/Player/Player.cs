@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
     bool isFacingRight;
 	bool isFacingUp;
     bool isInCooldown;
+	public bool isDead;
 
     [Header ("Attack transforms")]
 	public Transform m_SlashTransform;
@@ -38,10 +39,15 @@ public class Player : MonoBehaviour {
         isFacingRight = true;
         isFacingUp = false;
         isInCooldown = false;
+		isDead = false;
     }
 	
 	// Fixed update because the player can
 	void FixedUpdate() {
+
+		if (isDead) {
+			PlayerAnimation.Dead (animator,isDead);
+		} 
 
         //Moving
         Move();

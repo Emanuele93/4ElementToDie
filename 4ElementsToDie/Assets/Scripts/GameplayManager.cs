@@ -204,10 +204,12 @@ public class GameplayManager : Singleton<GameplayManager> {
     IEnumerator GameOver()
     {
         //ClearArea();
+		m_player.isDead = true;
+		yield return new WaitForSeconds(1);
         m_overlayText.text = "GAME OVER";
         m_ingameMenuScreen.SetActive(false);
         m_overlayScreen.SetActive(true);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1);
         m_ingameMenuScreen.SetActive(false);
         m_overlayScreen.SetActive(false);
         SceneManager.LoadScene("Main Menu");
