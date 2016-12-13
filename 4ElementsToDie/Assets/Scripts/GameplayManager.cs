@@ -65,14 +65,6 @@ public class GameplayManager : Singleton<GameplayManager> {
         //drop spawning
         if (Input.GetKeyDown(KeyCode.V))
             StartCoroutine(SpawnDrops(m_player.GetComponent<CharacterManager>()));
-        //item discarding
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            int random = Random.Range(0, 4);
-            if (m_player.GetComponent<CharacterManager>().Inventory[random] != null)
-                m_player.GetComponent<CharacterManager>().RemoveItem(m_player.GetComponent<CharacterManager>().Inventory[random]);
-            else Debug.Log("Randomly selected an empty slot. Can't discard.");
-        }
         //////////////////////
 
         if (Input.GetKeyDown(KeyCode.P))
