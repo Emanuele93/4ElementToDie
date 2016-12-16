@@ -110,8 +110,13 @@ public class CharacterManager : MonoBehaviour
         m_baseCharacterData = c;
 
         //sprite & animations
-        gameObject.GetComponent<SpriteRenderer>().sprite = c.sprite;
-        // TODO : animations
+		SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer> () as SpriteRenderer;
+		spriteRenderer.sprite = c.sprite;
+
+		Animator animator = gameObject.GetComponent<Animator> () as Animator;
+		animator.runtimeAnimatorController = (RuntimeAnimatorController)c.idleAnimation;
+
+		// TODO : animations
 
         //element
         m_element = c.element;

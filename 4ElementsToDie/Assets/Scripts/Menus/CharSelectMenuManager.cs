@@ -4,41 +4,55 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class CharSelectMenuManager : Singleton<CharSelectMenuManager>
 {
 
-    [Header("Basic Characters")]
-    public Character[] playableCharacters = new Character[System.Enum.GetValues(typeof(ElementType)).Length];
+    public Image selectionCursor;
 
     [Header("Character Buttons")]
     public Button[] characterButtons = new Button[System.Enum.GetValues(typeof(ElementType)).Length];
 
+    [Header("Basic Characters")]
+    public Character[] playableCharacters = new Character[System.Enum.GetValues(typeof(ElementType)).Length];
+    
     private int selection;
-
-    void Start()
+    private int lastSelection;
+    
+    void OnEnable()
     {
-        characterButtons[0].onClick.Invoke();
         Select(0);
     }
 
     public void Select(int index)
     {
         selection = index;
-        characterButtons[selection].Select();
+        lastSelection = selection;
+
+		characterButtons[selection].Select();
+
+        //move the cursor
+        var temp = selectionCursor.transform.position;
+        temp.x = characterButtons[selection].transform.position.x;
+        selectionCursor.transform.position = temp;
     }
 
     private void ConfirmSelection()
     {
         GameplayManager.chosenCharacter = playableCharacters[selection];
-		MusicManager.Instance.StopAll ();
-		MusicManager.Instance.PlayMusic (Constants.MUSIC_Background);
+        MusicManager.Instance.StopAll();
+        MusicManager.Instance.PlayMusic(Constants.MUSIC_Background);
         SceneManager.LoadScene("Gameplay");
     }
     
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+        if (EventSystem.current.currentSelectedGameObject == null)
+        {
+            Select(lastSelection);
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
             Select((selection + 1) % characterButtons.Length);
         }
