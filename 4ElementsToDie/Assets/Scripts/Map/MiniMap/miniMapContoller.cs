@@ -9,6 +9,8 @@ public class miniMapContoller : MonoBehaviour
     private Vector2 margin;
     private GameObject[,] mapObjects;
     private int[,] map;
+    public GameObject playerObject;
+    private GameObject player;
 
     // Use this for initialization
     void Start()
@@ -28,6 +30,10 @@ public class miniMapContoller : MonoBehaviour
                 }
             }
         }
+        Debug.Log("qui");
+        playerObject.transform.localScale = new Vector3(2 / (float)map.GetLength(1), 2 / (float)map.GetLength(0), 1f);
+        player = Instantiate(playerObject, new Vector3(0, 0, 0), playerObject.transform.rotation, transform) as GameObject;
+        player.name = "miniMapPlayer";
     }
 
     // Update is called once per frame
@@ -44,6 +50,7 @@ public class miniMapContoller : MonoBehaviour
         if (y < 0) y = -y;
         mapObjects[(int)y, (int)x].GetComponent<SpriteRenderer>().sprite = enteredRoom;
         mapObjects[(int)y, (int)x].SetActive(true);
+        player.transform.position = mapObjects[(int)y, (int)x].transform.position;
         if (map[(int)y, (int)x - 1] > 1) mapObjects[(int)y, (int)x - 1].SetActive(true);
         if (map[(int)y, (int)x + 1] > 1) mapObjects[(int)y, (int)x + 1].SetActive(true);
         if (map[(int)y - 1, (int)x] > 1) mapObjects[(int)y - 1, (int)x].SetActive(true);
@@ -57,5 +64,14 @@ public class miniMapContoller : MonoBehaviour
         y = (y - margin.y) / 10;
         if (y < 0) y = -y;
         mapObjects[(int)y, (int)x].GetComponent<SpriteRenderer>().sprite = completedRoom;
+    }
+
+    public void movePlayer(float x, float y)
+    {
+        x = (x - margin.x) / 16;
+        if (x < 0) x = -x;
+        y = (y - margin.y) / 10;
+        if (y < 0) y = -y;
+        player.transform.position = mapObjects[(int)y, (int)x].transform.position;
     }
 }

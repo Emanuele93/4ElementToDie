@@ -25,15 +25,19 @@ public class CharSelectMenuManager : Singleton<CharSelectMenuManager>
     public void Select(int index)
     {
         selection = index;
-        characterButtons[selection].Select();
+
+		characterButtons[selection].Select();
+
     }
 
     private void ConfirmSelection()
     {
-        GameplayManager.chosenCharacter = playableCharacters[selection];
-		MusicManager.Instance.StopAll ();
-		MusicManager.Instance.PlayMusic (Constants.MUSIC_Background);
-        SceneManager.LoadScene("Gameplay");
+		if (selection == 0 || selection == 2) {
+			GameplayManager.chosenCharacter = playableCharacters [selection];
+			MusicManager.Instance.StopAll ();
+			MusicManager.Instance.PlayMusic (Constants.MUSIC_Background);
+			SceneManager.LoadScene ("Gameplay");
+		}
     }
     
     void Update()

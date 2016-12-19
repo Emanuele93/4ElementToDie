@@ -7,7 +7,7 @@ public abstract class chestEnemiesActivator : MonoBehaviour
     private List<GameObject> enemies = new List<GameObject>();
     public GameObject buttom;
     protected bool inChestArea;
-    public CharacterManager player;
+    protected CharacterManager player;
     protected List<GameObject> objects = new List<GameObject>();
 
 
@@ -22,6 +22,7 @@ public abstract class chestEnemiesActivator : MonoBehaviour
     {
         if (inChestArea && Input.GetKeyDown(KeyCode.F))
         {
+            remouveKey();
             foreach (GameObject child in enemies)
             {
                 child.SetActive(true);
@@ -42,4 +43,6 @@ public abstract class chestEnemiesActivator : MonoBehaviour
     }
 
     public abstract void addItemOnChest(GameObject enemyObjectCollection);
+
+    protected abstract void remouveKey();
 }

@@ -32,13 +32,27 @@ public class chestEnemiesActivatorEarth : chestEnemiesActivator
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player" && player.Keys[(int)ElementType.Earth] > 0)
+        if (other.tag == "Player" && other.gameObject.GetComponent<CharacterManager>().Keys[(int)ElementType.Earth] > 0)
         {
-            player.Keys[(int)ElementType.Earth]--;
+            player = other.gameObject.GetComponent<CharacterManager>();
             buttom.SetActive(true);
             inChestArea = true;
         }
         else return;
     }
 
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.tag == "Player")
+        {
+            inChestArea = false;
+            buttom.SetActive(false);
+        }
+    }
+
+    protected override void remouveKey()
+    {
+        player.Keys[(int)ElementType.Earth]--;
+
+    }
 }
