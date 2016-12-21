@@ -11,7 +11,6 @@ public class Enemy : MonoBehaviour {
     // Unity objects references
     Transform tr;
     Animator animator;
-    SpriteRenderer spriteRend;
     CharacterManager charManager;
     GameObject player;
 
@@ -37,7 +36,6 @@ public class Enemy : MonoBehaviour {
 	void Start () {
 		tr = GetComponent<Transform> () as Transform;
 		animator = GetComponent<Animator> () as Animator;
-        spriteRend = GetComponent<SpriteRenderer>() as SpriteRenderer;
         charManager = GetComponent<CharacterManager> () as CharacterManager;
         player = GameObject.FindGameObjectWithTag ("Player");
         
@@ -93,9 +91,9 @@ public class Enemy : MonoBehaviour {
                 go = ObjectPoolingManager.Instance.GetObject(m_SlashPrefab.name);
                 go.transform.position = m_SlashTransform.position;
                 break;
-            case AttackType.Thrusting:
-                go = ObjectPoolingManager.Instance.GetObject(m_ThrustPrefab.name);
-                go.transform.position = m_ThrustTransform.position;
+			case AttackType.Thrusting:
+				go = ObjectPoolingManager.Instance.GetObject (m_ThrustPrefab.name);
+				go.transform.position = m_ThrustTransform.position;
                 break;
             case AttackType.Area:
                 go = ObjectPoolingManager.Instance.GetObject(m_AreaPrefab.name);

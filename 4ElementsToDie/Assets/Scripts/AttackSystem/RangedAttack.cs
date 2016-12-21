@@ -2,7 +2,7 @@
 using System.Collections;
 
 // PlayerScript requires the GameObject to have a Rigidbody component
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(BoxCollider2D), typeof(SpriteRenderer))]
 public class RangedAttack : Attack
 {
     BoxCollider2D col;
@@ -10,6 +10,8 @@ public class RangedAttack : Attack
 
     float attSpeed;
     float direction;
+
+	public Sprite attackSprite;
 
     // Use this for initialization
     protected override void Start()
@@ -21,6 +23,8 @@ public class RangedAttack : Attack
         direction = 1f;
         col.size = colliderSize;
         col.isTrigger = true;
+
+		sr.sprite = attackSprite;
     }
 
     public override void AttackNow()
@@ -38,7 +42,7 @@ public class RangedAttack : Attack
         CharacterManager attacker = GameplayManager.Instance.attackersDict[gameObject.GetInstanceID()];
         CharacterManager defender = other.GetComponent<CharacterManager>() as CharacterManager;
 
-		if (other.tag == "wall" || other.tag == "obstacle")
+		if (other.tag == "wall" || other.tag == "obstacle" || other.tag == "door")
         {
             gameObject.SetActive(false);
         }
