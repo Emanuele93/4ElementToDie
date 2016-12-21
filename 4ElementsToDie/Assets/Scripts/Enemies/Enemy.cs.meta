@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 8125bb227deaf414b88742fac63a2ccd
+timeCreated: 1481230491
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - m_AreaTransform: {instanceID: 0}
+  - m_RangeTransform: {instanceID: 0}
+  - m_SlashTransform: {instanceID: 0}
+  - m_ThrustTransform: {instanceID: 0}
+  - m_AreaPrefab: {instanceID: 0}
+  - m_RangePrefab: {instanceID: 0}
+  - m_SlashPrefab: {instanceID: 0}
+  - m_ThrustPrefab: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
