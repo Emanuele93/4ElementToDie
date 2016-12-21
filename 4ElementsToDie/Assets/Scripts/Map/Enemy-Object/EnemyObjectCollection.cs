@@ -68,6 +68,7 @@ public class EnemyObjectCollection : MonoBehaviour
         foreach (Object world in worlds)
         {
             go = world as GameObject;
+			go.tag = "Enemy";
             fireEnemies[go.GetComponent<Enemy>().difficulty - 1].Add(go);
         }
 
