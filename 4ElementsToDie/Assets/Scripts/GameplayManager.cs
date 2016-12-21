@@ -63,19 +63,11 @@ public class GameplayManager : Singleton<GameplayManager> {
 
         ///////////// TESTING
         //drop spawning
-        if (Input.GetKeyDown(KeyCode.V))
-            StartCoroutine(SpawnDrops(m_player.GetComponent<CharacterManager>()));
-        //item discarding
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            int random = Random.Range(0, 4);
-            if (m_player.GetComponent<CharacterManager>().Inventory[random] != null)
-                m_player.GetComponent<CharacterManager>().RemoveItem(m_player.GetComponent<CharacterManager>().Inventory[random]);
-            else Debug.Log("Randomly selected an empty slot. Can't discard.");
-        }
+//        if (Input.GetKeyDown(KeyCode.V))
+//            StartCoroutine(SpawnDrops(m_player.GetComponent<CharacterManager>()));
         //////////////////////
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.O))
         {
             m_ingameMenuScreen.SetActive(!m_ingameMenuScreen.activeInHierarchy);
         }
@@ -134,16 +126,22 @@ public class GameplayManager : Singleton<GameplayManager> {
         }
         else if (deadCharacter.gameObject.CompareTag("Boss"))
         {
-            SpawnDrops(deadCharacter);
+			StartCoroutine(SpawnDrops(deadCharacter));
             deadCharacter.gameObject.SetActive(false);
             noKilledBosses[(int)deadCharacter.Element]++;
             //TODO: open the next area, obtain the boss crystal and so on.
         }
-        else if (deadCharacter.gameObject.CompareTag("Enemy"))
-        {
-            SpawnDrops(deadCharacter);
-            deadCharacter.gameObject.SetActive(false);
-        }
+////        else if (deadCharacter.gameObject.CompareTag("Enemy"))
+//		else {
+//			StartCoroutine(SpawnDrops(deadCharacter));
+//            deadCharacter.gameObject.SetActive(false);
+//        }
+		//        else if (deadCharacter.gameObject.CompareTag("Enemy"))
+		else {
+			StartCoroutine(SpawnDrops(deadCharacter));
+			deadCharacter.gameObject.SetActive (false);
+		}
+
     }
     #endregion
 
@@ -154,7 +152,8 @@ public class GameplayManager : Singleton<GameplayManager> {
 
         foreach (Item i in character.Inventory)
         {
-            if (i!= null && Random.Range(0, 100) <= i.dropRate)
+			
+			if (i != null && ((Random.Range(0f, 100f) * 5f) <= i.dropRate))
             {
                 Debug.Log("Spawned " + i.itemName);
 
@@ -189,6 +188,9 @@ public class GameplayManager : Singleton<GameplayManager> {
         {
             drop.shouldMove = false;
         }
+
+		//character.gameObject.SetActive (false);
+
     }
 
     public void PickUpDrop(Drop drop)
@@ -205,11 +207,11 @@ public class GameplayManager : Singleton<GameplayManager> {
     {
         //ClearArea();
 		m_player.isDead = true;
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(1f);
         m_overlayText.text = "GAME OVER";
         m_ingameMenuScreen.SetActive(false);
         m_overlayScreen.SetActive(true);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1f);
         m_ingameMenuScreen.SetActive(false);
         m_overlayScreen.SetActive(false);
         SceneManager.LoadScene("Main Menu");
@@ -221,7 +223,7 @@ public class GameplayManager : Singleton<GameplayManager> {
         m_overlayText.text = "CONGRATULATIONS";
         m_ingameMenuScreen.SetActive(false);
         m_overlayScreen.SetActive(true);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2f);
         m_ingameMenuScreen.SetActive(false);
         m_overlayScreen.SetActive(false);
         SceneManager.LoadScene("Main Menu");
