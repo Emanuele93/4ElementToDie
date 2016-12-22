@@ -4,156 +4,336 @@ using UnityEngine;
 
 public class EnemyObjectCollection : MonoBehaviour
 {
-    private List<GameObject>[] fireEnemies;
-    private List<GameObject>[] waterEnemies;
-    private List<GameObject>[] airEnemies;
-    private List<GameObject>[] earthEnemies;
-    private List<GameObject>[] fireEquipment;
-    private List<GameObject>[] waterEquipment;
-    private List<GameObject>[] airEquipment;
-    private List<GameObject>[] earthEquipment;
-    private List<GameObject> fireObject;
-    private List<GameObject> waterObject;
-    private List<GameObject> airObject;
-    private List<GameObject> earthObject;
+    private List<Character>[] fireEnemies;
+    private List<Character>[] waterEnemies;
+    private List<Character>[] airEnemies;
+    private List<Character>[] earthEnemies;
+    private List<Item>[] fireEquipment;
+    private List<Item>[] waterEquipment;
+    private List<Item>[] airEquipment;
+    private List<Item>[] earthEquipment;
+    private List<Item> fireObject;
+    private List<Item> waterObject;
+    private List<Item> airObject;
+    private List<Item> earthObject;
 
     private GameObject fireChest;
     private GameObject waterChest;
     private GameObject airChest;
     private GameObject earthChest;
 
+    public GameObject enemyPrefab;
+    public GameplayManager gameplayManager;
+
     void Start()
     {
-        GameObject go;
+        Character ch;
+        Item it;
         Object[] worlds;
 
-        fireEnemies = new List<GameObject>[10];
+        fireEnemies = new List<Character>[4];
         for (int i = 0; i < fireEnemies.Length; i++)
-            fireEnemies[i] = new List<GameObject>();
+            fireEnemies[i] = new List<Character>();
 
-        waterEnemies = new List<GameObject>[10];
+        waterEnemies = new List<Character>[4];
         for (int i = 0; i < waterEnemies.Length; i++)
-            waterEnemies[i] = new List<GameObject>();
+            waterEnemies[i] = new List<Character>();
 
-        airEnemies = new List<GameObject>[10];
+        airEnemies = new List<Character>[4];
         for (int i = 0; i < airEnemies.Length; i++)
-            airEnemies[i] = new List<GameObject>();
+            airEnemies[i] = new List<Character>();
 
-        earthEnemies = new List<GameObject>[10];
+        earthEnemies = new List<Character>[4];
         for (int i = 0; i < earthEnemies.Length; i++)
-            earthEnemies[i] = new List<GameObject>();
+            earthEnemies[i] = new List<Character>();
 
-        fireEquipment = new List<GameObject>[10];
+        fireEquipment = new List<Item>[4];
         for (int i = 0; i < fireEquipment.Length; i++)
-            fireEquipment[i] = new List<GameObject>();
+            fireEquipment[i] = new List<Item>();
 
-        waterEquipment = new List<GameObject>[10];
+        waterEquipment = new List<Item>[4];
         for (int i = 0; i < waterEquipment.Length; i++)
-            waterEquipment[i] = new List<GameObject>();
+            waterEquipment[i] = new List<Item>();
 
-        airEquipment = new List<GameObject>[10];
+        airEquipment = new List<Item>[4];
         for (int i = 0; i < airEquipment.Length; i++)
-            airEquipment[i] = new List<GameObject>();
+            airEquipment[i] = new List<Item>();
 
-        earthEquipment = new List<GameObject>[10];
+        earthEquipment = new List<Item>[4];
         for (int i = 0; i < earthEquipment.Length; i++)
-            earthEquipment[i] = new List<GameObject>();
+            earthEquipment[i] = new List<Item>();
 
-        fireObject = new List<GameObject>();
-        waterObject = new List<GameObject>();
-        airObject = new List<GameObject>();
-        earthObject = new List<GameObject>();
+        fireObject = new List<Item>();
+        waterObject = new List<Item>();
+        airObject = new List<Item>();
+        earthObject = new List<Item>();
 
-        worlds = Resources.LoadAll("Enemies/FireEnemies", typeof(GameObject));
+        worlds = Resources.LoadAll("Enemies/FireEnemies/Easy", typeof(Character));
         foreach (Object world in worlds)
         {
-            go = world as GameObject;
-			go.tag = "Enemy";
-            fireEnemies[go.GetComponent<Enemy>().difficulty - 1].Add(go);
+            ch = world as Character;
+            fireEnemies[0].Add(ch);
         }
 
-        worlds = Resources.LoadAll("Enemies/WaterEnemies", typeof(GameObject));
+        worlds = Resources.LoadAll("Enemies/FireEnemies/Medium", typeof(Character));
         foreach (Object world in worlds)
         {
-            go = world as GameObject;
-            waterEnemies[go.GetComponent<Enemy>().difficulty - 1].Add(go);
+            ch = world as Character;
+            fireEnemies[1].Add(ch);
         }
 
-        worlds = Resources.LoadAll("Enemies/AirEnemies", typeof(GameObject));
+        worlds = Resources.LoadAll("Enemies/FireEnemies/Hard", typeof(Character));
         foreach (Object world in worlds)
         {
-            go = world as GameObject;
-            airEnemies[go.GetComponent<Enemy>().difficulty - 1].Add(go);
+            ch = world as Character;
+            fireEnemies[2].Add(ch);
         }
 
-        worlds = Resources.LoadAll("Enemies/EarthEnemies", typeof(GameObject));
+        worlds = Resources.LoadAll("Enemies/FireEnemies/Boss", typeof(Character));
         foreach (Object world in worlds)
         {
-            go = world as GameObject;
-            earthEnemies[go.GetComponent<Enemy>().difficulty - 1].Add(go);
+            ch = world as Character;
+            fireEnemies[3].Add(ch);
+        }
+
+        worlds = Resources.LoadAll("Enemies/WaterEnemies/Easy", typeof(Character));
+        foreach (Object world in worlds)
+        {
+            ch = world as Character;
+            waterEnemies[0].Add(ch);
+        }
+
+        worlds = Resources.LoadAll("Enemies/WaterEnemies/Medium", typeof(Character));
+        foreach (Object world in worlds)
+        {
+            ch = world as Character;
+            waterEnemies[1].Add(ch);
+        }
+
+        worlds = Resources.LoadAll("Enemies/WaterEnemies/Hard", typeof(Character));
+        foreach (Object world in worlds)
+        {
+            ch = world as Character;
+            waterEnemies[2].Add(ch);
+        }
+
+        worlds = Resources.LoadAll("Enemies/WaterEnemies/Boss", typeof(Character));
+        foreach (Object world in worlds)
+        {
+            ch = world as Character;
+            waterEnemies[3].Add(ch);
+        }
+
+        worlds = Resources.LoadAll("Enemies/EarthEnemies/Easy", typeof(Character));
+        foreach (Object world in worlds)
+        {
+            ch = world as Character;
+            earthEnemies[0].Add(ch);
+        }
+
+        worlds = Resources.LoadAll("Enemies/EarthEnemies/Medium", typeof(Character));
+        foreach (Object world in worlds)
+        {
+            ch = world as Character;
+            earthEnemies[1].Add(ch);
+        }
+
+        worlds = Resources.LoadAll("Enemies/EarthEnemies/Hard", typeof(Character));
+        foreach (Object world in worlds)
+        {
+            ch = world as Character;
+            earthEnemies[2].Add(ch);
+        }
+
+        worlds = Resources.LoadAll("Enemies/EarthEnemies/Boss", typeof(Character));
+        foreach (Object world in worlds)
+        {
+            ch = world as Character;
+            earthEnemies[3].Add(ch);
+        }
+
+        worlds = Resources.LoadAll("Enemies/AirEnemies/Easy", typeof(Character));
+        foreach (Object world in worlds)
+        {
+            ch = world as Character;
+            airEnemies[0].Add(ch);
+        }
+
+        worlds = Resources.LoadAll("Enemies/AirEnemies/Medium", typeof(Character));
+        foreach (Object world in worlds)
+        {
+            ch = world as Character;
+            airEnemies[1].Add(ch);
+        }
+
+        worlds = Resources.LoadAll("Enemies/AirEnemies/Hard", typeof(Character));
+        foreach (Object world in worlds)
+        {
+            ch = world as Character;
+            airEnemies[2].Add(ch);
+        }
+
+        worlds = Resources.LoadAll("Enemies/AirEnemies/Boss", typeof(Character));
+        foreach (Object world in worlds)
+        {
+            ch = world as Character;
+            airEnemies[3].Add(ch);
+        }
+
+        //--------------------------------------------------------------------------------------------------------
+
+
+        worlds = Resources.LoadAll("Items/FireItem/Equipments/Common", typeof(Item));
+        foreach (Object world in worlds)
+        {
+            it = world as Item;
+            fireEquipment[0].Add(it);
+        }
+
+        worlds = Resources.LoadAll("Items/FireItem/Equipments/Rare", typeof(Item));
+        foreach (Object world in worlds)
+        {
+            it = world as Item;
+            fireEquipment[1].Add(it);
+        }
+
+        worlds = Resources.LoadAll("Items/FireItem/Equipments/Epic", typeof(Item));
+        foreach (Object world in worlds)
+        {
+            it = world as Item;
+            fireEquipment[2].Add(it);
+        }
+
+        worlds = Resources.LoadAll("Items/FireItem/Equipments/Legendary", typeof(Item));
+        foreach (Object world in worlds)
+        {
+            it = world as Item;
+            fireEquipment[3].Add(it);
+        }
+
+        worlds = Resources.LoadAll("Items/WaterItem/Equipments/Common", typeof(Item));
+        foreach (Object world in worlds)
+        {
+            it = world as Item;
+            waterEquipment[0].Add(it);
+        }
+
+        worlds = Resources.LoadAll("Items/WaterItem/Equipments/Rare", typeof(Item));
+        foreach (Object world in worlds)
+        {
+            it = world as Item;
+            waterEquipment[1].Add(it);
+        }
+
+        worlds = Resources.LoadAll("Items/WaterItem/Equipments/Epic", typeof(Item));
+        foreach (Object world in worlds)
+        {
+            it = world as Item;
+            waterEquipment[2].Add(it);
+        }
+
+        worlds = Resources.LoadAll("Items/WaterItem/Equipments/Legendary", typeof(Item));
+        foreach (Object world in worlds)
+        {
+            it = world as Item;
+            waterEquipment[3].Add(it);
+        }
+
+        worlds = Resources.LoadAll("Items/EarthItem/Equipments/Common", typeof(Item));
+        foreach (Object world in worlds)
+        {
+            it = world as Item;
+            earthEquipment[0].Add(it);
+        }
+
+        worlds = Resources.LoadAll("Items/EarthItem/Equipments/Rare", typeof(Item));
+        foreach (Object world in worlds)
+        {
+            it = world as Item;
+            earthEquipment[1].Add(it);
+        }
+
+        worlds = Resources.LoadAll("Items/EarthItem/Equipments/Epic", typeof(Item));
+        foreach (Object world in worlds)
+        {
+            it = world as Item;
+            earthEquipment[2].Add(it);
+        }
+
+        worlds = Resources.LoadAll("Items/EarthItem/Equipments/Legendary", typeof(Item));
+        foreach (Object world in worlds)
+        {
+            it = world as Item;
+            earthEquipment[3].Add(it);
+        }
+
+        worlds = Resources.LoadAll("Items/AirItem/Equipments/Common", typeof(Item));
+        foreach (Object world in worlds)
+        {
+            it = world as Item;
+            airEquipment[0].Add(it);
+        }
+
+        worlds = Resources.LoadAll("Items/AirItem/Equipments/Rare", typeof(Item));
+        foreach (Object world in worlds)
+        {
+            it = world as Item;
+            airEquipment[1].Add(it);
+        }
+
+        worlds = Resources.LoadAll("Items/AirItem/Equipments/Epic", typeof(Item));
+        foreach (Object world in worlds)
+        {
+            it = world as Item;
+            airEquipment[2].Add(it);
+        }
+
+        worlds = Resources.LoadAll("Items/AirItem/Equipments/Legendary", typeof(Item));
+        foreach (Object world in worlds)
+        {
+            it = world as Item;
+            airEquipment[3].Add(it);
+        }
+
+        //----------------------------------------------------------------------------------------
+
+        worlds = Resources.LoadAll("Items/FireItem/Object", typeof(Item));
+        foreach (Object world in worlds)
+        {
+            it = world as Item;
+            fireObject.Add(it);
+        }
+
+        worlds = Resources.LoadAll("Items/AirItem/Object", typeof(Item));
+        foreach (Object world in worlds)
+        {
+            it = world as Item;
+            airObject.Add(it);
+        }
+
+        worlds = Resources.LoadAll("Items/WaterItem/Object", typeof(Item));
+        foreach (Object world in worlds)
+        {
+            it = world as Item;
+            waterObject.Add(it);
+        }
+
+        worlds = Resources.LoadAll("Items/EarthItem/Object", typeof(Item));
+        foreach (Object world in worlds)
+        {
+            it = world as Item;
+            earthObject.Add(it);
         }
         
-        worlds = Resources.LoadAll("Object/FireObject/Equipment", typeof(GameObject));
-        foreach (Object world in worlds)
-        {
-            go = world as GameObject;
-            fireEquipment[go.GetComponent<tempStatsObject>().rarity - 1].Add(go);
-        }
+        fireChest = (Resources.LoadAll("Items/FireItem/chestFire", typeof(GameObject)))[0] as GameObject;
+        airChest = (Resources.LoadAll("Items/AirItem/chestAir", typeof(GameObject)))[0] as GameObject;
+        waterChest = (Resources.LoadAll("Items/WaterItem/chestWater", typeof(GameObject)))[0] as GameObject;
+        earthChest = (Resources.LoadAll("Items/EarthItem/chestEarth", typeof(GameObject)))[0] as GameObject;
 
-
-        worlds = Resources.LoadAll("Object/WaterObject/Equipment", typeof(GameObject));
-        foreach (Object world in worlds)
-        {
-            go = world as GameObject;
-            waterEquipment[go.GetComponent<tempStatsObject>().rarity - 1].Add(go);
-        }
-
-        worlds = Resources.LoadAll("Object/AirObject/Equipment", typeof(GameObject));
-        foreach (Object world in worlds)
-        {
-            go = world as GameObject;
-            airEquipment[go.GetComponent<tempStatsObject>().rarity - 1].Add(go);
-        }
-
-        worlds = Resources.LoadAll("Object/EarthObject/Equipment", typeof(GameObject));
-        foreach (Object world in worlds)
-        {
-            go = world as GameObject;
-            earthEquipment[go.GetComponent<tempStatsObject>().rarity - 1].Add(go);
-        }
-
-        worlds = Resources.LoadAll("Object/FireObject/Object", typeof(GameObject));
-        foreach (Object world in worlds)
-        {
-            go = world as GameObject;
-            fireObject.Add(go);
-        }
-
-        worlds = Resources.LoadAll("Object/WaterObject/Object", typeof(GameObject));
-        foreach (Object world in worlds)
-        {
-            go = world as GameObject;
-            waterObject.Add(go);
-        }
-
-        worlds = Resources.LoadAll("Object/AirObject/Object", typeof(GameObject));
-        foreach (Object world in worlds)
-        {
-            go = world as GameObject;
-            airObject.Add(go);
-        }
-
-        worlds = Resources.LoadAll("Object/EarthObject/Object", typeof(GameObject));
-        foreach (Object world in worlds)
-        {
-            go = world as GameObject;
-            earthObject.Add(go);
-        }
-
-        fireChest = (Resources.LoadAll("Object/FireObject/chestFire", typeof(GameObject)))[0] as GameObject;
-        airChest = (Resources.LoadAll("Object/AirObject/chestAir", typeof(GameObject)))[0] as GameObject;
-        waterChest = (Resources.LoadAll("Object/WaterObject/chestWater", typeof(GameObject)))[0] as GameObject;
-        earthChest = (Resources.LoadAll("Object/EarthObject/chestEarth", typeof(GameObject)))[0] as GameObject;
+        fireChest.GetComponent<chestEnemiesActivator>().gm = gameplayManager;
+        airChest.GetComponent<chestEnemiesActivator>().gm = gameplayManager;
+        waterChest.GetComponent<chestEnemiesActivator>().gm = gameplayManager;
+        earthChest.GetComponent<chestEnemiesActivator>().gm = gameplayManager;
     }
 
     public GameObject getFireEnemy(int diff)
@@ -162,7 +342,9 @@ public class EnemyObjectCollection : MonoBehaviour
         while (fireEnemies[difficulty].Count == 0)
             difficulty--;
         int enemyNumber = Random.Range(0, fireEnemies[difficulty].Count);
-        return Instantiate(fireEnemies[difficulty][enemyNumber], new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        GameObject go = Instantiate(enemyPrefab, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        go.GetComponent<CharacterManager>().InitCharacter(fireEnemies[difficulty][enemyNumber]);
+        return go;
     }
 
     public GameObject getWaterEnemy(int diff)
@@ -170,8 +352,10 @@ public class EnemyObjectCollection : MonoBehaviour
         int difficulty = Random.Range(0, diff - 1);
         while (waterEnemies[difficulty].Count == 0)
             difficulty--;
-        int enemyNumber = Random.Range(0, fireEnemies[difficulty].Count);
-        return Instantiate(waterEnemies[difficulty][enemyNumber], new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        int enemyNumber = Random.Range(0, waterEnemies[difficulty].Count);
+        GameObject go = Instantiate(enemyPrefab, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        go.GetComponent<CharacterManager>().InitCharacter(waterEnemies[difficulty][enemyNumber]);
+        return go;
     }
 
     public GameObject getAirEnemy(int diff)
@@ -179,8 +363,10 @@ public class EnemyObjectCollection : MonoBehaviour
         int difficulty = Random.Range(0, diff - 1);
         while (airEnemies[difficulty].Count == 0)
             difficulty--;
-        int enemyNumber = Random.Range(0, fireEnemies[difficulty].Count);
-        return Instantiate(airEnemies[difficulty][enemyNumber], new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        int enemyNumber = Random.Range(0, airEnemies[difficulty].Count);
+        GameObject go = Instantiate(enemyPrefab, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        go.GetComponent<CharacterManager>().InitCharacter(airEnemies[difficulty][enemyNumber]);
+        return go;
     }
 
     public GameObject getEarthEnemy(int diff)
@@ -188,64 +374,66 @@ public class EnemyObjectCollection : MonoBehaviour
         int difficulty = Random.Range(0, diff - 1);
         while (earthEnemies[difficulty].Count == 0)
             difficulty--;
-        int enemyNumber = Random.Range(0, fireEnemies[difficulty].Count);
-        return Instantiate(earthEnemies[difficulty][enemyNumber], new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        int enemyNumber = Random.Range(0, earthEnemies[difficulty].Count);
+        GameObject go = Instantiate(enemyPrefab, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        go.GetComponent<CharacterManager>().InitCharacter(earthEnemies[difficulty][enemyNumber]);
+        return go;
     }
 
-    public GameObject getFireEquipment(int rar)
+    public Item getFireEquipment(int rar)
     {
         int rarity = Random.Range(0, rar - 1);
         while (fireEquipment[rarity].Count == 0)
             rarity--;
         int equipmentsNumber = Random.Range(0, fireEquipment[rarity].Count);
-        return Instantiate(fireEquipment[rarity][equipmentsNumber], new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        return fireEquipment[rarity][equipmentsNumber];
     }
 
-    public GameObject getWaterEquipment(int rar)
+    public Item getWaterEquipment(int rar)
     {
         int rarity = Random.Range(0, rar - 1);
         while (waterEquipment[rarity].Count == 0)
             rarity--;
-        int equipmentsNumber = Random.Range(0, fireEquipment[rarity].Count);
-        return Instantiate(waterEquipment[rarity][equipmentsNumber], new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        int equipmentsNumber = Random.Range(0, waterEquipment[rarity].Count);
+        return waterEquipment[rarity][equipmentsNumber];
     }
 
-    public GameObject getAirEquipment(int rar)
+    public Item getAirEquipment(int rar)
     {
         int rarity = Random.Range(0, rar - 1);
         while (airEquipment[rarity].Count == 0)
             rarity--;
-        int equipmentsNumber = Random.Range(0, fireEquipment[rarity].Count);
-        return Instantiate(airEquipment[rarity][equipmentsNumber], new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        int equipmentsNumber = Random.Range(0, airEquipment[rarity].Count);
+        return airEquipment[rarity][equipmentsNumber];
     }
 
-    public GameObject getEarthEquipment(int rar)
+    public Item getEarthEquipment(int rar)
     {
         int rarity = Random.Range(0, rar - 1);
         while (earthEquipment[rarity].Count == 0)
             rarity--;
         int equipmentsNumber = Random.Range(0, earthEquipment[rarity].Count);
-        return Instantiate(earthEquipment[rarity][equipmentsNumber], new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        return earthEquipment[rarity][equipmentsNumber];
     }
 
-    public GameObject getAirObject()
+    public Item getAirObject()
     {
-        return Instantiate(airObject[Random.Range(0, airObject.Count)], new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        return airObject[Random.Range(0, airObject.Count)];
     }
 
-    public GameObject getWaterObject()
+    public Item getWaterObject()
     {
-        return Instantiate(waterObject[Random.Range(0, waterObject.Count)], new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        return waterObject[Random.Range(0, waterObject.Count)];
     }
 
-    public GameObject getFireObject()
+    public Item getFireObject()
     {
-        return Instantiate(fireObject[Random.Range(0, fireObject.Count)], new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        return fireObject[Random.Range(0, fireObject.Count)];
     }
 
-    public GameObject getEarthObject()
+    public Item getEarthObject()
     {
-        return Instantiate(earthObject[Random.Range(0, earthObject.Count)], new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+        return earthObject[Random.Range(0, earthObject.Count)];
     }
 
     public GameObject getAirChest()

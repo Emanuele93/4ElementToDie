@@ -193,6 +193,53 @@ public class GameplayManager : Singleton<GameplayManager> {
 
     }
 
+    public IEnumerator SpawnChestDrops(GameObject chest)
+    {
+        List<Drop> drops = new List<Drop>();
+        Debug.Log(chest.GetComponent<chestEnemiesActivator>().objects + " qui");
+        foreach (Item i in chest.GetComponent<chestEnemiesActivator>().objects)
+        {
+
+            if (i != null && ((Random.Range(0f, 100f) * 5f) <= i.dropRate))
+            {
+                Debug.Log("Spawned " + i.itemName);
+
+                //spawn the object
+                GameObject go = ObjectPoolingManager.Instance.GetObject(m_drop.name);
+                go.transform.position = chest.transform.position;
+                go.transform.rotation = Quaternion.identity;
+                go.GetComponent<SpriteRenderer>().sprite = i.sprite;
+                go.SetActive(true);
+
+                //define item
+                Drop drop = go.GetComponent<Drop>() as Drop;
+                drop.item = i;
+                drops.Add(drop);
+
+                //give a random direction to the explosion
+                drop.direction = new Vector3(
+                    UnityEngine.Random.Range(-1f, 1f),
+                    UnityEngine.Random.Range(-1f, 1f),
+                    0f
+                );
+
+                //enable movement
+                drop.shouldMove = true;
+            }
+        }
+
+        yield return new WaitForSeconds(1);
+
+        //disable movement
+        foreach (Drop drop in drops)
+        {
+            drop.shouldMove = false;
+        }
+
+        //character.gameObject.SetActive (false);
+
+    }
+
     public void PickUpDrop(Drop drop)
     {
         if(m_player.GetComponent<CharacterManager>().AddItem(drop.item))

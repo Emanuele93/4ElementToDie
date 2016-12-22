@@ -13,7 +13,6 @@ public abstract class roomFactory : MonoBehaviour
     public GameObject floor;
     
     public GameObject cameraMenager;
-    public Character typeOfPlayer;
 
     public GameObject obstacleObject;
     public GameObject miniMapActivator;
@@ -289,14 +288,14 @@ public abstract class roomFactory : MonoBehaviour
     {
         GameObject enemies = Instantiate(miniMapActivator, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
 
-        int i, j, x, y, activX, activY;
+        int i, j, x, y, activX, activY, diff;
         bool full, stop;
 
         i = x = Random.Range(0, roomStructure.GetLength(0));
         j = y = Random.Range(0, roomStructure.GetLength(1));
         full = stop = false;
 
-        int difficulty = Random.Range(1, 10);
+        int difficulty = Random.Range(1, 4);
         if (Random.Range(0, 3) == 0)
         {
             while (roomStructure[i, j] != 0 && !full)
@@ -344,9 +343,9 @@ public abstract class roomFactory : MonoBehaviour
                     {
                         roomStructure[i, j] = 2;
 
-                        GameObject enemy = getEnemy(difficulty);
-                        enemy.GetComponent<CharacterManager>().InitCharacter(typeOfPlayer);
-                        difficulty -= enemy.GetComponent<Enemy>().difficulty;
+                        diff = Random.Range(1, difficulty + 1);
+                        GameObject enemy = getEnemy(diff);
+                        difficulty -= diff;
                         enemy.transform.position = new Vector3(i - 6, j - 3, 0);
                         enemy.transform.parent = enemies.transform;
                         activator.GetComponent<chestEnemiesActivator>().addChild(enemy);
@@ -379,9 +378,9 @@ public abstract class roomFactory : MonoBehaviour
             if (!full)
             {
                 roomStructure[i, j] = 2;
-                GameObject enemy = getEnemy(difficulty);
-                enemy.GetComponent<CharacterManager>().InitCharacter(typeOfPlayer);
-                difficulty -= enemy.GetComponent<Enemy>().difficulty;
+                diff = Random.Range(1, difficulty + 1);
+                GameObject enemy = getEnemy(diff);
+                difficulty -= diff;
                 enemy.transform.position = new Vector3(i - 6, j - 3, 0);
                 enemy.transform.parent = enemies.transform;
             }

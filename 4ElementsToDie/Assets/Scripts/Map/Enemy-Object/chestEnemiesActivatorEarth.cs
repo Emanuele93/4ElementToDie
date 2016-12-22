@@ -10,10 +10,8 @@ public class chestEnemiesActivatorEarth : chestEnemiesActivator
         int numObject;
         if (Random.Range(0, 3) == 0)
         {
-            GameObject go = enemyObjectCollection.GetComponent<EnemyObjectCollection>().getEarthEquipment(Random.Range(1, 10));
-            go.transform.parent = transform;
-            go.SetActive(false);
-            objects.Add(go);
+            Item it = enemyObjectCollection.GetComponent<EnemyObjectCollection>().getEarthEquipment(Random.Range(1, 5));
+            objects.Add(it);
             equipment = true;
         }
         if (equipment)
@@ -23,10 +21,8 @@ public class chestEnemiesActivatorEarth : chestEnemiesActivator
         while (numObject > 0)
         {
             numObject--;
-            GameObject go = enemyObjectCollection.GetComponent<EnemyObjectCollection>().getEarthObject();
-            go.transform.parent = transform;
-            go.SetActive(false);
-            objects.Add(go);
+            Item it = enemyObjectCollection.GetComponent<EnemyObjectCollection>().getEarthObject();
+            objects.Add(it);
         }
     }
 

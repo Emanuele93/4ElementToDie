@@ -30,7 +30,6 @@ public class miniMapContoller : MonoBehaviour
                 }
             }
         }
-        Debug.Log("qui");
         playerObject.transform.localScale = new Vector3(2 / (float)map.GetLength(1), 2 / (float)map.GetLength(0), 1f);
         player = Instantiate(playerObject, new Vector3(0, 0, 0), playerObject.transform.rotation, transform) as GameObject;
         player.name = "miniMapPlayer";
