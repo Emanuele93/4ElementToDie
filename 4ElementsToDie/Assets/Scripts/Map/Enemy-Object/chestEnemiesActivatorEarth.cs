@@ -17,7 +17,7 @@ public class chestEnemiesActivatorEarth : chestEnemiesActivator
         if (equipment)
             numObject = Random.Range(0, 3);
         else
-            numObject = Random.Range(2, 5);
+            numObject = Random.Range(2, 4);
         while (numObject > 0)
         {
             numObject--;

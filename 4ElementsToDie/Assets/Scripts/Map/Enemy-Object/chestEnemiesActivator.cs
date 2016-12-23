@@ -23,8 +23,9 @@ public abstract class chestEnemiesActivator : MonoBehaviour
         if (inChestArea && Input.GetKeyDown(KeyCode.F))
         {
             remouveKey();
-            gm.SpawnChestDrops(gameObject);
-            Destroy(gameObject);
+            foreach (GameObject go in enemies)
+                go.SetActive(true);
+            gm.openChest(gameObject);
         }
     }
 

@@ -139,7 +139,7 @@ public class GameplayManager : Singleton<GameplayManager> {
 		//        else if (deadCharacter.gameObject.CompareTag("Enemy"))
 		else {
 			StartCoroutine(SpawnDrops(deadCharacter));
-			deadCharacter.gameObject.SetActive (false);
+            deadCharacter.gameObject.SetActive (false);
 		}
 
     }
@@ -193,14 +193,19 @@ public class GameplayManager : Singleton<GameplayManager> {
 
     }
 
+    public void openChest(GameObject chest)
+    {
+        StartCoroutine(SpawnChestDrops(chest));
+        Destroy(chest);
+    }
+
     public IEnumerator SpawnChestDrops(GameObject chest)
     {
         List<Drop> drops = new List<Drop>();
-        Debug.Log(chest.GetComponent<chestEnemiesActivator>().objects + " qui");
         foreach (Item i in chest.GetComponent<chestEnemiesActivator>().objects)
         {
 
-            if (i != null && ((Random.Range(0f, 100f) * 5f) <= i.dropRate))
+            if (i != null)
             {
                 Debug.Log("Spawned " + i.itemName);
 
