@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class keyObjectWater : keyObject
+public class keyObjectWater : usableObject
 {
     void OnTriggerEnter2D(Collider2D other)
     {

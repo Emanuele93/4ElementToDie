@@ -10,8 +10,7 @@ public class chestEnemiesActivatorWater : chestEnemiesActivator
         int numObject;
         if (Random.Range(0, 3) == 0)
         {
-            Item it = enemyObjectCollection.GetComponent<EnemyObjectCollection>().getWaterEquipment(Random.Range(1, 5));
-            objects.Add(it);
+            item = enemyObjectCollection.GetComponent<EnemyObjectCollection>().getWaterEquipment(getRarity());
             equipment = true;
         }
         if (equipment)
@@ -21,8 +20,11 @@ public class chestEnemiesActivatorWater : chestEnemiesActivator
         while (numObject > 0)
         {
             numObject--;
-            Item it = enemyObjectCollection.GetComponent<EnemyObjectCollection>().getWaterObject();
-            objects.Add(it);
+            GameObject go = enemyObjectCollection.GetComponent<EnemyObjectCollection>().getWaterObject();
+            go.transform.parent = transform;
+            go.transform.position = transform.position;
+            go.SetActive(false);
+            objects.Add(go);
         }
     }
 
@@ -49,5 +51,22 @@ public class chestEnemiesActivatorWater : chestEnemiesActivator
     protected override void remouveKey()
     {
         player.Keys[(int)ElementType.Water]--;
+    }
+
+    private int getRarity()
+    {
+        int rarity, variation;
+        rarity = gm.getNoKilledBosses((int)ElementType.Water) + 2;
+        if (rarity > 4) rarity = 4;
+        if (Random.Range(0, 2) == 0)
+        {
+            if (Random.Range(0, 3) == 0) variation = 2;
+            else variation = 1;
+            if (Random.Range(0, 2) == 0) variation = -variation;
+            rarity += variation;
+            if (rarity < 1) rarity = 1;
+            else if (rarity > 3) rarity = 3;
+        }
+        return rarity;
     }
 }

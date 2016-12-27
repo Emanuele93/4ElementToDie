@@ -11,7 +11,7 @@ public abstract class roomFactory : MonoBehaviour
     public GameObject wallVerticalDoubleAngle;
     public GameObject angleWall;
     public GameObject floor;
-    
+
     public GameObject cameraMenager;
 
     public GameObject obstacleObject;
@@ -20,10 +20,12 @@ public abstract class roomFactory : MonoBehaviour
     private GameObject miniMap;
 
     protected int[,] roomStructure;
+    protected GameplayManager gameplayManager;
 
     void Start()
     {
         roomStructure = new int[13, 7];
+        gameplayManager = enemyObjectCollection.GetComponent<EnemyObjectCollection>().gameplayManager;
     }
 
     void Update()
@@ -295,7 +297,17 @@ public abstract class roomFactory : MonoBehaviour
         j = y = Random.Range(0, roomStructure.GetLength(1));
         full = stop = false;
 
-        int difficulty = Random.Range(1, 4);
+        int difficulty = getDifficulty() + 1;
+        if (difficulty > 3) difficulty = 3;
+        if (Random.Range(0, 2) == 0)
+        {
+            if (Random.Range(0, 3) == 0) diff = 2;
+            else diff = 1;
+            if (Random.Range(0, 2) == 0) diff = -diff;
+            difficulty += diff;
+            if (difficulty < 1) difficulty = 1;
+            else if (difficulty > 3) difficulty = 3;
+        }
         if (Random.Range(0, 3) == 0)
         {
             while (roomStructure[i, j] != 0 && !full)
@@ -356,38 +368,40 @@ public abstract class roomFactory : MonoBehaviour
                 }
             }
         }
-        while (difficulty > 0 && !full)
-        {
-            i = x = Random.Range(0, roomStructure.GetLength(0));
-            j = y = Random.Range(0, roomStructure.GetLength(1));
-            full = false;
-            while (!(roomStructure[i, j] == 0 && !full))
+        if (!full)
+            do
             {
-                i++;
-                if (i == roomStructure.GetLength(0))
+                i = x = Random.Range(0, roomStructure.GetLength(0));
+                j = y = Random.Range(0, roomStructure.GetLength(1));
+                full = false;
+                while (!(roomStructure[i, j] == 0 && !full))
                 {
-                    i = 0;
-                    j++;
-                    if (j == roomStructure.GetLength(1))
-                        j = 0;
+                    i++;
+                    if (i == roomStructure.GetLength(0))
+                    {
+                        i = 0;
+                        j++;
+                        if (j == roomStructure.GetLength(1))
+                            j = 0;
+                    }
+                    if (i == x && j == y)
+                        full = true;
                 }
-                if (i == x && j == y)
-                    full = true;
-            }
 
-            if (!full)
-            {
-                roomStructure[i, j] = 2;
-                diff = Random.Range(1, difficulty + 1);
-                GameObject enemy = getEnemy(diff);
-                difficulty -= diff;
-                enemy.transform.position = new Vector3(i - 6, j - 3, 0);
-                enemy.transform.parent = enemies.transform;
-            }
-        }
+                if (!full)
+                {
+                    roomStructure[i, j] = 2;
+                    diff = Random.Range(1, difficulty + 1);
+                    GameObject enemy = getEnemy(diff);
+                    difficulty -= diff;
+                    enemy.transform.position = new Vector3(i - 6, j - 3, 0);
+                    enemy.transform.parent = enemies.transform;
+                }
+            } while (difficulty > 0 && !full);
         return enemies;
     }
 
+    protected abstract int getDifficulty();
     protected abstract GameObject getEnemy(int difficulty);
     protected abstract GameObject getChest();
 
@@ -434,4 +448,6 @@ public abstract class roomFactory : MonoBehaviour
                 if (roomStructure[i, j] == 1)
                     Instantiate(obstacleObject, new Vector3(i - 6, j - 3, 0), Quaternion.Euler(0, 0, 0), obstacles.transform);
     }
+
+    public abstract void getBossEnemy(Vector3 pos, Transform parent);
 }

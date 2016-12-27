@@ -9,7 +9,9 @@ public abstract class chestEnemiesActivator : MonoBehaviour
     public GameObject buttom;
     protected bool inChestArea;
     protected CharacterManager player;
-    public List<Item> objects = new List<Item>();
+    public List<GameObject> objects = new List<GameObject>();
+    public Item item = null;
+
 
     // Use this for initialization
     void Start()

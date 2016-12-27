@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class keyObjectEarth : keyObject
+public class keyObjectEarth : usableObject
 {
     void OnTriggerEnter2D(Collider2D other)
     {

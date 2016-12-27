@@ -144,4 +144,16 @@ public class roomFactoryRight : roomFactory
         else
             return enemyObjectCollection.GetComponent<EnemyObjectCollection>().getAirChest();
     }
+
+    protected override int getDifficulty()
+    {
+        return gameplayManager.getNoKilledBosses((int)(ElementType.Air));
+    }
+
+    public override void getBossEnemy(Vector3 pos, Transform parent)
+    {
+        GameObject go = enemyObjectCollection.GetComponent<EnemyObjectCollection>().getAirEnemy(4);
+        go.transform.parent = parent;
+        go.transform.position = pos;
+    }
 }

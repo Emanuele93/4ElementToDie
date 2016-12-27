@@ -5,7 +5,7 @@ public class miniMapSetter : MonoBehaviour
 {
     public GameObject controller;
     private bool entered = false;
-    private bool voidRoom = false;
+    //private bool voidRoom = false;
 
     // Use this for initialization
     void Start()

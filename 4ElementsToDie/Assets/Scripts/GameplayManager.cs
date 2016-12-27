@@ -196,42 +196,54 @@ public class GameplayManager : Singleton<GameplayManager> {
     public void openChest(GameObject chest)
     {
         StartCoroutine(SpawnChestDrops(chest));
-        Destroy(chest);
     }
 
     public IEnumerator SpawnChestDrops(GameObject chest)
     {
+        List<GameObject> objects = new List<GameObject>();
         List<Drop> drops = new List<Drop>();
-        foreach (Item i in chest.GetComponent<chestEnemiesActivator>().objects)
+        Item i = chest.GetComponent<chestEnemiesActivator>().item;
+        if (i != null)
         {
+            Debug.Log("Spawned " + i.itemName);
 
-            if (i != null)
-            {
-                Debug.Log("Spawned " + i.itemName);
+            //spawn the object
+            GameObject go = ObjectPoolingManager.Instance.GetObject(m_drop.name);
+            go.transform.position = chest.transform.position;
+            go.transform.rotation = Quaternion.identity;
+            go.GetComponent<SpriteRenderer>().sprite = i.sprite;
+            go.SetActive(true);
 
-                //spawn the object
-                GameObject go = ObjectPoolingManager.Instance.GetObject(m_drop.name);
-                go.transform.position = chest.transform.position;
-                go.transform.rotation = Quaternion.identity;
-                go.GetComponent<SpriteRenderer>().sprite = i.sprite;
-                go.SetActive(true);
+            //define item
+            Drop drop = go.GetComponent<Drop>() as Drop;
+            drop.item = i;
+            drops.Add(drop);
 
-                //define item
-                Drop drop = go.GetComponent<Drop>() as Drop;
-                drop.item = i;
-                drops.Add(drop);
+            //give a random direction to the explosion
+            drop.direction = new Vector3(
+                UnityEngine.Random.Range(-1f, 1f),
+                UnityEngine.Random.Range(-1f, 1f),
+                0f
+            );
 
-                //give a random direction to the explosion
-                drop.direction = new Vector3(
-                    UnityEngine.Random.Range(-1f, 1f),
-                    UnityEngine.Random.Range(-1f, 1f),
-                    0f
-                );
-
-                //enable movement
-                drop.shouldMove = true;
-            }
+            //enable movement
+            drop.shouldMove = true;
         }
+
+        foreach (GameObject drop in chest.GetComponent<chestEnemiesActivator>().objects)
+        {
+            objects.Add(drop);
+            drop.GetComponent<usableObject>().direction = new Vector3(
+                UnityEngine.Random.Range(-1f, 1f),
+                UnityEngine.Random.Range(-1f, 1f),
+                0f
+            );
+            drop.SetActive(true);
+            drop.transform.parent = drop.transform.parent.parent;
+            drop.GetComponent<usableObject>().shouldMove = true;
+        }
+
+        Destroy(chest);
 
         yield return new WaitForSeconds(1);
 
@@ -241,6 +253,12 @@ public class GameplayManager : Singleton<GameplayManager> {
             drop.shouldMove = false;
         }
 
+        foreach (GameObject drop in objects)
+        {
+            drop.GetComponent<usableObject>().shouldMove = false;
+            drop.GetComponent<CircleCollider2D>().isTrigger = true;
+            drop.layer = 0;
+        }
         //character.gameObject.SetActive (false);
 
     }
@@ -299,5 +317,10 @@ public class GameplayManager : Singleton<GameplayManager> {
 	public void StopAllMusic() {
 		MusicManager.Instance.StopAll ();
 	}
-	#endregion
+    #endregion
+
+    public int getNoKilledBosses (int element)
+    {
+        return noKilledBosses[element];
+    }
 }

@@ -12,10 +12,10 @@ public class EnemyObjectCollection : MonoBehaviour
     private List<Item>[] waterEquipment;
     private List<Item>[] airEquipment;
     private List<Item>[] earthEquipment;
-    private List<Item> fireObject;
-    private List<Item> waterObject;
-    private List<Item> airObject;
-    private List<Item> earthObject;
+    private List<GameObject> fireObject;
+    private List<GameObject> waterObject;
+    private List<GameObject> airObject;
+    private List<GameObject> earthObject;
 
     private GameObject fireChest;
     private GameObject waterChest;
@@ -27,6 +27,7 @@ public class EnemyObjectCollection : MonoBehaviour
 
     void Start()
     {
+        GameObject go;
         Character ch;
         Item it;
         Object[] worlds;
@@ -63,10 +64,10 @@ public class EnemyObjectCollection : MonoBehaviour
         for (int i = 0; i < earthEquipment.Length; i++)
             earthEquipment[i] = new List<Item>();
 
-        fireObject = new List<Item>();
-        waterObject = new List<Item>();
-        airObject = new List<Item>();
-        earthObject = new List<Item>();
+        fireObject = new List<GameObject>();
+        waterObject = new List<GameObject>();
+        airObject = new List<GameObject>();
+        earthObject = new List<GameObject>();
 
         worlds = Resources.LoadAll("Enemies/FireEnemies/Easy", typeof(Character));
         foreach (Object world in worlds)
@@ -297,39 +298,39 @@ public class EnemyObjectCollection : MonoBehaviour
 
         //----------------------------------------------------------------------------------------
 
-        worlds = Resources.LoadAll("Items/FireItem/Object", typeof(Item));
+        worlds = Resources.LoadAll("Items/FireItem/Object", typeof(GameObject));
         foreach (Object world in worlds)
         {
-            it = world as Item;
-            fireObject.Add(it);
+            go = world as GameObject;
+            fireObject.Add(go);
         }
 
-        worlds = Resources.LoadAll("Items/AirItem/Object", typeof(Item));
+        worlds = Resources.LoadAll("Items/AirItem/Object", typeof(GameObject));
         foreach (Object world in worlds)
         {
-            it = world as Item;
-            airObject.Add(it);
+            go = world as GameObject;
+            airObject.Add(go);
         }
 
-        worlds = Resources.LoadAll("Items/WaterItem/Object", typeof(Item));
+        worlds = Resources.LoadAll("Items/WaterItem/Object", typeof(GameObject));
         foreach (Object world in worlds)
         {
-            it = world as Item;
-            waterObject.Add(it);
+            go = world as GameObject;
+            waterObject.Add(go);
         }
 
-        worlds = Resources.LoadAll("Items/EarthItem/Object", typeof(Item));
+        worlds = Resources.LoadAll("Items/EarthItem/Object", typeof(GameObject));
         foreach (Object world in worlds)
         {
-            it = world as Item;
-            earthObject.Add(it);
+            go = world as GameObject;
+            earthObject.Add(go);
         }
         
         fireChest = (Resources.LoadAll("Items/FireItem/chestFire", typeof(GameObject)))[0] as GameObject;
         airChest = (Resources.LoadAll("Items/AirItem/chestAir", typeof(GameObject)))[0] as GameObject;
         waterChest = (Resources.LoadAll("Items/WaterItem/chestWater", typeof(GameObject)))[0] as GameObject;
         earthChest = (Resources.LoadAll("Items/EarthItem/chestEarth", typeof(GameObject)))[0] as GameObject;
-
+        
         fireChest.GetComponent<chestEnemiesActivator>().gm = gameplayManager;
         airChest.GetComponent<chestEnemiesActivator>().gm = gameplayManager;
         waterChest.GetComponent<chestEnemiesActivator>().gm = gameplayManager;
@@ -416,24 +417,24 @@ public class EnemyObjectCollection : MonoBehaviour
         return earthEquipment[rarity][equipmentsNumber];
     }
 
-    public Item getAirObject()
+    public GameObject getAirObject()
     {
-        return airObject[Random.Range(0, airObject.Count)];
+        return Instantiate(airObject[Random.Range(0, airObject.Count)]);
     }
 
-    public Item getWaterObject()
+    public GameObject getWaterObject()
     {
-        return waterObject[Random.Range(0, waterObject.Count)];
+        return Instantiate(waterObject[Random.Range(0, waterObject.Count)]);
     }
 
-    public Item getFireObject()
+    public GameObject getFireObject()
     {
-        return fireObject[Random.Range(0, fireObject.Count)];
+        return Instantiate(fireObject[Random.Range(0, fireObject.Count)]);
     }
 
-    public Item getEarthObject()
+    public GameObject getEarthObject()
     {
-        return earthObject[Random.Range(0, earthObject.Count)];
+        return Instantiate(earthObject[Random.Range(0, earthObject.Count)]);
     }
 
     public GameObject getAirChest()
