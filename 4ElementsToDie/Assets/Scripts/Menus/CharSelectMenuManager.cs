@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 public class CharSelectMenuManager : Singleton<CharSelectMenuManager>
 {
 
-    public Image selectionCursor;
+    public GameObject selectionCursor;
 
     [Header("Character Buttons")]
     public Button[] characterButtons = new Button[System.Enum.GetValues(typeof(ElementType)).Length];
@@ -20,6 +20,11 @@ public class CharSelectMenuManager : Singleton<CharSelectMenuManager>
     private int selection;
     private int lastSelection;
     
+    void Start()
+    {
+        Select(0);
+    }
+
     void OnEnable()
     {
         Select(0);

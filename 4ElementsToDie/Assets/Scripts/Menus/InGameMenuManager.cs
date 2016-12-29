@@ -2,11 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InGameMenuManager : Singleton<InGameMenuManager>
 {
-    
+
+    public GameObject selectionCursor;
+
     [Header("Equip Panel")]
     public Button[] equipButtons = new Button[Constants.NO_EquipmentTypes];
     public Image[] equipIcons = new Image[Constants.NO_EquipmentTypes];
@@ -19,11 +22,15 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
     [Header("Description Panel")]
     public Text characterText;
     public Text itemText;
-    public Text commandInfoText;
+
+    [Header("Commands Info Panel")]
+    public GameObject commandsPanel;
+    public Text commandsText;
 
     private CharacterManager player;
 
     private int selection;
+    private int lastSelection;
     private Item selectedItem;
 
     void OnEnable()
@@ -37,26 +44,39 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
     public void Select(int index)
     {
         selection = index;
+        lastSelection = selection;
+
         if (selection < inventoryButtons.Length)
         {
+            //update selection
             inventoryButtons[selection].Select();
             selectedItem = player.Inventory[selection];
 
+            //move the cursor
+            var temp = selectionCursor.transform.position;
+            temp.x = inventoryButtons[selection].transform.position.x;
+            temp.y = inventoryButtons[selection].transform.position.y - 50;
+            selectionCursor.transform.position = temp;
+
+            //update commands panel
             if (selectedItem is Equipment)
             {
-                commandInfoText.text = "Press E to equip, press T to throw away";
+                commandsPanel.SetActive(true);
+                commandsText.text = "Press  E                     Press  X  " + "\n" + "to Equip                to Destroy";
             }
             else if (selectedItem != null)
             {
-                commandInfoText.text = "Press T to throw away";
+                commandsPanel.SetActive(true);
+                commandsText.text = "Press X" + "\n" + "to Destroy";
             }
             else
             {
-                commandInfoText.text = "";
+                commandsPanel.SetActive(false);
             }
         }
         else if (selection <= inventoryButtons.Length + equipButtons.Length)
         {
+            //update selection
             equipButtons[selection - inventoryButtons.Length].Select();
             switch (selection)
             {
@@ -74,13 +94,21 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
                     break;
             }
 
+            //move the cursor
+            var temp = selectionCursor.transform.position;
+            temp.x = equipButtons[selection - inventoryButtons.Length].transform.position.x;
+            temp.y = equipButtons[selection - inventoryButtons.Length].transform.position.y - 50;
+            selectionCursor.transform.position = temp;
+
+            //update commands panel
             if (selectedItem != null)
             {
-                commandInfoText.text = "Press U to unequip";
+                commandsPanel.SetActive(true);
+                commandsText.text = "Press Q" + "\n" + "to Unequip";
             }
             else
             {
-                commandInfoText.text = "";
+                commandsPanel.SetActive(false);
             }
         }
         DrawItemText();
@@ -100,14 +128,14 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
         if (player.Weapon != null)
         {
             equipIcons[0].sprite = player.Weapon.sprite;
-            Color color = equipIcons[0].color;
+            var color = equipIcons[0].color;
             color.a = 1;
             equipIcons[0].color = color;
         }
         else
         {
             equipIcons[0].sprite = null;
-            Color color = equipIcons[0].color;
+            var color = equipIcons[0].color;
             color.a = 0;
             equipIcons[0].color = color;
         }
@@ -115,14 +143,14 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
         if (player.Armor != null)
         {
             equipIcons[1].sprite = player.Armor.sprite;
-            Color color = equipIcons[1].color;
+            var color = equipIcons[1].color;
             color.a = 1;
             equipIcons[1].color = color;
         }
         else
         {
             equipIcons[1].sprite = null;
-            Color color = equipIcons[1].color;
+            var color = equipIcons[1].color;
             color.a = 0;
             equipIcons[1].color = color;
         }
@@ -130,14 +158,14 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
         if (player.Accessory != null)
         {
             equipIcons[2].sprite = player.Accessory.sprite;
-            Color color = equipIcons[2].color;
+            var color = equipIcons[2].color;
             color.a = 1;
             equipIcons[2].color = color;
         }
         else
         {
             equipIcons[2].sprite = null;
-            Color color = equipIcons[2].color;
+            var color = equipIcons[2].color;
             color.a = 0;
             equipIcons[2].color = color;
         }
@@ -145,14 +173,14 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
         if (player.Garment != null)
         {
             equipIcons[3].sprite = player.Garment.sprite;
-            Color color = equipIcons[3].color;
+            var color = equipIcons[3].color;
             color.a = 1;
             equipIcons[3].color = color;
         }
         else
         {
             equipIcons[3].sprite = null;
-            Color color = equipIcons[3].color;
+            var color = equipIcons[3].color;
             color.a = 0;
             equipIcons[3].color = color;
         }
@@ -164,14 +192,14 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
             if (player.Inventory[i] != null)
             {
                 inventoryIcons[i].sprite = player.Inventory[i].sprite;
-                Color color = inventoryIcons[i].color;
+                var color = inventoryIcons[i].color;
                 color.a = 1;
                 inventoryIcons[i].color = color;
             }
             else
             {
                 inventoryIcons[i].sprite = null;
-                Color color = inventoryIcons[i].color;
+                var color = inventoryIcons[i].color;
                 color.a = 0;
                 inventoryIcons[i].color = color;
             }
@@ -202,12 +230,12 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
                     //positive buffs
                     if (((Equipment)selectedItem).statBuffs[i] > 0)
                     {
-                        text += "    + " + ((Equipment)selectedItem).statBuffs[i] + " " + (StatType)i;
+                        text += "          + " + ((Equipment)selectedItem).statBuffs[i] + "   " + (StatType)i;
                     }
                     //negative buffs
                     else if (((Equipment)selectedItem).statBuffs[i] < 0)
                     {
-                        text += "    -  " + -((Equipment)selectedItem).statBuffs[i] + " " + (StatType)i;
+                        text += "          -  " + -((Equipment)selectedItem).statBuffs[i] + "   " + (StatType)i;
                     }
                 }
                 text += "\n\n";
@@ -232,16 +260,23 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
         string text = "";
         text += player.BaseCharacterData.characterName + "\n";
         text += "Element : " + player.Element + "\n\n";
+        // primary stats
         double currentVitality = player.Stats[(int)StatType.VIT].FinalStat - player.Damage;
-        text += "    VIT : " + currentVitality + " / " + player.Stats[(int)StatType.VIT].FinalStat + "\n";
+        text += "    VIT : " + (int)currentVitality + " / " + player.Stats[(int)StatType.VIT].FinalStat + "\n";
         text += "    ATT : " + player.Stats[(int)StatType.ATT].VisibleStat + "\n";
         text += "    DEF : " + player.Stats[(int)StatType.DEF].VisibleStat + "\n";
         text += "    SPD : " + player.Stats[(int)StatType.SPD].VisibleStat + "\n\n";
+        // elemental affinities
+        double elementsTotal = 0;
+        for (int i = 0; i < System.Enum.GetValues(typeof(ElementType)).Length; i++)
+        {
+            elementsTotal += player.Stats[(int)StatType.FIRE + i].VisibleStat;
+        }
         text += "    Elemental affinity :" + "\n";
-        text += "    FIRE : " + player.Stats[(int)StatType.FirePOW].VisibleStat;
-        text += "    EARTH : " + player.Stats[(int)StatType.EarthPOW].VisibleStat + "\n";
-        text += "    WATER : " + player.Stats[(int)StatType.WaterPOW].VisibleStat;
-        text += "    AIR : " + player.Stats[(int)StatType.AirPOW].VisibleStat + "\n";
+        text += "    FIRE : " + player.Stats[(int)StatType.FIRE].VisibleStat;
+        text += "    EARTH : " + player.Stats[(int)StatType.EARTH].VisibleStat + "\n";
+        text += "    WATER : " + player.Stats[(int)StatType.WATER].VisibleStat;
+        text += "    AIR : " + player.Stats[(int)StatType.AIR].VisibleStat + "\n";
 
         //abilities
         for (int i = 0; i < player.Abilities.Count; i++)
@@ -259,7 +294,106 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
     
     void Update()
     {
-        if (selection < inventoryButtons.Length)
+        //item selection
+        if (EventSystem.current.currentSelectedGameObject == null)
+        {
+            Select(lastSelection);
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+        {
+            switch (selection)
+            {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                    Select((selection + 1) % inventoryButtons.Length);
+                    break;
+                case 4:
+                case 6:
+                    Select(selection + 1);
+                    break;
+                case 5:
+                case 7:
+                    Select(selection - 1);
+                    break;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+        {
+            switch (selection)
+            {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                    Select((selection + inventoryButtons.Length - 1) % inventoryButtons.Length);
+                    break;
+                case 4:
+                case 6:
+                    Select(selection + 1);
+                    break;
+                case 5:
+                case 7:
+                    Select(selection - 1);
+                    break;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        {
+            switch (selection)
+            {
+                case 0:
+                case 1:
+                    Select(7);
+                    break;
+                case 2:
+                case 3:
+                    Select(6);
+                    break;
+                case 4:
+                    Select(3);
+                    break;
+                case 5:
+                    Select(0);
+                    break;
+                case 6:
+                    Select(4);
+                    break;
+                case 7:
+                    Select(5);
+                    break;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        {
+            switch (selection)
+            {
+                case 0:
+                case 1:
+                    Select(5);
+                    break;
+                case 2:
+                case 3:
+                    Select(4);
+                    break;
+                case 4:
+                    Select(6);
+                    break;
+                case 5:
+                    Select(7);
+                    break;
+                case 6:
+                    Select(3);
+                    break;
+                case 7:
+                    Select(0);
+                    break;
+            }
+        }
+
+        //item interaction
+        else if (selection < inventoryButtons.Length)
         {
             if (selectedItem is Equipment)
             {
@@ -271,7 +405,7 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
                     Select(selection);
                 }
 
-                else if (Input.GetKeyDown(KeyCode.T))
+                else if (Input.GetKeyDown(KeyCode.X))
                 {
                     player.RemoveItem(selectedItem);
                     DrawItems();
@@ -280,7 +414,7 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
             }
             else if (selectedItem != null)
             {
-                if (Input.GetKeyDown(KeyCode.T))
+                if (Input.GetKeyDown(KeyCode.X))
                 {
                     player.RemoveItem(selectedItem);
                     DrawItems();
@@ -291,8 +425,7 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
 
         else if (selection < inventoryButtons.Length + equipButtons.Length && selectedItem != null)
         {
-
-            if (Input.GetKeyDown(KeyCode.U))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 player.Unequip((Equipment)selectedItem);
                 DrawItems();

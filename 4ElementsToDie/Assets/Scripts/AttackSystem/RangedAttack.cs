@@ -30,7 +30,7 @@ public class RangedAttack : Attack
     public override void AttackNow()
     {
         // Attack Speed stat
-        attSpeed = (float)GameplayManager.Instance.attackersDict[gameObject.GetInstanceID()].Stats[(int)StatType.ATTSpd].FinalStat;
+        attSpeed = (float)GameplayManager.Instance.attackersDict[gameObject.GetInstanceID()].Stats[(int)StatType.AttSPD].FinalStat;
 
         tr.position += tr.right * Time.fixedDeltaTime * direction * attSpeed;
         StartCoroutine(Fade());

@@ -22,9 +22,9 @@ public class GameplayManager : Singleton<GameplayManager> {
 	public Character WaterPlayer;
 
     [Header("UI Screens")]
-    public GameObject m_ingameMenuScreen;
-    public GameObject m_overlayScreen;
-    public Text m_overlayText;
+    public GameObject inGameMenuScreen;
+    public GameObject overlayScreen;
+    public Text overlayText;
 
     [Header("Player")]
     public Player m_player;
@@ -53,7 +53,7 @@ public class GameplayManager : Singleton<GameplayManager> {
         ObjectPoolingManager.Instance.CreatePool(m_RangedAttack, 100, 100);
         ObjectPoolingManager.Instance.CreatePool (m_drop, 100, 100);
        	
-        m_ingameMenuScreen.SetActive(false);
+        inGameMenuScreen.SetActive(false);
 
         m_player.GetComponent<CharacterManager>().InitCharacter(chosenCharacter);
     }
@@ -61,15 +61,9 @@ public class GameplayManager : Singleton<GameplayManager> {
 	// Update is called once per frame
 	void Update () {
 
-        ///////////// TESTING
-        //drop spawning
-//        if (Input.GetKeyDown(KeyCode.V))
-//            StartCoroutine(SpawnDrops(m_player.GetComponent<CharacterManager>()));
-        //////////////////////
-
         if (Input.GetKeyDown(KeyCode.O))
         {
-            m_ingameMenuScreen.SetActive(!m_ingameMenuScreen.activeInHierarchy);
+            inGameMenuScreen.SetActive(!inGameMenuScreen.activeInHierarchy);
         }
 
         //		if (Input.GetKeyDown (KeyCode.Alpha1))
@@ -98,14 +92,18 @@ public class GameplayManager : Singleton<GameplayManager> {
     {
         double damage = GameLogicManager.CalculateDamage(attacker, defender);
         defender.ApplyDamage(damage);
-        //AbilityManager.Instance.CheckAbilityActivation(TriggerType.OnInflictedAttack, attacker, defender);
-        //AbilityManager.Instance.CheckAbilityActivation(TriggerType.OnReceivedAttack, defender, attacker);
+
+        // check abilities that trigger on attack
+        //AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnInflictedAttack, attacker, defender);
+        //AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnReceivedAttack, defender, attacker);
+
         if (defender.isDead())
         {
-            //AbilityManager.Instance.CheckAbilityActivation(TriggerType.OnKill, attacker, defender);
-            //AbilityManager.Instance.CheckAbilityActivation(TriggerType.OnDeath, defender, attacker);
+            // check abilities that trigger on death
+            //AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnKill, attacker, defender);
+            //AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnDeath, defender, attacker);
 
-            //check again in case of resurrection
+            // check again in case of resurrection
             if (defender.isDead())
             {
                 Kill(defender);
@@ -155,7 +153,6 @@ public class GameplayManager : Singleton<GameplayManager> {
 			
 			if (i != null && ((Random.Range(0f, 100f) * 5f) <= i.dropRate))
             {
-                Debug.Log("Spawned " + i.itemName);
 
                 //spawn the object
                 GameObject go = ObjectPoolingManager.Instance.GetObject (m_drop.name);
@@ -208,24 +205,24 @@ public class GameplayManager : Singleton<GameplayManager> {
         //ClearArea();
 		m_player.isDead = true;
 		yield return new WaitForSeconds(1f);
-        m_overlayText.text = "GAME OVER";
-        m_ingameMenuScreen.SetActive(false);
-        m_overlayScreen.SetActive(true);
+        overlayText.text = "GAME OVER";
+        inGameMenuScreen.SetActive(false);
+        overlayScreen.SetActive(true);
         yield return new WaitForSeconds(1f);
-        m_ingameMenuScreen.SetActive(false);
-        m_overlayScreen.SetActive(false);
+        inGameMenuScreen.SetActive(false);
+        overlayScreen.SetActive(false);
         SceneManager.LoadScene("Main Menu");
     }
 
     IEnumerator Victory()
     {
         //ClearArea();
-        m_overlayText.text = "CONGRATULATIONS";
-        m_ingameMenuScreen.SetActive(false);
-        m_overlayScreen.SetActive(true);
+        overlayText.text = "CONGRATULATIONS";
+        inGameMenuScreen.SetActive(false);
+        overlayScreen.SetActive(true);
         yield return new WaitForSeconds(2f);
-        m_ingameMenuScreen.SetActive(false);
-        m_overlayScreen.SetActive(false);
+        inGameMenuScreen.SetActive(false);
+        overlayScreen.SetActive(false);
         SceneManager.LoadScene("Main Menu");
     }
     #endregion
