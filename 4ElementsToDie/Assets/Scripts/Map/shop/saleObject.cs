@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class saleObject : MonoBehaviour
@@ -7,12 +8,14 @@ public class saleObject : MonoBehaviour
 
     public GameObject buttom;
     private bool onArea;
+    public Text value;
     private GameObject player;
     private Item item;
 
     // Use this for initialization
     void Start()
     {
+        value.text = item.price + " ";
         onArea = false;
     }
 
