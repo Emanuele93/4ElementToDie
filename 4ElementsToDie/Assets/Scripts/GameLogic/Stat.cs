@@ -32,8 +32,8 @@ public class Stat : MonoBehaviour {
         }
         m_baseStat = bS;
         m_growingRatio = gR;
-        m_equipBuff = 0f;
-        m_effectBuff = 1.0;
+        m_equipBuff = 0;
+        m_effectBuff = 1;
         UpdateStatValues();
     }
     #endregion
@@ -45,10 +45,9 @@ public class Stat : MonoBehaviour {
         UpdateStatValues();
     }
 
-    public void UpdateEffectBuff (double buff)
+    public void UpdateEffectBuff(double buff)
     {
-        m_effectBuff *= buff;
-        m_effectBuff = System.Math.Max( m_effectBuff, Constants.MIN_EffectBuffValue);
+        m_effectBuff += buff / 100;
         UpdateStatValues();
     }
     #endregion
@@ -57,15 +56,19 @@ public class Stat : MonoBehaviour {
     private void UpdateStatValues()
     {
         m_visibleStat = m_baseStat + m_equipBuff;
-        m_visibleStat = System.Math.Max(m_visibleStat, Constants.MIN_VisibleStatValue);
+        m_visibleStat = System.Math.Max(m_visibleStat, 0);
 
         double modStat = m_visibleStat;
-
         if (!hasLinearGrowth)
         {
             modStat = System.Math.Sqrt(modStat);
         }
-        m_finalStat = Constants.StatConstantMultiplier[(int) m_name] * m_growingRatio * modStat * m_effectBuff;
+
+        m_finalStat =
+            Constants.StatConstantMultiplier[(int)m_name]
+            * m_growingRatio
+            * modStat
+            * System.Math.Max(m_effectBuff, 0);
     }
     #endregion
 

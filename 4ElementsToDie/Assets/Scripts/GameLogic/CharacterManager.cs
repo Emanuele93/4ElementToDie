@@ -110,13 +110,13 @@ public class CharacterManager : MonoBehaviour
         m_baseCharacterData = c;
 
         //sprite & animations
-		SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer> () as SpriteRenderer;
-		spriteRenderer.sprite = c.sprite;
+        SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>() as SpriteRenderer;
+        spriteRenderer.sprite = c.sprite;
 
-		Animator animator = gameObject.GetComponent<Animator> () as Animator;
-		animator.runtimeAnimatorController = (RuntimeAnimatorController)c.idleAnimation;
+        Animator animator = gameObject.GetComponent<Animator>() as Animator;
+        animator.runtimeAnimatorController = (RuntimeAnimatorController)c.idleAnimation;
 
-		// TODO : animations
+        // TODO : animations
 
         //element
         m_element = c.element;
@@ -136,9 +136,13 @@ public class CharacterManager : MonoBehaviour
         m_damage = 0.0;
 
         //equipments
+        m_weapon = null;
         Equip(c.weapon);
+        m_armor = null;
         Equip(c.armor);
+        m_accessory = null;
         Equip(c.accessory);
+        m_garment = null;
         Equip(c.garment);
 
         //inventory
@@ -157,7 +161,7 @@ public class CharacterManager : MonoBehaviour
 
         //stones
         m_stones = new int[System.Enum.GetValues(typeof(ElementType)).Length];
-        m_stones[(int) m_element] += 1;
+        m_stones[(int)m_element] += 1;
 
         //abilities
         m_abilities = new List<Ability>();
@@ -165,6 +169,12 @@ public class CharacterManager : MonoBehaviour
         {
             AddAbility(a);
         }
+
+        //effects
+        m_activeEffects = new List<Effect>();
+
+        //check static abilities activation
+        AbilityManager.CheckStaticAbilitiesActivation(this);
     }
     #endregion
 
@@ -207,6 +217,10 @@ public class CharacterManager : MonoBehaviour
                 }
                 m_garment = (Garment)equip;
             }
+            else
+            {
+                return;
+            }
 
             //stats
             for (int i = 0; i < m_stats.Length; i++)
@@ -219,6 +233,10 @@ public class CharacterManager : MonoBehaviour
             {
                 AddAbility(a);
             }
+
+            //check static abilities activation
+            AbilityManager.CheckStaticAbilitiesActivation(this);
+
         }
     }
 
@@ -255,6 +273,10 @@ public class CharacterManager : MonoBehaviour
                 {
                     m_garment = null;
                 }
+                else
+                {
+                    return;
+                }
 
                 //stats
                 for (int i = 0; i < m_stats.Length; i++)
@@ -268,6 +290,10 @@ public class CharacterManager : MonoBehaviour
                     RemoveAbility(a);
                 }
 
+                //check static abilities activation
+                AbilityManager.CheckStaticAbilitiesActivation(this);
+
+                //put item back into the inventory
                 AddItem(equip);
             }
         }
@@ -317,49 +343,89 @@ public class CharacterManager : MonoBehaviour
         if (ability != null)
         {
             m_abilities.Add(ability);
-            if (ability.trigger == TriggerType.Passive)
-            {
-                AddActiveEffect(ability.effect);
-            }
         }
     }
 
     public void RemoveAbility(Ability ability)
     {
-        if (m_abilities.Contains(ability) && ability != null)
+        if (ability != null && m_abilities.Contains(ability))
         {
             m_abilities.Remove(ability);
-            if (ability.trigger == TriggerType.Passive || ability.target == TargetType.Self)
+
+            if (ability is StaticAbility)
             {
                 RemoveActiveEffect(ability.effect);
             }
+
+            //if triggered ability, Coroutine TriggeredEffect() will take care of calling RemoveActiveEffect()
+
         }
     }
     #endregion
 
-    #region ActiveEffect Methods
+    #region Effect Methods
     public void AddActiveEffect(Effect effect)
     {
         if (effect != null)
         {
             m_activeEffects.Add(effect);
+
             for (int i = 0; i < m_stats.Length; i++)
             {
-                m_stats[i].UpdateEffectBuff(effect.statBuffs[i]);
+                if (effect.statBuffs[i] > 0)
+                {
+                    m_stats[i].UpdateEffectBuff(effect.statBuffs[i]);
+                }
+                // consider the Resistance (RES) Stat in case of DEbuff
+                else if (effect.statBuffs[i] < 0)
+                {
+                    m_stats[i].UpdateEffectBuff(effect.statBuffs[i] * (1 - (m_stats[(int)StatType.RES].FinalStat / 10)));
+                }
             }
+
+            ApplyDamage(effect.damage);
+
+            //check static abilities activation
+            AbilityManager.CheckStaticAbilitiesActivation(this);
+
         }
     }
 
     public void RemoveActiveEffect(Effect effect)
     {
-        if (m_activeEffects.Contains(effect) && effect != null)
+        if (effect != null && m_activeEffects.Contains(effect))
         {
             m_activeEffects.Remove(effect);
+
             for (int i = 0; i < m_stats.Length; i++)
             {
-                m_stats[i].UpdateEffectBuff(1.0 / effect.statBuffs[i]);
+                if (effect.statBuffs[i] > 0)
+                {
+                    m_stats[i].UpdateEffectBuff(-effect.statBuffs[i]);
+                }
+                // consider the Resistance (RES) Stat in case of DEbuff
+                else if (effect.statBuffs[i] < 0)
+                {
+                    m_stats[i].UpdateEffectBuff(-effect.statBuffs[i] * (1 - (m_stats[(int)StatType.RES].FinalStat / 10)));
+                }
             }
+
+            // damage remains!
+
+            //check static abilities activation
+            AbilityManager.CheckStaticAbilitiesActivation(this);
+
         }
+    }
+
+    public IEnumerator TriggeredEffect(TriggeredAbility ability)
+    {
+        AddActiveEffect(ability.effect);
+
+        yield return new WaitForSeconds(ability.duration);
+
+        RemoveActiveEffect(ability.effect);
+        Debug.Log("Deactivated triggered ability:" + ability.abilityName + " " + ability.level);
     }
     #endregion
 
@@ -367,12 +433,13 @@ public class CharacterManager : MonoBehaviour
     public void ApplyDamage(double damage)
     {
         m_damage += damage;
-        System.Math.Max(damage, 0.0);
+        System.Math.Max(m_damage, 0.0);
+        System.Math.Min(m_damage, m_stats[(int)StatType.VIT].FinalStat);
     }
 
     public bool isDead()
     {
-        return (m_damage >= m_stats[(int)StatType.VIT].FinalStat);
+        return (m_stats[(int)StatType.VIT].FinalStat <= m_damage);
     }
     #endregion
 

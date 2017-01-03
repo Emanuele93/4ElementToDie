@@ -277,18 +277,13 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
         text += "    EARTH : " + player.Stats[(int)StatType.EARTH].VisibleStat + "\n";
         text += "    WATER : " + player.Stats[(int)StatType.WATER].VisibleStat;
         text += "    AIR : " + player.Stats[(int)StatType.AIR].VisibleStat + "\n";
-
-        //abilities
-        for (int i = 0; i < player.Abilities.Count; i++)
-        {
-            text += player.Abilities[i].abilityName + " " + player.Abilities[i].level + "\n";
-        }
-
+        
         //abilities
         foreach (Ability a in player.Abilities)
         {
             text += a.abilityName + " " + a.level + "\n";
         }
+
         characterText.text = text;
     }
     

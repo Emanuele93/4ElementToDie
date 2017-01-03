@@ -94,14 +94,14 @@ public class GameplayManager : Singleton<GameplayManager> {
         defender.ApplyDamage(damage);
 
         // check abilities that trigger on attack
-        //AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnInflictedAttack, attacker, defender);
-        //AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnReceivedAttack, defender, attacker);
+        AbilityManager.CheckTriggeredAbilitiesActivation (TriggeredTriggerType.OnInflictedAttack, attacker, defender);
+        AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnReceivedAttack, defender, attacker);
 
         if (defender.isDead())
         {
             // check abilities that trigger on death
-            //AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnKill, attacker, defender);
-            //AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnDeath, defender, attacker);
+            AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnKill, attacker, defender);
+            AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnDeath, defender, attacker);
 
             // check again in case of resurrection
             if (defender.isDead())
@@ -113,7 +113,6 @@ public class GameplayManager : Singleton<GameplayManager> {
 
     public void Kill(CharacterManager deadCharacter)
     {
-        Debug.Log(deadCharacter + " is dead");
         if (deadCharacter.gameObject.CompareTag("Player"))
         {
             StartCoroutine(GameOver());
