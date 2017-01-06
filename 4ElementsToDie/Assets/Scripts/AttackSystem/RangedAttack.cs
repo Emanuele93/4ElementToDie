@@ -8,8 +8,9 @@ public class RangedAttack : Attack
     BoxCollider2D col;
     Vector2 colliderSize = new Vector2(2f, 1f);
 
+    float baseBulletRange = 1f;
+    float baseBulletSpeed = 5f;
     float attSpeed;
-    float direction;
 
 	public Sprite attackSprite;
 
@@ -20,7 +21,6 @@ public class RangedAttack : Attack
 
         col = GetComponent<BoxCollider2D>() as BoxCollider2D;
         
-        direction = 1f;
         col.size = colliderSize;
         col.isTrigger = true;
 
@@ -31,9 +31,18 @@ public class RangedAttack : Attack
     {
         // Attack Speed stat
         attSpeed = (float)GameplayManager.Instance.attackersDict[gameObject.GetInstanceID()].Stats[(int)StatType.AttSPD].FinalStat;
+        // Attack Range stat
+        attRange = (float)GameplayManager.Instance.attackersDict[gameObject.GetInstanceID()].Stats[(int)StatType.AttRNG].FinalStat;
 
-        tr.position += tr.right * Time.fixedDeltaTime * direction * attSpeed;
+        tr.position += tr.right * Time.fixedDeltaTime * baseBulletSpeed * attSpeed;
         StartCoroutine(Fade());
+    }
+
+    protected override IEnumerator Fade()
+    {
+        waitTime = baseBulletRange * attRange;
+        yield return new WaitForSeconds(waitTime);
+        gameObject.SetActive(false);
     }
 
     // Triggered when a collision happens.
@@ -42,7 +51,7 @@ public class RangedAttack : Attack
         CharacterManager attacker = GameplayManager.Instance.attackersDict[gameObject.GetInstanceID()];
         CharacterManager defender = other.GetComponent<CharacterManager>() as CharacterManager;
 
-		if (other.tag == "wall" || other.tag == "obstacle" || other.tag == "door")
+		if (other.tag == "wall" || other.tag == "door")
         {
             gameObject.SetActive(false);
         }

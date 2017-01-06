@@ -38,6 +38,14 @@ public static class GameLogicManager {
         double effectiveAttack = attacker.Stats[(int)StatType.ATT].FinalStat;
         double effectiveDefense = defender.Stats[(int)StatType.DEF].FinalStat;
         double elementalFactor = CalculateElementalFactor(attacker, defender);
-        return elementalFactor * (effectiveAttack / effectiveDefense);
+        double damage = elementalFactor * (effectiveAttack / effectiveDefense);
+
+        //calculate if critical hit
+        if (Random.Range(0f, 100f) <= attacker.Stats[(int)StatType.LCK].FinalStat)
+        {
+            damage *= 2;
+        }
+
+        return damage;
     }
 }

@@ -9,8 +9,7 @@ public  class Attack : MonoBehaviour {
 	protected SpriteRenderer sr;
 
     protected float attRange;
-
-	protected float waitTime = 1f;
+	protected float waitTime = 0.3f;
 
 	protected virtual void Start() {
 		tr = GetComponent<Transform> () as Transform;
@@ -31,7 +30,8 @@ public  class Attack : MonoBehaviour {
         StartCoroutine(Fade());
     }
 
-	protected IEnumerator Fade () {
+	protected virtual IEnumerator Fade ()
+    {
 		yield return new WaitForSeconds (waitTime);
 		gameObject.SetActive (false);
 	}

@@ -262,7 +262,7 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
         text += "Element : " + player.Element + "\n\n";
         // primary stats
         double currentVitality = player.Stats[(int)StatType.VIT].FinalStat - player.Damage;
-        text += "    VIT : " + (int)currentVitality + " / " + player.Stats[(int)StatType.VIT].FinalStat + "\n";
+        text += "    VIT : " + (int)currentVitality + " / " + (int)player.Stats[(int)StatType.VIT].FinalStat + "\n";
         text += "    ATT : " + player.Stats[(int)StatType.ATT].VisibleStat + "\n";
         text += "    DEF : " + player.Stats[(int)StatType.DEF].VisibleStat + "\n";
         text += "    SPD : " + player.Stats[(int)StatType.SPD].VisibleStat + "\n\n";

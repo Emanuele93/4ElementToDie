@@ -3,10 +3,13 @@ using System.Collections;
 
 [RequireComponent (typeof (PolygonCollider2D),typeof(Rigidbody2D), typeof(SpriteRenderer))]
 public class ThrustAttack : Attack {
+
 	PolygonCollider2D col;
 	const int numberOfPoints = 3;
 
-	public Sprite attackSprite;
+    float baseSize = 2.5f;
+
+    public Sprite attackSprite;
 
 	protected override void Start ()
 	{

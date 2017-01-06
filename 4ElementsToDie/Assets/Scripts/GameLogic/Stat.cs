@@ -3,7 +3,6 @@
 public class Stat : MonoBehaviour {
     
     private StatType m_name;
-    private bool hasLinearGrowth = true;
 
     private double m_finalStat;
     private double m_visibleStat;
@@ -26,10 +25,6 @@ public class Stat : MonoBehaviour {
     public void InitStat(StatType n, double bS, double gR)
     {
         m_name = n;
-        if (m_name == StatType.ATT || m_name == StatType.DEF)
-        {
-            hasLinearGrowth = false;
-        }
         m_baseStat = bS;
         m_growingRatio = gR;
         m_equipBuff = 0;
@@ -55,19 +50,14 @@ public class Stat : MonoBehaviour {
     #region Updater
     private void UpdateStatValues()
     {
-        m_visibleStat = m_baseStat + m_equipBuff;
+        m_visibleStat = System.Math.Truncate((m_baseStat + m_equipBuff) * 10) / 10;
         m_visibleStat = System.Math.Max(m_visibleStat, 0);
 
-        double modStat = m_visibleStat;
-        if (!hasLinearGrowth)
-        {
-            modStat = System.Math.Sqrt(modStat);
-        }
-
         m_finalStat =
-            Constants.StatConstantMultiplier[(int)m_name]
+            Constants.StatConstantAdder[(int)m_name]
+            + Constants.StatConstantMultiplier[(int)m_name]
             * m_growingRatio
-            * modStat
+            * m_visibleStat
             * System.Math.Max(m_effectBuff, 0);
     }
     #endregion

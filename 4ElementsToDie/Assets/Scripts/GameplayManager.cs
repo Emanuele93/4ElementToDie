@@ -145,48 +145,49 @@ public class GameplayManager : Singleton<GameplayManager> {
     #region Drops Management
     public IEnumerator SpawnDrops(CharacterManager character)
     {
-        List<Drop> drops = new List<Drop>();
-
-        foreach (Item i in character.Inventory)
+        if (character.Inventory != null)
         {
-			
-			if (i != null && ((Random.Range(0f, 100f) * 5f) <= i.dropRate))
+            List<Drop> drops = new List<Drop>();
+            double luck = m_player.GetComponent<CharacterManager>().Stats[(int)StatType.LCK].FinalStat;
+
+            foreach (Item i in character.Inventory)
             {
 
-                //spawn the object
-                GameObject go = ObjectPoolingManager.Instance.GetObject (m_drop.name);
-                go.transform.position = character.transform.position;
-                go.transform.rotation = Quaternion.identity;
-                go.GetComponent<SpriteRenderer>().sprite = i.sprite;
-                go.SetActive(true);
-                
-                //define item
-                Drop drop = go.GetComponent<Drop>() as Drop;
-                drop.item = i;
-                drops.Add(drop);
+                if (i != null && (Random.Range(0f, 100f) <= i.dropRate + luck))
+                {
 
-                //give a random direction to the explosion
-                drop.direction = new Vector3(
-                    UnityEngine.Random.Range(-1f, 1f),
-                    UnityEngine.Random.Range(-1f, 1f), 
-                    0f
-                );
+                    //spawn the object
+                    GameObject go = ObjectPoolingManager.Instance.GetObject(m_drop.name);
+                    go.transform.position = character.transform.position;
+                    go.transform.rotation = Quaternion.identity;
+                    go.GetComponent<SpriteRenderer>().sprite = i.sprite;
+                    go.SetActive(true);
 
-                //enable movement
-                drop.shouldMove = true;
+                    //define item
+                    Drop drop = go.GetComponent<Drop>() as Drop;
+                    drop.item = i;
+                    drops.Add(drop);
+
+                    //give a random direction to the explosion
+                    drop.direction = new Vector3(
+                        UnityEngine.Random.Range(-1f, 1f),
+                        UnityEngine.Random.Range(-1f, 1f),
+                        0f
+                    );
+
+                    //enable movement
+                    drop.shouldMove = true;
+                }
+            }
+
+            yield return new WaitForSeconds(1);
+
+            //disable movement
+            foreach (Drop drop in drops)
+            {
+                drop.shouldMove = false;
             }
         }
-
-        yield return new WaitForSeconds(1);
-
-        //disable movement
-        foreach (Drop drop in drops)
-        {
-            drop.shouldMove = false;
-        }
-
-		//character.gameObject.SetActive (false);
-
     }
 
     public void PickUpDrop(Drop drop)
