@@ -425,7 +425,6 @@ public class CharacterManager : MonoBehaviour
         yield return new WaitForSeconds(ability.duration);
 
         RemoveActiveEffect(ability.effect);
-        Debug.Log("Deactivated triggered ability:" + ability.abilityName + " " + ability.level);
     }
     #endregion
 

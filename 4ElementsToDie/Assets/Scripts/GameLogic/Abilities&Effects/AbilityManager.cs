@@ -46,14 +46,10 @@ public static class AbilityManager
 
                 if (shouldBeActive && !isAlreadyActive)
                 {
-                    Debug.Log("Activated static ability:" + a.abilityName + " " + a.level);
-                    Debug.Log("SPD: " + abilityPossessor.Stats[(int)StatType.SPD].FinalStat);
                     abilityPossessor.AddActiveEffect(a.effect);
                 }
                 else if (!shouldBeActive && isAlreadyActive)
                 {
-                    Debug.Log("Deactivated static ability:" + a.abilityName + " " + a.level);
-                    Debug.Log("SPD: " + abilityPossessor.Stats[(int)StatType.SPD].FinalStat);
                     abilityPossessor.RemoveActiveEffect(a.effect);
                 }
             }
@@ -83,7 +79,6 @@ public static class AbilityManager
 
                     if (shouldBeActive)
                     {
-                        Debug.Log("Activated triggered ability:" + a.abilityName + " " + a.level);
                         if (a.target == TargetType.Self)
                         {
                             abilityPossessor.StartCoroutine(abilityPossessor.TriggeredEffect(a));

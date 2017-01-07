@@ -243,7 +243,7 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
                 //abilities
                 foreach (Ability a in ((Equipment)selectedItem).abilities)
                 {
-                    text += a.abilityName + " " + a.level + "    ";
+                    text += a.abilityName + " " + "    ";
                 }
                 text += "\n";
             }
@@ -281,7 +281,7 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
         //abilities
         foreach (Ability a in player.Abilities)
         {
-            text += a.abilityName + " " + a.level + "\n";
+            text += a.abilityName + " " + "\n";
         }
 
         characterText.text = text;
