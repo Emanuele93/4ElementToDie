@@ -354,7 +354,7 @@ public class superMap : MonoBehaviour
 
                     if (map[i - 1, j] < -1 || map[i + 1, j] < -1 || map[i, j - 1] < -1 || map[i, j + 1] < -1)
                         door = true;
-                    
+
                     room = roomGeneratorObject.GetComponent<roomFactory>().makeRoom(u, r, l, d, ur, ul, dr, dl, j * 16 + marginX, -i * 10 + marginY, door);
                     if (room != null)
                         rooms.Add(room);

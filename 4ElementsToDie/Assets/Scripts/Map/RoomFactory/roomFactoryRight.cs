@@ -147,7 +147,7 @@ public class roomFactoryRight : roomFactory
 
     protected override int getDifficulty()
     {
-        return gameplayManager.getNoKilledBosses((int)(ElementType.Air));
+        return enemyObjectCollection.GetComponent<EnemyObjectCollection>().gameplayManager.getNoKilledBosses((int)(ElementType.Air));
     }
 
     public override void getBossEnemy(Vector3 pos, Transform parent)

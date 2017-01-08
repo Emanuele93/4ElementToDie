@@ -19,13 +19,11 @@ public abstract class roomFactory : MonoBehaviour
     public GameObject enemyObjectCollection;
     private GameObject miniMap;
 
-    protected int[,] roomStructure;
-    protected GameplayManager gameplayManager;
+    protected int[,] roomStructure = new int[13, 7];
 
     void Start()
     {
-        roomStructure = new int[13, 7];
-        gameplayManager = enemyObjectCollection.GetComponent<EnemyObjectCollection>().gameplayManager;
+
     }
 
     void Update()
