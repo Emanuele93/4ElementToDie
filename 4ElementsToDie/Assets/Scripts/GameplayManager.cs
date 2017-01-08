@@ -23,11 +23,15 @@ public class GameplayManager : Singleton<GameplayManager> {
 
     [Header("UI Screens")]
     public GameObject inGameMenuScreen;
+    public GameObject healthScreen;
+    public Image healthBar;
+    public Text healthText;
     public GameObject overlayScreen;
     public Text overlayText;
 
     [Header("Player")]
     public Player m_player;
+    private CharacterManager playerChar;
 
     [Header("Prefabs")]
     public GameObject m_SlashAttack;
@@ -54,8 +58,12 @@ public class GameplayManager : Singleton<GameplayManager> {
         ObjectPoolingManager.Instance.CreatePool (m_drop, 100, 100);
        	
         inGameMenuScreen.SetActive(false);
+        healthScreen.SetActive(true);
+        overlayScreen.SetActive(false);
 
-        m_player.GetComponent<CharacterManager>().InitCharacter(chosenCharacter);
+        playerChar = m_player.GetComponent<CharacterManager>();
+        playerChar.InitCharacter(chosenCharacter);
+        UpdateHealthBar();
     }
 	
 	// Update is called once per frame
@@ -64,6 +72,7 @@ public class GameplayManager : Singleton<GameplayManager> {
         if (Input.GetKeyDown(KeyCode.O))
         {
             inGameMenuScreen.SetActive(!inGameMenuScreen.activeInHierarchy);
+            healthScreen.SetActive(!healthScreen.activeInHierarchy);
         }
 
         //		if (Input.GetKeyDown (KeyCode.Alpha1))
@@ -109,6 +118,12 @@ public class GameplayManager : Singleton<GameplayManager> {
                 Kill(defender);
             }
         }
+
+        if (defender.gameObject.CompareTag("Player"))
+        {
+            UpdateHealthBar();
+        }
+
     }
 
     public void Kill(CharacterManager deadCharacter)
@@ -139,6 +154,15 @@ public class GameplayManager : Singleton<GameplayManager> {
 			deadCharacter.gameObject.SetActive (false);
 		}
 
+    }
+
+    private void UpdateHealthBar()
+    {
+        double currentVitality = System.Math.Round(playerChar.Stats[(int)StatType.VIT].FinalStat - playerChar.Damage, 1);
+        double totalVitality = System.Math.Round(playerChar.Stats[(int)StatType.VIT].FinalStat, 1);
+
+        healthBar.GetComponent<RectTransform>().localScale = new Vector2((float)(currentVitality / totalVitality), 1);
+        healthText.text = currentVitality + " / " + totalVitality;
     }
     #endregion
 
@@ -207,9 +231,11 @@ public class GameplayManager : Singleton<GameplayManager> {
 		yield return new WaitForSeconds(1f);
         overlayText.text = "GAME OVER";
         inGameMenuScreen.SetActive(false);
+        healthScreen.SetActive(true);
         overlayScreen.SetActive(true);
         yield return new WaitForSeconds(1f);
         inGameMenuScreen.SetActive(false);
+        healthScreen.SetActive(false);
         overlayScreen.SetActive(false);
         SceneManager.LoadScene("Main Menu");
     }
@@ -219,9 +245,11 @@ public class GameplayManager : Singleton<GameplayManager> {
         //ClearArea();
         overlayText.text = "CONGRATULATIONS";
         inGameMenuScreen.SetActive(false);
+        healthScreen.SetActive(true);
         overlayScreen.SetActive(true);
         yield return new WaitForSeconds(2f);
         inGameMenuScreen.SetActive(false);
+        healthScreen.SetActive(false);
         overlayScreen.SetActive(false);
         SceneManager.LoadScene("Main Menu");
     }
