@@ -39,6 +39,7 @@ public class GameplayManager : Singleton<GameplayManager> {
     private GameObject[] secondaryDropKey = new GameObject[System.Enum.GetValues(typeof(ElementType)).Length];
     private GameObject[] secondaryDropCoin = new GameObject[System.Enum.GetValues(typeof(ElementType)).Length];
     private GameObject[] secondaryDropHeart = new GameObject[System.Enum.GetValues(typeof(ElementType)).Length];
+    private GameObject[] secondaryDropGems = new GameObject[System.Enum.GetValues(typeof(ElementType)).Length];
 
     // We create a dictionary where the keys will be the instance ID of the attacks (they're managed by the pooling manager)
     // and the values will be the CharacterManager of the attacker using that instance, this, in order to have the 
@@ -131,6 +132,7 @@ public class GameplayManager : Singleton<GameplayManager> {
         else if (deadCharacter.gameObject.CompareTag("Boss"))
         {
 			StartCoroutine(SpawnDrops(deadCharacter));
+            Instantiate(secondaryDropGems[(int)deadCharacter.Element], deadCharacter.gameObject.transform.position, deadCharacter.gameObject.transform.rotation, deadCharacter.gameObject.transform.parent);
             deadCharacter.gameObject.SetActive(false);
             noKilledBosses[(int)deadCharacter.Element]++;
             //TODO: open the next area, obtain the boss crystal and so on.
@@ -312,6 +314,11 @@ public class GameplayManager : Singleton<GameplayManager> {
         secondaryDropHeart = secondary;
     }
     
+    public void setSecondaryDropGems(GameObject[] secondary)
+    {
+        secondaryDropGems = secondary;
+    }
+
     public void PickUpDrop(Drop drop)
     {
         if(m_player.GetComponent<CharacterManager>().AddItem(drop.item))

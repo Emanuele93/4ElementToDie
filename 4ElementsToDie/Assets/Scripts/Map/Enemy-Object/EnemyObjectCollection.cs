@@ -25,6 +25,7 @@ public class EnemyObjectCollection : MonoBehaviour
     private GameObject[] secondaryDropKey;
     private GameObject[] secondaryDropCoin;
     private GameObject[] secondaryDropHeart;
+    private GameObject[] secondaryDropGems;
 
     public GameObject enemyPrefab;
     public GameplayManager gameplayManager;
@@ -344,22 +345,28 @@ public class EnemyObjectCollection : MonoBehaviour
         secondaryDropKey = new GameObject[System.Enum.GetValues(typeof(ElementType)).Length];
         secondaryDropCoin = new GameObject[System.Enum.GetValues(typeof(ElementType)).Length];
         secondaryDropHeart = new GameObject[System.Enum.GetValues(typeof(ElementType)).Length];
+        secondaryDropGems = new GameObject[System.Enum.GetValues(typeof(ElementType)).Length];
         secondaryDropKey[(int)ElementType.Fire] = (Resources.LoadAll("Items/FireItem/Object/keyFire", typeof(GameObject)))[0] as GameObject;
         secondaryDropCoin[(int)ElementType.Fire] = (Resources.LoadAll("Items/FireItem/Object/CoinFire", typeof(GameObject)))[0] as GameObject;
         secondaryDropHeart[(int)ElementType.Fire] = (Resources.LoadAll("Items/FireItem/Object/heartFire", typeof(GameObject)))[0] as GameObject;
+        secondaryDropGems[(int)ElementType.Fire] = (Resources.LoadAll("Items/FireItem/Gem", typeof(GameObject)))[0] as GameObject;
         secondaryDropKey[(int)ElementType.Water] = (Resources.LoadAll("Items/WaterItem/Object/keyWater", typeof(GameObject)))[0] as GameObject;
         secondaryDropCoin[(int)ElementType.Water] = (Resources.LoadAll("Items/WaterItem/Object/CoinWater", typeof(GameObject)))[0] as GameObject;
         secondaryDropHeart[(int)ElementType.Water] = (Resources.LoadAll("Items/WaterItem/Object/heartWater", typeof(GameObject)))[0] as GameObject;
+        secondaryDropGems[(int)ElementType.Water] = (Resources.LoadAll("Items/WaterItem/Gem", typeof(GameObject)))[0] as GameObject;
         secondaryDropKey[(int)ElementType.Air] = (Resources.LoadAll("Items/AirItem/Object/keyAir", typeof(GameObject)))[0] as GameObject;
         secondaryDropCoin[(int)ElementType.Air] = (Resources.LoadAll("Items/AirItem/Object/CoinAir", typeof(GameObject)))[0] as GameObject;
         secondaryDropHeart[(int)ElementType.Air] = (Resources.LoadAll("Items/AirItem/Object/heartAir", typeof(GameObject)))[0] as GameObject;
+        secondaryDropGems[(int)ElementType.Air] = (Resources.LoadAll("Items/AirItem/Gem", typeof(GameObject)))[0] as GameObject;
         secondaryDropKey[(int)ElementType.Earth] = (Resources.LoadAll("Items/EarthItem/Object/keyEarth", typeof(GameObject)))[0] as GameObject;
         secondaryDropCoin[(int)ElementType.Earth] = (Resources.LoadAll("Items/EarthItem/Object/CoinEarth", typeof(GameObject)))[0] as GameObject;
         secondaryDropHeart[(int)ElementType.Earth] = (Resources.LoadAll("Items/EarthItem/Object/heartEarth", typeof(GameObject)))[0] as GameObject;
+        secondaryDropGems[(int)ElementType.Earth] = (Resources.LoadAll("Items/EarthItem/Gem", typeof(GameObject)))[0] as GameObject;
 
         gameplayManager.setSecondaryDropCoin(secondaryDropCoin);
         gameplayManager.setSecondaryDropKey(secondaryDropKey);
         gameplayManager.setSecondaryDropHeart(secondaryDropHeart);
+        gameplayManager.setSecondaryDropGems(secondaryDropGems);
     }
 
     public GameObject getFireEnemy(int diff)

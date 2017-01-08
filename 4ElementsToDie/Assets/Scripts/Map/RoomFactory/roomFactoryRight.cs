@@ -155,5 +155,6 @@ public class roomFactoryRight : roomFactory
         GameObject go = enemyObjectCollection.GetComponent<EnemyObjectCollection>().getAirEnemy(4);
         go.transform.parent = parent;
         go.transform.position = pos;
+        go.tag = "Boss";
     }
 }

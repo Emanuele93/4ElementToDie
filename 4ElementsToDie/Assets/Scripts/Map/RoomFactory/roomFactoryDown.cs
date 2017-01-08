@@ -136,5 +136,6 @@ public class roomFactoryDown : roomFactory
         GameObject go = enemyObjectCollection.GetComponent<EnemyObjectCollection>().getWaterEnemy(4);
         go.transform.parent = parent;
         go.transform.position = pos;
+        go.tag = "Boss";
     }
 }
