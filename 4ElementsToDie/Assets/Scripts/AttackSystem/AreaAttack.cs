@@ -31,9 +31,8 @@ public class AreaAttack : Attack {
     public override void AttackNow()
     {
         base.AttackNow();
-
-		updateScale.x += Time.fixedDeltaTime / attRange;
-		updateScale.y += Time.fixedDeltaTime / attRange;
+		updateScale.x += (Time.fixedDeltaTime * attRange) / 50;
+		updateScale.y += (Time.fixedDeltaTime * attRange) / 50;
 		sr.transform.localScale += updateScale;
 
     }
