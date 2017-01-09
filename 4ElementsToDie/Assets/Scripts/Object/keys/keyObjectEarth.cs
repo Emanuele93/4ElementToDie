@@ -9,6 +9,7 @@ public class keyObjectEarth : usableObject
         if (other.tag == "Player")
         {
             other.gameObject.GetComponent<CharacterManager>().Keys[(int)ElementType.Earth]++;
+            GameplayManager.Instance.UpdateKeyBar();
             Destroy(gameObject);
         }
     }

@@ -9,6 +9,7 @@ public class keyObjectAir : usableObject
         if (other.tag == "Player")
         {
             other.gameObject.GetComponent<CharacterManager>().Keys[(int)ElementType.Air]++;
+            GameplayManager.Instance.UpdateKeyBar();
             Destroy(gameObject);
         }
     }

@@ -9,6 +9,7 @@ public class keyObjectFire : usableObject
         if (other.tag == "Player")
         {
             other.gameObject.GetComponent<CharacterManager>().Keys[(int)ElementType.Fire]++;
+            GameplayManager.Instance.UpdateKeyBar();
             Destroy(gameObject);
         }
     }

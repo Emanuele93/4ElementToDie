@@ -9,6 +9,7 @@ public class coin : usableObject
         if (other.tag == "Player")
         {
             other.gameObject.GetComponent<CharacterManager>().Money++;
+            GameplayManager.Instance.UpdateCoinBar();
             Destroy(gameObject);
         }
     }
