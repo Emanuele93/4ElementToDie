@@ -44,13 +44,14 @@ MonoBehaviour:
   - 1
   - 0
   - 0
-  weapon: {fileID: 11400000, guid: cae4fef5ad91ef547a412cc77c48373f, type: 2}
-  armor: {fileID: 11400000, guid: c3c5d713d548e8d4393b8b73fb47e2cc, type: 2}
-  accessory: {fileID: 11400000, guid: 634f6aeb121a8cc4aa0ce6a5b55e8732, type: 2}
-  garment: {fileID: 11400000, guid: 70789ffe65aad9142ac37210c5888efd, type: 2}
+  weapon: {fileID: 11400000, guid: 1cd06552750ae6848b1a96ed64052383, type: 2}
+  armor: {fileID: 11400000, guid: c56c94dfc6778d04f86b467694c87c52, type: 2}
+  accessory: {fileID: 11400000, guid: 51a6aea3bf5e4f340afd95502714b2ba, type: 2}
+  garment: {fileID: 11400000, guid: 4ee1d89bd22aa184b93daaaa73c77930, type: 2}
   inventory:
-  - {fileID: 11400000, guid: 193bc579ea9946941af3438c0cabfda2, type: 2}
-  - {fileID: 11400000, guid: 8962178951bda3140a0915ed8bcad220, type: 2}
-  - {fileID: 11400000, guid: ddb260845ff5d044b9580188859e8489, type: 2}
-  - {fileID: 11400000, guid: e07cc38756556a64daf22991a5491ce2, type: 2}
+  - {fileID: 11400000, guid: 1cd06552750ae6848b1a96ed64052383, type: 2}
+  - {fileID: 11400000, guid: 5891b940013f9554eb17c4eed44c0f3a, type: 2}
+  - {fileID: 11400000, guid: 5e60978cef3e8ca49a24591343b021e4, type: 2}
+  - {fileID: 11400000, guid: 5c80613c27262b243b5bd3cd21624774, type: 2}
+  - {fileID: 11400000, guid: 752f5c176ab88f94c851ea72fc1b5c08, type: 2}
   abilities: []

@@ -48,5 +48,8 @@ MonoBehaviour:
   armor: {fileID: 0}
   accessory: {fileID: 0}
   garment: {fileID: 0}
-  inventory: []
+  inventory:
+  - {fileID: 11400000, guid: 273908a1ff33c5e4694247ddf54c4c46, type: 2}
+  - {fileID: 11400000, guid: 8296fb698b399ba41bf7259fa27b2ff0, type: 2}
+  - {fileID: 11400000, guid: 936b9e13c00494241803f8f3836f559b, type: 2}
   abilities: []
