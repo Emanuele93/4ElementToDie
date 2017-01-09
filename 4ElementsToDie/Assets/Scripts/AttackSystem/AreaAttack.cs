@@ -3,8 +3,10 @@ using System.Collections;
 
 [RequireComponent (typeof(CircleCollider2D), typeof(SpriteRenderer))]
 public class AreaAttack : Attack {
+
 	CircleCollider2D col;
-	float colliderRadius = 3f;
+
+	float baseRadius = 2.5f;
 
 	public Sprite attackSprite;
 
@@ -15,7 +17,7 @@ public class AreaAttack : Attack {
 
 		col = GetComponent<CircleCollider2D> () as CircleCollider2D;
 
-		col.radius = colliderRadius;
+		col.radius = baseRadius;
 		col.isTrigger = true;
 
 		sr.sprite = attackSprite;
@@ -25,6 +27,6 @@ public class AreaAttack : Attack {
     {
         base.AttackNow();
 
-        col.radius = attRange;
+        col.radius = baseRadius * attRange;
     }
 }

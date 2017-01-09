@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b358bab5d19b4c441b4618565fbc0d43, type: 3}
   m_Name: Water
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 8754d1e52b1796f4ba4ed86d5df6af7e, type: 3}
+  sprite: {fileID: 21300000, guid: b05f64fcb6f8df743a261bb4a9c9e22d, type: 3}
   idleAnimation: {fileID: 9100000, guid: 0fcbcb6ed1b0f4ffa945fb76e0ad5dfb, type: 2}
   moveLeftRightAnimation: {fileID: 9100000, guid: 2f4b6b5338e1d488f928ebf66f5b56bd,
     type: 2}
@@ -20,38 +20,34 @@ MonoBehaviour:
   element: 2
   defaultAttackType: 2
   baseStats:
-  - 4
-  - 4
-  - 4
-  - 3
-  - 3
-  - 3
-  - 0
-  - 3
-  - 0
-  - 0
-  - 3
-  - 0
-  growingRatios:
   - 1
-  - 0.5
+  - 2
+  - 3
+  - 2
+  - 0
+  - 1
   - 2
   - 1
-  - 0.75
-  - 1.5
-  - 0.75
-  - 1.25
   - 0
   - 0
   - 1
   - 0
-  weapon: {fileID: 11400000, guid: ddb260845ff5d044b9580188859e8489, type: 2}
-  armor: {fileID: 11400000, guid: d168c3d360359a643869657ff096cb34, type: 2}
-  accessory: {fileID: 11400000, guid: 8da12068812580b42b694fe1e0215fc8, type: 2}
-  garment: {fileID: 11400000, guid: 26bf544ff0cb0ef4e950d3ae6440ce3a, type: 2}
-  inventory:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  growingRatios:
+  - 0.75
+  - 1
+  - 1.5
+  - 1
+  - 0.5
+  - 1
+  - 2
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  weapon: {fileID: 0}
+  armor: {fileID: 0}
+  accessory: {fileID: 0}
+  garment: {fileID: 0}
+  inventory: []
   abilities: []

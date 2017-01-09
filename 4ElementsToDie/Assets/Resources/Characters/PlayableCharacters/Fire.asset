@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b358bab5d19b4c441b4618565fbc0d43, type: 3}
   m_Name: Fire
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 8ef11f5976c814dfbb9acea01266121c, type: 3}
+  sprite: {fileID: 21300000, guid: 74b8f1ee040e9904983f2e30c114ab0b, type: 3}
   idleAnimation: {fileID: 9100000, guid: c73033894b66c47f5b72c8f0f338df31, type: 2}
   moveLeftRightAnimation: {fileID: 9100000, guid: 3c1a4b864188e4ff786e1199893ee988,
     type: 2}
@@ -20,38 +20,34 @@ MonoBehaviour:
   element: 0
   defaultAttackType: 0
   baseStats:
-  - 4
-  - 4
   - 3
-  - 3
-  - 3
-  - 3
+  - 2
+  - 1
+  - 2
+  - 2
+  - 1
   - 0
-  - 3
-  - 3
+  - 1
+  - 1
   - 0
   - 0
   - 0
   growingRatios:
   - 1.5
   - 1
+  - 0.75
+  - 1
   - 2
   - 1
-  - 0.75
+  - 0.5
   - 1
-  - 1.25
-  - 0.75
   - 1
-  - 0
-  - 0
-  - 0
+  - 1
+  - 1
+  - 1
   weapon: {fileID: 0}
   armor: {fileID: 0}
   accessory: {fileID: 0}
   garment: {fileID: 0}
-  inventory:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  inventory: []
   abilities: []

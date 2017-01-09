@@ -44,13 +44,13 @@ MonoBehaviour:
   - 0
   - 0
   - 1
-  weapon: {fileID: 11400000, guid: 1b8c456599020d74bb2f7ee2e04f52b5, type: 2}
-  armor: {fileID: 11400000, guid: 5d1d55d63fc880742a232c47e94ec911, type: 2}
-  accessory: {fileID: 11400000, guid: 975ab5ab883de9949b2193bb432bcbc1, type: 2}
-  garment: {fileID: 11400000, guid: 03e61ac5d7446fd46b7a26fd68767987, type: 2}
+  weapon: {fileID: 0}
+  armor: {fileID: 0}
+  accessory: {fileID: 0}
+  garment: {fileID: 0}
   inventory:
-  - {fileID: 11400000, guid: d168c3d360359a643869657ff096cb34, type: 2}
-  - {fileID: 11400000, guid: 3c4580b521f822a4a9fe8624cd3fd4cb, type: 2}
-  - {fileID: 11400000, guid: 6711244db7516b04dba96f451e0dd335, type: 2}
-  - {fileID: 11400000, guid: 26bf544ff0cb0ef4e950d3ae6440ce3a, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   abilities: []

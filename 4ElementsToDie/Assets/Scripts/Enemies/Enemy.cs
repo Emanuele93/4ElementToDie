@@ -109,7 +109,7 @@ public class Enemy : MonoBehaviour {
     {
 
         isInCooldown = true;
-        double attSpeed = charManager.Stats[(int)StatType.ATTSpd].FinalStat;
+        double attSpeed = charManager.Stats[(int)StatType.AttSPD].FinalStat;
         double cooldownTime = 1 / attSpeed;
 
 		yield return new WaitForSeconds ((float)cooldownTime);
