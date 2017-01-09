@@ -3,7 +3,7 @@
 public abstract class Item : ScriptableObject
 {
 
-    public enum Rarity { Common, Uncommon, Rare, Epic, Legendary }
+    public enum Rarity { Common, Uncommon, Rare }
 
     [Header("General")]
     public Sprite sprite;

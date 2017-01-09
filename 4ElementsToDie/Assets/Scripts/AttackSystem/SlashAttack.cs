@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 [RequireComponent (typeof (PolygonCollider2D),typeof(Rigidbody2D), typeof(SpriteRenderer))]
 public class SlashAttack : Attack {
+
 	PolygonCollider2D col;
 	const int numberOfPoints = 16;
+
+    float baseSize = 1f;
 
 	public Sprite attackSprite;
 
@@ -27,8 +30,8 @@ public class SlashAttack : Attack {
 		transform.localScale = new Vector3 (attRange, attRange, 0);
 		//col.SetPath (0, setColliderPoints ());
 	}
-		
-	Vector2[] setColliderPoints() {
+
+    Vector2[] setColliderPoints() {
         // Thanks to my friend salim :D.
 
         // Creating the points for the angle.
