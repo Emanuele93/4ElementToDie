@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32c4837644e7b514a963b41bc218eaf0, type: 3}
+  m_Name: Lava Vial
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: 8b7795ab38a364badb80042ae5238ebe, type: 3}
+  itemID: 
+  itemName: Lava Vial
+  rarity: 1
+  description: 
+  price: 5
+  dropRate: 14
+  element: 0
+  statBuffs:
+  - 1.5
+  - 0.5
+  - 0.5
+  - 0.5
+  - 1
+  - 0
+  - 1
+  - 0
+  - 1
+  - 0
+  - 0
+  - 0
+  abilities: []

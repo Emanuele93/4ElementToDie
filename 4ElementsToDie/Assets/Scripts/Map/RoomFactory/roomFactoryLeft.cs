@@ -174,4 +174,17 @@ public class roomFactoryLeft : roomFactory
         else
             return enemyObjectCollection.GetComponent<EnemyObjectCollection>().getEarthChest();
     }
+
+    protected override int getDifficulty()
+    {
+        return enemyObjectCollection.GetComponent<EnemyObjectCollection>().gameplayManager.getNoKilledBosses((int)(ElementType.Earth));
+    }
+
+    public override void getBossEnemy(Vector3 pos, Transform parent)
+    {
+        GameObject go = enemyObjectCollection.GetComponent<EnemyObjectCollection>().getEarthEnemy(4);
+        go.transform.parent = parent;
+        go.transform.position = pos;
+        go.tag = "Boss";
+    }
 }

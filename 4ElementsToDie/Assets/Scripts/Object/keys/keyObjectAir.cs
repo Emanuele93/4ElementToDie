@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class keyObjectAir : keyObject
+public class keyObjectAir : usableObject
 {
     void OnTriggerEnter2D(Collider2D other)
     {

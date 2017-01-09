@@ -21,6 +21,7 @@ public class CharacterManager : MonoBehaviour
     private Item[] m_inventory;
     private int[] m_keys;
     private int[] m_stones;
+    private int m_money;
 
     private List<Ability> m_abilities;
     private List<Effect> m_activeEffects;
@@ -92,6 +93,12 @@ public class CharacterManager : MonoBehaviour
         set { m_stones = value; }
     }
 
+    public int Money
+    {
+        get { return m_money; }
+        set { m_money = value; }
+    }
+
     public List<Ability> Abilities
     {
         get { return m_abilities; }
@@ -158,6 +165,8 @@ public class CharacterManager : MonoBehaviour
         //stones
         m_stones = new int[System.Enum.GetValues(typeof(ElementType)).Length];
         m_stones[(int) m_element] += 1;
+
+        m_money = 5;
 
         //abilities
         m_abilities = new List<Ability>();
