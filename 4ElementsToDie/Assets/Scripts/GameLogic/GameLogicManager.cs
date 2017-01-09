@@ -2,7 +2,7 @@
 
 //Global enums, accessible from everywhere
 public enum ElementType { Fire, Earth, Water, Air };
-public enum StatType { ATT, DEF, VIT, SPD, ATTSpd, RES, LCK, ATTRng, FirePOW, EarthPOW, WaterPOW, AirPOW };
+public enum StatType { ATT, DEF, VIT, SPD, AttSPD, RES, LCK, AttRNG, FIRE, EARTH, WATER, AIR };
 public enum EquipType { Weapon, Armor, Accessory, Garment }
 public enum AttackType { Slashing, Thrusting, Area, Ranged }
 
@@ -20,14 +20,14 @@ public static class GameLogicManager {
 
         for (int i = 0; i < System.Enum.GetValues(typeof(ElementType)).Length; i++)
         {
-            a += attacker.Stats[(int)(StatType.FirePOW + i)].FinalStat;
-            d += defender.Stats[(int)(StatType.FirePOW + i)].FinalStat;
+            a += attacker.Stats[(int)(StatType.FIRE + i)].FinalStat;
+            d += defender.Stats[(int)(StatType.FIRE + i)].FinalStat;
             for (int j = 0; j < System.Enum.GetValues(typeof(ElementType)).Length; j++)
             {
                 n +=
                     Constants.ElementsTable[i, j] *
-                    attacker.Stats[ (int)(StatType.FirePOW) + i ].FinalStat *
-                    defender.Stats[ (int)(StatType.FirePOW) + j ].FinalStat;
+                    attacker.Stats[ (int)(StatType.FIRE) + i ].FinalStat *
+                    defender.Stats[ (int)(StatType.FIRE) + j ].FinalStat;
             }
         }
         return n / (a * d);
@@ -38,6 +38,14 @@ public static class GameLogicManager {
         double effectiveAttack = attacker.Stats[(int)StatType.ATT].FinalStat;
         double effectiveDefense = defender.Stats[(int)StatType.DEF].FinalStat;
         double elementalFactor = CalculateElementalFactor(attacker, defender);
-        return elementalFactor * (effectiveAttack / effectiveDefense);
+        double damage = elementalFactor * (effectiveAttack / effectiveDefense);
+
+        //calculate if critical hit
+        if (Random.Range(0f, 100f) <= attacker.Stats[(int)StatType.LCK].FinalStat)
+        {
+            damage *= 2;
+        }
+
+        return damage;
     }
 }

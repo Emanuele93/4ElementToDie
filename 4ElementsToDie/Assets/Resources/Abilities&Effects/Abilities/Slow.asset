@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84261e3d71423e8448227c22ac567d9f, type: 3}
+  m_Name: Slow
+  m_EditorClassIdentifier: 
+  abilityName: Slow
+  description: 40% chance to slow down attackers
+  effect: {fileID: 11400000, guid: 92a72926981193042ac54b5700bd311d, type: 2}
+  trigger: 1
+  target: 1
+  probability: 40
+  duration: 5
+  noTicks: 0
+  secondsBetweenTicks: 0

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 [RequireComponent (typeof(Rigidbody2D), typeof(SpriteRenderer))]
@@ -9,8 +9,7 @@ public  class Attack : MonoBehaviour {
 	protected SpriteRenderer sr;
 
     protected float attRange;
-
-	protected float waitTime = 1f;
+	protected float waitTime = 0.3f;
 
 	protected virtual void Start() {
 		tr = GetComponent<Transform> () as Transform;
@@ -27,11 +26,12 @@ public  class Attack : MonoBehaviour {
     public virtual void AttackNow()
     {
         // Attack Range stat
-        attRange = (float)GameplayManager.Instance.attackersDict[gameObject.GetInstanceID()].Stats[(int)StatType.ATTRng].FinalStat;
+        attRange = (float)GameplayManager.Instance.attackersDict[gameObject.GetInstanceID()].Stats[(int)StatType.AttRNG].FinalStat;
         StartCoroutine(Fade());
     }
 
-	protected IEnumerator Fade () {
+	protected virtual IEnumerator Fade ()
+    {
 		yield return new WaitForSeconds (waitTime);
 		gameObject.SetActive (false);
 	}

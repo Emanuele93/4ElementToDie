@@ -4,11 +4,13 @@ using System.Collections.Generic;
 
 public abstract class chestEnemiesActivator : MonoBehaviour
 {
+    public GameplayManager gm;
     private List<GameObject> enemies = new List<GameObject>();
     public GameObject buttom;
     protected bool inChestArea;
-    public CharacterManager player;
-    protected List<GameObject> objects = new List<GameObject>();
+    protected CharacterManager player;
+    public List<GameObject> objects = new List<GameObject>();
+    public Item item = null;
 
 
     // Use this for initialization
@@ -22,17 +24,10 @@ public abstract class chestEnemiesActivator : MonoBehaviour
     {
         if (inChestArea && Input.GetKeyDown(KeyCode.F))
         {
-            foreach (GameObject child in enemies)
-            {
-                child.SetActive(true);
-            }
-            foreach (GameObject child in objects)
-            {
-                child.SetActive(true);
-                child.transform.parent = transform.parent;
-                child.transform.position = new Vector3(child.transform.position.x + Random.Range(-1f, 1f), child.transform.position.y + Random.Range(-1f, 1f), 0);
-            }
-            Destroy(gameObject);
+            remouveKey();
+            foreach (GameObject go in enemies)
+                go.SetActive(true);
+            gm.openChest(gameObject);
         }
     }
 
@@ -42,4 +37,6 @@ public abstract class chestEnemiesActivator : MonoBehaviour
     }
 
     public abstract void addItemOnChest(GameObject enemyObjectCollection);
+
+    protected abstract void remouveKey();
 }

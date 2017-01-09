@@ -3,11 +3,7 @@ using System.Collections;
 using POLIMIGameCollective;
 
 public class Enemy : MonoBehaviour {
-
-    [Header("Difficulty")]
-    [Range (1,10)]
-    public int difficulty;
-
+    
     // Unity objects references
     Transform tr;
     Animator animator;
@@ -113,7 +109,7 @@ public class Enemy : MonoBehaviour {
     {
 
         isInCooldown = true;
-        double attSpeed = charManager.Stats[(int)StatType.ATTSpd].FinalStat;
+        double attSpeed = charManager.Stats[(int)StatType.AttSPD].FinalStat;
         double cooldownTime = 1 / attSpeed;
 
 		yield return new WaitForSeconds ((float)cooldownTime);
