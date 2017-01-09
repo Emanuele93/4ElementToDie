@@ -26,6 +26,7 @@ public class saleObject : MonoBehaviour
             if (player.GetComponent<CharacterManager>().AddItem(item) && player.GetComponent<CharacterManager>().Money >= item.price)
             {
                 player.GetComponent<CharacterManager>().Money -= item.price;
+                GameplayManager.Instance.UpdateCoinBar();
                 Destroy(gameObject);
             }
         }
