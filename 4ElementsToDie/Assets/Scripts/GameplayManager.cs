@@ -171,6 +171,7 @@ public class GameplayManager : Singleton<GameplayManager> {
     public void UpdateHealthBar()
     {
         double currentVitality = System.Math.Round(playerChar.Stats[(int)StatType.VIT].FinalStat - playerChar.Damage, 1);
+        currentVitality = System.Math.Max(currentVitality, 0);
         double totalVitality = System.Math.Round(playerChar.Stats[(int)StatType.VIT].FinalStat, 1);
 
         healthBar.GetComponent<RectTransform>().localScale = new Vector2((float)(currentVitality / totalVitality), 1);

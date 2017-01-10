@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b358bab5d19b4c441b4618565fbc0d43, type: 3}
+  m_Name: Water Area
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: 444e18893b0b25b438ca1a1089a334f6, type: 3}
+  idleAnimation: {fileID: 0}
+  moveLeftRightAnimation: {fileID: 0}
+  moveUpDownAnimation: {fileID: 0}
+  characterName: Water Area
+  element: 1
+  defaultAttackType: 2
+  baseStats:
+  - 0
+  - 0
+  - 1
+  - 0
+  - 0
+  - 0
+  - 1
+  - 0
+  - 0
+  - 0
+  - 1
+  - 0
+  growingRatios:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 0
+  - 1
+  - 0
+  weapon: {fileID: 0}
+  armor: {fileID: 0}
+  accessory: {fileID: 0}
+  garment: {fileID: 0}
+  inventory:
+  - {fileID: 11400000, guid: 473c7c6d6b4a85747a348ad2b807b722, type: 2}
+  - {fileID: 11400000, guid: 88c95c9e91134ec40a1f3ff1e1cd5c9c, type: 2}
+  - {fileID: 11400000, guid: 4ee1d89bd22aa184b93daaaa73c77930, type: 2}
+  abilities: []
