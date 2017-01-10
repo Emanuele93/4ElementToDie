@@ -439,8 +439,8 @@ public class CharacterManager : MonoBehaviour
     public void ApplyDamage(double damage)
     {
         m_damage += damage;
-        System.Math.Max(m_damage, 0.0);
-        System.Math.Min(m_damage, m_stats[(int)StatType.VIT].FinalStat);
+        m_damage = System.Math.Max(m_damage, 0.0);
+        m_damage = System.Math.Min(m_damage, m_stats[(int)StatType.VIT].FinalStat);
     }
 
     public bool isDead()
