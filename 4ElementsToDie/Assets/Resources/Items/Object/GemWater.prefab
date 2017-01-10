@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4200185327719248}
   - component: {fileID: 212757347839521618}
   - component: {fileID: 58937581646615038}
-  - component: {fileID: 114108061481675968}
+  - component: {fileID: 114089560183194766}
   m_Layer: 0
   m_Name: GemWater
   m_TagString: Untagged
@@ -51,12 +51,12 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &114108061481675968
+--- !u!114 &114089560183194766
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -64,7 +64,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1475095215750270}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81312ca74e8a2584ea234ecc21406132, type: 3}
+  m_Script: {fileID: 11500000, guid: 964573a60e2afcb49b59ef67f6f17a5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &212757347839521618
@@ -96,7 +96,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
+  m_SortingLayerID: 1179815721
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bce10ac73dd34584ca229ded8ff59932, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
