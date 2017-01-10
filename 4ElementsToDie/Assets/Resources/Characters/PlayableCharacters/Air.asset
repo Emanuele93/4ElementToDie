@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Name: Air
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 87274a6b7b15db44a84efa40474a91ce, type: 3}
-  idleAnimation: {fileID: 9100000, guid: 8f4519c5db6f347779b8dd2d1ec680ba, type: 2}
-  moveLeftRightAnimation: {fileID: 9100000, guid: c6bb9cda94f8e4ce7a997a1c8db9ae4a,
+  idleAnimation: {fileID: 9100000, guid: 8243241efb88d4dedb337051974c2a4c, type: 2}
+  moveLeftRightAnimation: {fileID: 9100000, guid: 15afd23d5a8e04eafbb94837b35c00db,
     type: 2}
-  moveUpDownAnimation: {fileID: 0}
+  moveUpDownAnimation: {fileID: 9100000, guid: a7b92dc188cd14138ae4cce1dda51d95, type: 2}
   characterName: Windy
   element: 3
   defaultAttackType: 3
