@@ -77,11 +77,12 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: 0, y: 1}
-      - {x: 0.95105654, y: 0.30901697}
-      - {x: 0.5877852, y: -0.80901706}
-      - {x: -0.58778536, y: -0.80901694}
-      - {x: -0.9510565, y: 0.30901712}
+    - - {x: -0.6957192, y: 0.15098679}
+      - {x: 1.6703596, y: 0.0024288297}
+      - {x: -0.15510124, y: -0.16046524}
+      - {x: -1.6136767, y: -0.33734286}
+      - {x: -1.3935903, y: 0.00029282272}
+      - {x: -1.5996083, y: 0.3326009}
 --- !u!114 &114000013546445620
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -93,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30f87ca7485344f97ba619cd61d9c46d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSprite: {fileID: 21300000, guid: a9f5a92b286bc42b2998bddc6e042b4a, type: 3}
+  attackSprite: {fileID: 21300000, guid: 5048524dcc63a492195d691b46dd8a92, type: 3}
 --- !u!212 &212449054107478966
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -125,7 +126,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1179815721
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a9f5a92b286bc42b2998bddc6e042b4a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5048524dcc63a492195d691b46dd8a92, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
