@@ -18,9 +18,16 @@ public class ThrustAttack : Attack {
 
 	}
 
+	void OnEnable() {
+		transform.position = new Vector3 (transform.position.x * attRange, transform.position.y * attRange, 1f);
+	}
+
 	public override void AttackNow()
 	{
 		base.AttackNow();
+		transform.localScale = new Vector3 (attRange, attRange, 1f);
+
+
 	}
 
 }
