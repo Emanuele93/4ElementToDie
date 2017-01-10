@@ -161,14 +161,14 @@ public class CharacterManager : MonoBehaviour
         m_keys = new int[System.Enum.GetValues(typeof(ElementType)).Length];
         for (int i = 0; i < m_keys.Length; i++)
         {
-            m_keys[i] = 5;
+            m_keys[i] = 0;
         }
 
         //stones
         m_stones = new int[System.Enum.GetValues(typeof(ElementType)).Length];
         m_stones[(int)m_element] += 1;
 
-        m_money = 5;
+        m_money = 0;
 
         //abilities
         m_abilities = new List<Ability>();
