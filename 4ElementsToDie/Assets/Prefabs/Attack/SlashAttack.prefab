@@ -72,27 +72,28 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: 1.5000001, y: 0.9666667}
-      - {x: 0.9666667, y: 1.4333334}
-      - {x: 0.6, y: 1.6666667}
-      - {x: 0.16666667, y: 1.6666667}
-      - {x: 0.16666667, y: 1.6333334}
-      - {x: 0.23333335, y: 1.5333334}
-      - {x: 0.7666667, y: 1.2666668}
-      - {x: 1.3000001, y: 0.43333337}
-      - {x: 0.33333334, y: -1.1}
-      - {x: 0.06666667, y: -1.6000001}
-      - {x: 0.10000001, y: -1.6666667}
-      - {x: 0.3, y: -1.6666667}
-      - {x: 0.70000005, y: -1.5333334}
-      - {x: 1.1, y: -1.3333334}
-      - {x: 1.6666667, y: -0.5666667}
-      - {x: 1.6666667, y: 0.53333336}
+    - - {x: 1.3097498, y: -0.33695626}
+      - {x: 1.3215412, y: 0.29545408}
+      - {x: 1.002042, y: 0.9113304}
+      - {x: 0.21179181, y: 1.472332}
+      - {x: -0.41225338, y: 1.6312913}
+      - {x: -1.3333334, y: 1.6666667}
+      - {x: -1.0385373, y: 1.5784588}
+      - {x: -0.66054016, y: 1.2666668}
+      - {x: -0.27028954, y: 0.7353755}
+      - {x: -0.1377769, y: -0.04710732}
+      - {x: -0.37279326, y: -0.9075111}
+      - {x: -0.849671, y: -1.4911734}
+      - {x: -1.3687088, y: -1.6610017}
+      - {x: -1.3333334, y: -1.6666667}
+      - {x: -0.054874886, y: -1.6077075}
+      - {x: 0.67437404, y: -1.1959158}
+      - {x: 1.1410408, y: -0.67028964}
 --- !u!114 &114000013238923558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -104,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f197f7a2c5e3412695e53dd38823fba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSprite: {fileID: 21300000, guid: 3cae19e6bfc414433be11f6dcb7e443b, type: 3}
+  attackSprite: {fileID: 21300000, guid: 052299b2fa4ff43c18915eab3e0c264a, type: 3}
 --- !u!212 &212472198351015706
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -136,7 +137,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1179815721
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3cae19e6bfc414433be11f6dcb7e443b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 052299b2fa4ff43c18915eab3e0c264a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
