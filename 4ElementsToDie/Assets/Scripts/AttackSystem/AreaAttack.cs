@@ -22,7 +22,7 @@ public class AreaAttack : Attack {
 	protected override IEnumerator Fade() {
 
 		yield return new WaitForSeconds(waitTime);
-		sr.transform.localScale = initialScale;
+		transform.localScale = initialScale;
 		updateScale.x = 0f;
 		updateScale.y = 0f;
 		gameObject.SetActive(false);
@@ -33,7 +33,7 @@ public class AreaAttack : Attack {
 		attRange = (float)GameplayManager.Instance.attackersDict[gameObject.GetInstanceID()].Stats[(int)StatType.AttRNG].FinalStat;
 		updateScale.x += (Time.fixedDeltaTime * attRange) / 5;
 		updateScale.y += (Time.fixedDeltaTime * attRange) / 5;
-		sr.transform.localScale += updateScale;
+		transform.localScale += updateScale;
 		StartCoroutine (Fade ());
 
 	}

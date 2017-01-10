@@ -18,7 +18,7 @@ MonoBehaviour:
   moveUpDownAnimation: {fileID: 9100000, guid: 051c41f8f86724e0bb109d0beeb51a5a, type: 2}
   characterName: Flamy
   element: 0
-  defaultAttackType: 0
+  defaultAttackType: 3
   baseStats:
   - 3
   - 2
