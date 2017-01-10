@@ -49,7 +49,10 @@ public class Attack : MonoBehaviour {
         
 
 		if ( (attacker.tag == "Player"  && other.tag == "Enemy") || 
-             (attacker.tag == "Enemy" && other.tag == "Player") )
+             (attacker.tag == "Enemy" && other.tag == "Player")  || 
+			 (attacker.tag == "Player" && other.tag == "Boss")   ||
+			 (attacker.tag == "Boss" && other.tag == "Player") 
+		   )
         {
             GameplayManager.Instance.ExecuteAttack(attacker, defender);
         }
