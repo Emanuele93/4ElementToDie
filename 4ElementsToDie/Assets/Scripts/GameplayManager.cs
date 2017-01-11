@@ -26,6 +26,11 @@ public class GameplayManager : Singleton<GameplayManager> {
     public GameObject healthScreen;
     public Image healthBar;
     public Text healthText;
+    public Text keyAirText;
+    public Text keyEarthText;
+    public Text keyFireText;
+    public Text keyWaterText;
+    public Text coinText;
     public GameObject overlayScreen;
     public Text overlayText;
 
@@ -69,6 +74,8 @@ public class GameplayManager : Singleton<GameplayManager> {
         playerChar = m_player.GetComponent<CharacterManager>();
         playerChar.InitCharacter(chosenCharacter);
         UpdateHealthBar();
+        UpdateCoinBar();
+        UpdateKeyBar();
     }
 	
 	// Update is called once per frame
@@ -79,7 +86,6 @@ public class GameplayManager : Singleton<GameplayManager> {
             inGameMenuScreen.SetActive(!inGameMenuScreen.activeInHierarchy);
             healthScreen.SetActive(!healthScreen.activeInHierarchy);
         }
-
         //		if (Input.GetKeyDown (KeyCode.Alpha1))
         //			SfxManager.Instance.Play ("creature");
         //		else if (Input.GetKeyDown (KeyCode.Alpha2))
@@ -162,7 +168,7 @@ public class GameplayManager : Singleton<GameplayManager> {
 
     }
 
-    private void UpdateHealthBar()
+    public void UpdateHealthBar()
     {
         double currentVitality = System.Math.Round(playerChar.Stats[(int)StatType.VIT].FinalStat - playerChar.Damage, 1);
         currentVitality = System.Math.Max(currentVitality, 0);
@@ -171,6 +177,20 @@ public class GameplayManager : Singleton<GameplayManager> {
         healthBar.GetComponent<RectTransform>().localScale = new Vector2((float)(currentVitality / totalVitality), 1);
         healthText.text = currentVitality + " / " + totalVitality;
     }
+
+    public void UpdateKeyBar()
+    {
+        keyAirText.text = "    " + playerChar.Keys[(int)ElementType.Air] ;
+        keyEarthText.text = "    " + playerChar.Keys[(int)ElementType.Earth];
+        keyFireText.text = "    " + playerChar.Keys[(int)ElementType.Fire];
+        keyWaterText.text = "    " + playerChar.Keys[(int)ElementType.Water];
+    }
+
+    public void UpdateCoinBar()
+    {
+        coinText.text = "      " + playerChar.Money;
+    }
+
     #endregion
 
     #region Drops Management

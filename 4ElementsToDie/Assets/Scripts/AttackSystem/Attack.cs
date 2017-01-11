@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 [RequireComponent (typeof(Rigidbody2D), typeof(SpriteRenderer))]
-public  class Attack : MonoBehaviour {
+public class Attack : MonoBehaviour {
 	
 	protected Rigidbody2D rb;
 	protected Transform tr;
@@ -12,6 +12,12 @@ public  class Attack : MonoBehaviour {
 	protected float waitTime = 0.3f;
 
 	protected virtual void Start() {
+		tr = GetComponent<Transform> () as Transform;
+		rb = GetComponent<Rigidbody2D> () as Rigidbody2D;
+		sr = GetComponent<SpriteRenderer> () as SpriteRenderer;
+	}
+
+	protected virtual void OnEnable() {
 		tr = GetComponent<Transform> () as Transform;
 		rb = GetComponent<Rigidbody2D> () as Rigidbody2D;
 		sr = GetComponent<SpriteRenderer> () as SpriteRenderer;
@@ -43,7 +49,10 @@ public  class Attack : MonoBehaviour {
         
 
 		if ( (attacker.tag == "Player"  && other.tag == "Enemy") || 
-             (attacker.tag == "Enemy" && other.tag == "Player") )
+             (attacker.tag == "Enemy" && other.tag == "Player")  || 
+			 (attacker.tag == "Player" && other.tag == "Boss")   ||
+			 (attacker.tag == "Boss" && other.tag == "Player") 
+		   )
         {
             GameplayManager.Instance.ExecuteAttack(attacker, defender);
         }

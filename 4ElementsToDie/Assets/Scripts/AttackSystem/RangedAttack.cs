@@ -55,8 +55,12 @@ public class RangedAttack : Attack
         {
             gameObject.SetActive(false);
         }
-		else if ( (attacker.tag == "Player"  && other.tag == "Enemy") || 
-			(attacker.tag == "Enemy" && other.tag == "Player") )
+		else if ( 
+			(attacker.tag == "Player"  && other.tag == "Enemy") || 
+			(attacker.tag == "Enemy" && other.tag == "Player")  || 
+			(attacker.tag == "Player" && other.tag == "Boss")   ||
+			(attacker.tag == "Boss" && other.tag == "Player") 
+		    )
         {
             GameplayManager.Instance.ExecuteAttack(attacker, defender);
 			gameObject.SetActive(false);
