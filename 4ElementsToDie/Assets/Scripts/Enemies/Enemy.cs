@@ -3,11 +3,7 @@ using System.Collections;
 using POLIMIGameCollective;
 
 public class Enemy : MonoBehaviour {
-
-    [Header("Difficulty")]
-    [Range (1,10)]
-    public int difficulty;
-
+    
     // Unity objects references
     Transform tr;
     Animator animator;
@@ -42,12 +38,11 @@ public class Enemy : MonoBehaviour {
         isFacingRight = true;
         isFacingUp = false;
         isInCooldown = false;
-
     }
 	
 	// Fixed update because the Enemy can
 	void FixedUpdate() {
-
+		animator = GetComponent<Animator> () as Animator;
         isAggressive = EnemyMovement.calculateDistance(tr, player.transform);
 
         if (isAggressive) {
@@ -113,7 +108,7 @@ public class Enemy : MonoBehaviour {
     {
 
         isInCooldown = true;
-        double attSpeed = charManager.Stats[(int)StatType.ATTSpd].FinalStat;
+        double attSpeed = charManager.Stats[(int)StatType.AttSPD].FinalStat;
         double cooldownTime = 1 / attSpeed;
 
 		yield return new WaitForSeconds ((float)cooldownTime);

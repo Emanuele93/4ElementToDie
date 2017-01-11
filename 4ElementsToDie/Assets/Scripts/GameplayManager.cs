@@ -1,4 +1,4 @@
-﻿using POLIMIGameCollective;
+using POLIMIGameCollective;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,12 +22,21 @@ public class GameplayManager : Singleton<GameplayManager> {
 	public Character WaterPlayer;
 
     [Header("UI Screens")]
-    public GameObject m_ingameMenuScreen;
-    public GameObject m_overlayScreen;
-    public Text m_overlayText;
+    public GameObject inGameMenuScreen;
+    public GameObject healthScreen;
+    public Image healthBar;
+    public Text healthText;
+    public Text keyAirText;
+    public Text keyEarthText;
+    public Text keyFireText;
+    public Text keyWaterText;
+    public Text coinText;
+    public GameObject overlayScreen;
+    public Text overlayText;
 
     [Header("Player")]
     public Player m_player;
+    private CharacterManager playerChar;
 
     [Header("Prefabs")]
     public GameObject m_SlashAttack;
@@ -35,11 +44,16 @@ public class GameplayManager : Singleton<GameplayManager> {
 	public GameObject m_AreaAttack;
     public GameObject m_RangedAttack;
     public GameObject m_drop;
-    
-	// We create a dictionary where the keys will be the instance ID of the attacks (they're managed by the pooling manager)
-	// and the values will be the CharacterManager of the attacker using that instance, this, in order to have the 
-	// stats of the attacker.
-	public Dictionary<int,CharacterManager> attackersDict = new Dictionary<int,CharacterManager> ();
+
+    private GameObject[] secondaryDropKey = new GameObject[System.Enum.GetValues(typeof(ElementType)).Length];
+    private GameObject[] secondaryDropCoin = new GameObject[System.Enum.GetValues(typeof(ElementType)).Length];
+    private GameObject[] secondaryDropHeart = new GameObject[System.Enum.GetValues(typeof(ElementType)).Length];
+    private GameObject[] secondaryDropGems = new GameObject[System.Enum.GetValues(typeof(ElementType)).Length];
+
+    // We create a dictionary where the keys will be the instance ID of the attacks (they're managed by the pooling manager)
+    // and the values will be the CharacterManager of the attacker using that instance, this, in order to have the 
+    // stats of the attacker.
+    public Dictionary<int,CharacterManager> attackersDict = new Dictionary<int,CharacterManager> ();
 
     // Number of killed bosses, by element.
     private int[] noKilledBosses = new int[System.Enum.GetValues(typeof(ElementType)).Length];
@@ -53,25 +67,25 @@ public class GameplayManager : Singleton<GameplayManager> {
         ObjectPoolingManager.Instance.CreatePool(m_RangedAttack, 100, 100);
         ObjectPoolingManager.Instance.CreatePool (m_drop, 100, 100);
        	
-        m_ingameMenuScreen.SetActive(false);
+        inGameMenuScreen.SetActive(false);
+        healthScreen.SetActive(true);
+        overlayScreen.SetActive(false);
 
-        m_player.GetComponent<CharacterManager>().InitCharacter(chosenCharacter);
+        playerChar = m_player.GetComponent<CharacterManager>();
+        playerChar.InitCharacter(chosenCharacter);
+        UpdateHealthBar();
+        UpdateCoinBar();
+        UpdateKeyBar();
     }
 	
 	// Update is called once per frame
 	void Update () {
 
-        ///////////// TESTING
-        //drop spawning
-//        if (Input.GetKeyDown(KeyCode.V))
-//            StartCoroutine(SpawnDrops(m_player.GetComponent<CharacterManager>()));
-        //////////////////////
-
         if (Input.GetKeyDown(KeyCode.O))
         {
-            m_ingameMenuScreen.SetActive(!m_ingameMenuScreen.activeInHierarchy);
+            inGameMenuScreen.SetActive(!inGameMenuScreen.activeInHierarchy);
+            healthScreen.SetActive(!healthScreen.activeInHierarchy);
         }
-
         //		if (Input.GetKeyDown (KeyCode.Alpha1))
         //			SfxManager.Instance.Play ("creature");
         //		else if (Input.GetKeyDown (KeyCode.Alpha2))
@@ -98,24 +112,33 @@ public class GameplayManager : Singleton<GameplayManager> {
     {
         double damage = GameLogicManager.CalculateDamage(attacker, defender);
         defender.ApplyDamage(damage);
-        //AbilityManager.Instance.CheckAbilityActivation(TriggerType.OnInflictedAttack, attacker, defender);
-        //AbilityManager.Instance.CheckAbilityActivation(TriggerType.OnReceivedAttack, defender, attacker);
+
+        // check abilities that trigger on attack
+        AbilityManager.CheckTriggeredAbilitiesActivation (TriggeredTriggerType.OnInflictedAttack, attacker, defender);
+        AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnReceivedAttack, defender, attacker);
+
         if (defender.isDead())
         {
-            //AbilityManager.Instance.CheckAbilityActivation(TriggerType.OnKill, attacker, defender);
-            //AbilityManager.Instance.CheckAbilityActivation(TriggerType.OnDeath, defender, attacker);
+            // check abilities that trigger on death
+            AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnKill, attacker, defender);
+            AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnDeath, defender, attacker);
 
-            //check again in case of resurrection
+            // check again in case of resurrection
             if (defender.isDead())
             {
                 Kill(defender);
             }
         }
+
+        if (defender.gameObject.CompareTag("Player"))
+        {
+            UpdateHealthBar();
+        }
+
     }
 
     public void Kill(CharacterManager deadCharacter)
     {
-        Debug.Log(deadCharacter + " is dead");
         if (deadCharacter.gameObject.CompareTag("Player"))
         {
             StartCoroutine(GameOver());
@@ -127,6 +150,7 @@ public class GameplayManager : Singleton<GameplayManager> {
         else if (deadCharacter.gameObject.CompareTag("Boss"))
         {
 			StartCoroutine(SpawnDrops(deadCharacter));
+            Instantiate(secondaryDropGems[(int)deadCharacter.Element], deadCharacter.gameObject.transform.position, deadCharacter.gameObject.transform.rotation, deadCharacter.gameObject.transform.parent);
             deadCharacter.gameObject.SetActive(false);
             noKilledBosses[(int)deadCharacter.Element]++;
             //TODO: open the next area, obtain the boss crystal and so on.
@@ -143,43 +167,162 @@ public class GameplayManager : Singleton<GameplayManager> {
 		}
 
     }
+
+    public void UpdateHealthBar()
+    {
+        double currentVitality = System.Math.Round(playerChar.Stats[(int)StatType.VIT].FinalStat - playerChar.Damage, 1);
+        currentVitality = System.Math.Max(currentVitality, 0);
+        double totalVitality = System.Math.Round(playerChar.Stats[(int)StatType.VIT].FinalStat, 1);
+
+        healthBar.GetComponent<RectTransform>().localScale = new Vector2((float)(currentVitality / totalVitality), 1);
+        healthText.text = currentVitality + " / " + totalVitality;
+    }
+
+    public void UpdateKeyBar()
+    {
+        keyAirText.text = "    " + playerChar.Keys[(int)ElementType.Air] ;
+        keyEarthText.text = "    " + playerChar.Keys[(int)ElementType.Earth];
+        keyFireText.text = "    " + playerChar.Keys[(int)ElementType.Fire];
+        keyWaterText.text = "    " + playerChar.Keys[(int)ElementType.Water];
+    }
+
+    public void UpdateCoinBar()
+    {
+        coinText.text = "      " + playerChar.Money;
+    }
+
     #endregion
 
     #region Drops Management
     public IEnumerator SpawnDrops(CharacterManager character)
     {
-        List<Drop> drops = new List<Drop>();
-
-        foreach (Item i in character.Inventory)
+        if (character.Inventory != null)
         {
-			
-			if (i != null && ((Random.Range(0f, 100f) * 5f) <= i.dropRate))
+			GameObject go;
+            List<Drop> drops = new List<Drop>();
+            double luck = m_player.GetComponent<CharacterManager>().Stats[(int)StatType.LCK].FinalStat;
+
+            foreach (Item i in character.Inventory)
             {
-                Debug.Log("Spawned " + i.itemName);
 
-                //spawn the object
-                GameObject go = ObjectPoolingManager.Instance.GetObject (m_drop.name);
-                go.transform.position = character.transform.position;
-                go.transform.rotation = Quaternion.identity;
-                go.GetComponent<SpriteRenderer>().sprite = i.sprite;
-                go.SetActive(true);
-                
-                //define item
-                Drop drop = go.GetComponent<Drop>() as Drop;
-                drop.item = i;
-                drops.Add(drop);
+                if (i != null && (Random.Range(0f, 100f) <= i.dropRate + luck))
+                {
 
-                //give a random direction to the explosion
-                drop.direction = new Vector3(
-                    UnityEngine.Random.Range(-1f, 1f),
-                    UnityEngine.Random.Range(-1f, 1f), 
-                    0f
-                );
+                    //spawn the object
+                    go = ObjectPoolingManager.Instance.GetObject(m_drop.name);
+                    go.transform.position = character.transform.position;
+                    go.transform.rotation = Quaternion.identity;
+                    go.GetComponent<SpriteRenderer>().sprite = i.sprite;
+                    go.SetActive(true);
 
-                //enable movement
-                drop.shouldMove = true;
+                    //define item
+                    Drop drop = go.GetComponent<Drop>() as Drop;
+                    drop.item = i;
+                    drops.Add(drop);
+
+                    //give a random direction to the explosion
+                    drop.direction = new Vector3(
+                        UnityEngine.Random.Range(-1f, 1f),
+                        UnityEngine.Random.Range(-1f, 1f),
+                        0f
+                    );
+
+                    //enable movement
+                    drop.shouldMove = true;
+                }
             }
+
+	        List<GameObject> secondaryDrops = new List<GameObject>();
+	        if (Random.Range(0, 7) == 0)
+	        {
+	            go = Instantiate(secondaryDropKey[(int)character.Element], character.transform.position, Quaternion.identity, character.transform.parent) as GameObject;
+	            secondaryDrops.Add(go);
+	            go.GetComponent<usableObject>().direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f);
+	            go.GetComponent<usableObject>().shouldMove = true;
+	        }
+	        if (Random.Range(0, 10) == 0)
+	        {
+	            go = Instantiate(secondaryDropHeart[(int)character.Element], character.transform.position, Quaternion.identity, character.transform.parent) as GameObject;
+	            secondaryDrops.Add(go);
+	            go.GetComponent<usableObject>().direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f);
+	            go.GetComponent<usableObject>().shouldMove = true;
+	        }
+	        if (Random.Range(0, 5) == 0)
+	        {
+	            go = Instantiate(secondaryDropCoin[(int)character.Element], character.transform.position, Quaternion.identity, character.transform.parent) as GameObject;
+	            secondaryDrops.Add(go);
+	            go.GetComponent<usableObject>().direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f);
+	            go.GetComponent<usableObject>().shouldMove = true;
+	        }
+
+	        yield return new WaitForSeconds(1);
+
+	        //disable movement
+	        foreach (Drop drop in drops)
+	        {
+	            drop.shouldMove = false;
+	        }
+
+	        foreach (GameObject drop in secondaryDrops)
+	        {
+	            drop.GetComponent<usableObject>().shouldMove = false;
+	            drop.GetComponent<CircleCollider2D>().isTrigger = true;
+	            drop.layer = 0;
+	        }
+    	}
+	}
+
+    public void openChest(GameObject chest)
+    {
+        StartCoroutine(SpawnChestDrops(chest));
+    }
+
+    public IEnumerator SpawnChestDrops(GameObject chest)
+    {
+        List<GameObject> objects = new List<GameObject>();
+        List<Drop> drops = new List<Drop>();
+        Item i = chest.GetComponent<chestEnemiesActivator>().item;
+        if (i != null)
+        {
+            Debug.Log("Spawned " + i.itemName);
+
+            //spawn the object
+            GameObject go = ObjectPoolingManager.Instance.GetObject(m_drop.name);
+            go.transform.position = chest.transform.position;
+            go.transform.rotation = Quaternion.identity;
+            go.GetComponent<SpriteRenderer>().sprite = i.sprite;
+            go.SetActive(true);
+
+            //define item
+            Drop drop = go.GetComponent<Drop>() as Drop;
+            drop.item = i;
+            drops.Add(drop);
+
+            //give a random direction to the explosion
+            drop.direction = new Vector3(
+                UnityEngine.Random.Range(-1f, 1f),
+                UnityEngine.Random.Range(-1f, 1f),
+                0f
+            );
+
+            //enable movement
+            drop.shouldMove = true;
         }
+
+        foreach (GameObject drop in chest.GetComponent<chestEnemiesActivator>().objects)
+        {
+            objects.Add(drop);
+            drop.GetComponent<usableObject>().direction = new Vector3(
+                UnityEngine.Random.Range(-1f, 1f),
+                UnityEngine.Random.Range(-1f, 1f),
+                0f
+            );
+            drop.SetActive(true);
+            drop.transform.parent = drop.transform.parent.parent;
+            drop.GetComponent<usableObject>().shouldMove = true;
+        }
+
+        Destroy(chest);
 
         yield return new WaitForSeconds(1);
 
@@ -189,8 +332,34 @@ public class GameplayManager : Singleton<GameplayManager> {
             drop.shouldMove = false;
         }
 
-		//character.gameObject.SetActive (false);
+        foreach (GameObject drop in objects)
+        {
+            drop.GetComponent<usableObject>().shouldMove = false;
+            drop.GetComponent<CircleCollider2D>().isTrigger = true;
+            drop.layer = 0;
+        }
+        //character.gameObject.SetActive (false);
 
+    }
+
+    public void setSecondaryDropKey(GameObject[] secondary)
+    {
+        secondaryDropKey = secondary;
+    }
+
+    public void setSecondaryDropCoin(GameObject[] secondary)
+    {
+        secondaryDropCoin = secondary;
+    }
+
+    public void setSecondaryDropHeart(GameObject[] secondary)
+    {
+        secondaryDropHeart = secondary;
+    }
+    
+    public void setSecondaryDropGems(GameObject[] secondary)
+    {
+        secondaryDropGems = secondary;
     }
 
     public void PickUpDrop(Drop drop)
@@ -208,24 +377,28 @@ public class GameplayManager : Singleton<GameplayManager> {
         //ClearArea();
 		m_player.isDead = true;
 		yield return new WaitForSeconds(1f);
-        m_overlayText.text = "GAME OVER";
-        m_ingameMenuScreen.SetActive(false);
-        m_overlayScreen.SetActive(true);
+        overlayText.text = "GAME OVER";
+        inGameMenuScreen.SetActive(false);
+        healthScreen.SetActive(true);
+        overlayScreen.SetActive(true);
         yield return new WaitForSeconds(1f);
-        m_ingameMenuScreen.SetActive(false);
-        m_overlayScreen.SetActive(false);
+        inGameMenuScreen.SetActive(false);
+        healthScreen.SetActive(false);
+        overlayScreen.SetActive(false);
         SceneManager.LoadScene("Main Menu");
     }
 
     IEnumerator Victory()
     {
         //ClearArea();
-        m_overlayText.text = "CONGRATULATIONS";
-        m_ingameMenuScreen.SetActive(false);
-        m_overlayScreen.SetActive(true);
+        overlayText.text = "CONGRATULATIONS";
+        inGameMenuScreen.SetActive(false);
+        healthScreen.SetActive(true);
+        overlayScreen.SetActive(true);
         yield return new WaitForSeconds(2f);
-        m_ingameMenuScreen.SetActive(false);
-        m_overlayScreen.SetActive(false);
+        inGameMenuScreen.SetActive(false);
+        healthScreen.SetActive(false);
+        overlayScreen.SetActive(false);
         SceneManager.LoadScene("Main Menu");
     }
     #endregion
@@ -247,5 +420,10 @@ public class GameplayManager : Singleton<GameplayManager> {
 	public void StopAllMusic() {
 		MusicManager.Instance.StopAll ();
 	}
-	#endregion
+    #endregion
+
+    public int getNoKilledBosses (int element)
+    {
+        return noKilledBosses[element];
+    }
 }
