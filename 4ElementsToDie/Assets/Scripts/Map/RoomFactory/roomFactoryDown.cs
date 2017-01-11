@@ -39,18 +39,35 @@ public class roomFactoryDown : roomFactory
 
             if (!full)
             {
+                int point = Random.Range(0, lenght * 4);
                 x = i;
                 for (y = j + 1; y < j + lenght + 1; y++)
-                    roomStructure[x, y] = 1;
+                {
+                    if (point != 0)
+                        roomStructure[x, y] = 1;
+                    point--;
+                }
                 x = i + lenght + 1;
                 for (y = j + 1; y < j + lenght + 1; y++)
-                    roomStructure[x, y] = 1;
+                {
+                    if (point != 0)
+                        roomStructure[x, y] = 1;
+                    point--;
+                }
                 y = j;
                 for (x = i + 1; x < i + lenght + 1; x++)
-                    roomStructure[x, y] = 1;
+                {
+                    if (point != 0)
+                        roomStructure[x, y] = 1;
+                    point--;
+                }
                 y = j + lenght + 1;
                 for (x = i + 1; x < i + lenght + 1; x++)
-                    roomStructure[x, y] = 1;
+                {
+                    if (point != 0)
+                        roomStructure[x, y] = 1;
+                    point--;
+                }
             }
         }
         addObstacles(obstacles);
@@ -124,5 +141,18 @@ public class roomFactoryDown : roomFactory
         }
         else
             return enemyObjectCollection.GetComponent<EnemyObjectCollection>().getWaterChest();
+    }
+
+    protected override int getDifficulty()
+    {
+        return enemyObjectCollection.GetComponent<EnemyObjectCollection>().gameplayManager.getNoKilledBosses((int)(ElementType.Water));
+    }
+
+    public override void getBossEnemy(Vector3 pos, Transform parent)
+    {
+        GameObject go = enemyObjectCollection.GetComponent<EnemyObjectCollection>().getWaterEnemy(4);
+        go.transform.parent = parent;
+        go.transform.position = pos;
+        go.tag = "Boss";
     }
 }

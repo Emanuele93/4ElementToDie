@@ -116,4 +116,17 @@ public class roomFactoryUp : roomFactory
         else
             return enemyObjectCollection.GetComponent<EnemyObjectCollection>().getFireChest();
     }
+
+    protected override int getDifficulty()
+    {
+        return enemyObjectCollection.GetComponent<EnemyObjectCollection>().gameplayManager.getNoKilledBosses((int)(ElementType.Fire));
+    }
+
+    public override void getBossEnemy(Vector3 pos, Transform parent)
+    {
+        GameObject go = enemyObjectCollection.GetComponent<EnemyObjectCollection>().getFireEnemy(4);
+        go.transform.parent = parent;
+        go.transform.position = pos;
+        go.tag = "Boss";
+    }
 }

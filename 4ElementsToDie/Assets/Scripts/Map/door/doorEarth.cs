@@ -15,16 +15,17 @@ public class doorEarth : MonoBehaviour
 
     void Update()
     {
-        if (inDoorArea && Input.GetKeyDown(KeyCode.F) && player.GetComponent<CharacterManager>().Stones[(int)ElementType.Earth] > 0)
+        if (inDoorArea && Input.GetKeyDown(KeyCode.F))
         {
             Vector3 mouvement = new Vector3(0, 3.5f, 0);
             player.transform.position = transform.rotation * mouvement + transform.position;
             mouvement = new Vector3(0, 6, 0);
             mouvement = transform.rotation * mouvement + transform.position;
             Camera.main.transform.position = new Vector3(mouvement.x, mouvement.y, Camera.main.transform.position.z);
+            Camera.main.backgroundColor = new Color(0.247f, 0.455f, 0.302f);
 
-			// Changing the sound.
-			GameplayManager.Instance.PlayMusic(Constants.MUSIC_EarthArea);
+            // Changing the sound.
+            GameplayManager.Instance.PlayMusic(Constants.MUSIC_EarthArea);
 
             transform.parent.gameObject.SetActive(false);
             where.SetActive(true);
@@ -33,7 +34,7 @@ public class doorEarth : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && other.gameObject.GetComponent<CharacterManager>().Stones[(int)ElementType.Earth] > 0)
         {
             buttom.SetActive(true);
             player = other.gameObject;
