@@ -90,7 +90,7 @@ public class Player : MonoBehaviour {
 			}
 
 			// Picking up drops
-			if (Input.GetKeyDown(KeyCode.P))
+			if (Input.GetKeyDown(KeyCode.E))
 			{
 				Drop drop = GetClosestDropInRange();
 				if (drop != null)

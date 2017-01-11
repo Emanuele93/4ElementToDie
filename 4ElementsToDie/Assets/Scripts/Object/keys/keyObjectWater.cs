@@ -9,6 +9,7 @@ public class keyObjectWater : usableObject
         if (other.tag == "Player")
         {
             other.gameObject.GetComponent<CharacterManager>().Keys[(int)ElementType.Water]++;
+            GameplayManager.Instance.UpdateKeyBar();
             Destroy(gameObject);
         }
     }

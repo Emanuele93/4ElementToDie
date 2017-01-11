@@ -23,9 +23,10 @@ public class saleObject : MonoBehaviour
     {
         if (onArea && Input.GetKeyDown(KeyCode.F))
         {
-            if (player.GetComponent<CharacterManager>().AddItem(item) && player.GetComponent<CharacterManager>().Money >= item.price)
+            if (player.GetComponent<CharacterManager>().Money >= item.price && player.GetComponent<CharacterManager>().AddItem(item))
             {
                 player.GetComponent<CharacterManager>().Money -= item.price;
+                GameplayManager.Instance.UpdateCoinBar();
                 Destroy(gameObject);
             }
         }

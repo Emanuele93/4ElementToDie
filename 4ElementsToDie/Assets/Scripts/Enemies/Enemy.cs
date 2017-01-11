@@ -38,12 +38,11 @@ public class Enemy : MonoBehaviour {
         isFacingRight = true;
         isFacingUp = false;
         isInCooldown = false;
-
     }
 	
 	// Fixed update because the Enemy can
 	void FixedUpdate() {
-
+		animator = GetComponent<Animator> () as Animator;
         isAggressive = EnemyMovement.calculateDistance(tr, player.transform);
 
         if (isAggressive) {

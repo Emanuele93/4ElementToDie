@@ -29,7 +29,7 @@ GameObject:
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4000013481217948
 Transform:
   m_ObjectHideFlags: 1
@@ -50,7 +50,7 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011495438110}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -76,7 +76,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1.6666666
 --- !u!114 &114000010335296138
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aa4cb506efde4f40813afae4dccbeee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSprite: {fileID: 21300000, guid: fbbdb056f19f84cd6ade6e06b55ab031, type: 3}
+  attackSprite: {fileID: 21300000, guid: 4f8e6b351d90346d6b30060ce0d287fa, type: 3}
 --- !u!212 &212830687198042760
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -120,7 +120,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1179815721
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fbbdb056f19f84cd6ade6e06b55ab031, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4f8e6b351d90346d6b30060ce0d287fa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
