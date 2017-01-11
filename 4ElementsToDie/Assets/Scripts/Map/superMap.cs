@@ -99,6 +99,7 @@ public class superMap : MonoBehaviour
         }
         if (possibleBossRoom.Count > 0)
         {
+            Vector3 position;
             Vector2 selected = possibleBossRoom[Random.Range(0, possibleBossRoom.Count)];
             GameObject boosRoomObject = null;
             GameObject doorObject = null;
@@ -107,26 +108,32 @@ public class superMap : MonoBehaviour
             map[i, j] = -3;
             if (j < map.GetLength(1) - 1 && map[i, j + 1] >= 2)
             {
-                boosRoomObject = Instantiate(bossRoom, new Vector3((j + 1) * 16 + marginX - 20.5f, -i * 10 + marginY, 0f), Quaternion.Euler(0, 0, 0)) as GameObject;
-                doorObject = Instantiate(bossDoor, new Vector3((j + 1) * 16 + marginX - 7.25f, -i * 10 + marginY, 0f), Quaternion.Euler(0, 0, 90)) as GameObject;
+                position = new Vector3((j + 1) * 16 + marginX - 20.5f, -i * 10 + marginY, 0f);
+                boosRoomObject = Instantiate(bossRoom, position, Quaternion.Euler(0, 0, 0), transform) as GameObject;
+                doorObject = Instantiate(bossDoor, new Vector3((j + 1) * 16 + marginX - 7.25f, -i * 10 + marginY, 0f), Quaternion.Euler(0, 0, 90), transform) as GameObject;
+                roomGeneratorObject.GetComponent<roomFactory>().getBossEnemy(position, boosRoomObject.transform);
             }
             else if (j > 0 && map[i, j - 1] >= 2)
             {
-                boosRoomObject = Instantiate(bossRoom, new Vector3((j - 1) * 16 + marginX + 20.5f, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
-                doorObject = Instantiate(bossDoor, new Vector3((j - 1) * 16 + marginX + 7.25f, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, -90)) as GameObject;
+                position = new Vector3((j - 1) * 16 + marginX + 20.5f, -i * 10 + marginY, 0);
+                boosRoomObject = Instantiate(bossRoom, position, Quaternion.Euler(0, 0, 0), transform) as GameObject;
+                doorObject = Instantiate(bossDoor, new Vector3((j - 1) * 16 + marginX + 7.25f, -i * 10 + marginY, 0), Quaternion.Euler(0, 0, -90), transform) as GameObject;
+                roomGeneratorObject.GetComponent<roomFactory>().getBossEnemy(position, boosRoomObject.transform);
             }
             else if (i < map.GetLength(0) - 1 && map[i + 1, j] >= 2)
             {
-                boosRoomObject = Instantiate(bossRoom, new Vector3(j * 16 + marginX, -(i + 1) * 10 + marginY + 13.5f, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
-                doorObject = Instantiate(bossDoor, new Vector3(j * 16 + marginX, -(i + 1) * 10 + marginY + 4.25f, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
+                position = new Vector3(j * 16 + marginX, -(i + 1) * 10 + marginY + 13.5f, 0);
+                boosRoomObject = Instantiate(bossRoom, position, Quaternion.Euler(0, 0, 0), transform) as GameObject;
+                doorObject = Instantiate(bossDoor, new Vector3(j * 16 + marginX, -(i + 1) * 10 + marginY + 4.25f, 0), Quaternion.Euler(0, 0, 0), transform) as GameObject;
+                roomGeneratorObject.GetComponent<roomFactory>().getBossEnemy(position, boosRoomObject.transform);
             }
             else if (i > 0 && map[i - 1, j] >= 2)
             {
-                boosRoomObject = Instantiate(bossRoom, new Vector3(j * 16 + marginX, -(i - 1) * 10 + marginY - 13.5f, 0), Quaternion.Euler(0, 0, 0)) as GameObject;
-                doorObject = Instantiate(bossDoor, new Vector3(j * 16 + marginX, -(i - 1) * 10 + marginY - 4.25f, 0), Quaternion.Euler(0, 0, 180)) as GameObject;
+                position = new Vector3(j * 16 + marginX, -(i - 1) * 10 + marginY - 13.5f, 0);
+                boosRoomObject = Instantiate(bossRoom, position, Quaternion.Euler(0, 0, 0), transform) as GameObject;
+                doorObject = Instantiate(bossDoor, new Vector3(j * 16 + marginX, -(i - 1) * 10 + marginY - 4.25f, 0), Quaternion.Euler(0, 0, 180), transform) as GameObject;
+                roomGeneratorObject.GetComponent<roomFactory>().getBossEnemy(position, boosRoomObject.transform);
             }
-            boosRoomObject.transform.parent = transform;
-            doorObject.transform.parent = transform;
             doorObject.GetComponent<door>().where = boosRoomObject;
             externalObject.Add(boosRoomObject);
             externalObject.Add(doorObject);
@@ -347,7 +354,7 @@ public class superMap : MonoBehaviour
 
                     if (map[i - 1, j] < -1 || map[i + 1, j] < -1 || map[i, j - 1] < -1 || map[i, j + 1] < -1)
                         door = true;
-                    
+
                     room = roomGeneratorObject.GetComponent<roomFactory>().makeRoom(u, r, l, d, ur, ul, dr, dl, j * 16 + marginX, -i * 10 + marginY, door);
                     if (room != null)
                         rooms.Add(room);

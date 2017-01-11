@@ -4,30 +4,38 @@ using System.Collections;
 public class miniMapSetter : MonoBehaviour
 {
     public GameObject controller;
-    private bool entered;
+    private bool entered = false;
+    //private bool voidRoom = false;
 
     // Use this for initialization
     void Start()
     {
-        entered = false;
+
     }
 
     // Update is called once per frame
     void Update()
-    {
-        if(transform.childCount == 0 && entered)
+    {/*
+        if(!voidRoom && transform.childCount == 0)
         {
             controller.GetComponent<miniMapContoller>().finishPosition(transform.position.x, transform.position.y);
-            Destroy(gameObject);
-        }
+            voidRoom = true;
+        }*/
     }
-    
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
         {
-            controller.GetComponent<miniMapContoller>().newPosition(transform.position.x, transform.position.y);
-            entered = true;
+            if (!entered)
+            {
+                controller.GetComponent<miniMapContoller>().newPosition(transform.position.x, transform.position.y);
+                entered = true;
+            }
+            else
+            {
+                controller.GetComponent<miniMapContoller>().movePlayer(transform.position.x, transform.position.y);
+            }
         }
     }
 }
