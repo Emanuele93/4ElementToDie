@@ -161,14 +161,14 @@ public class CharacterManager : MonoBehaviour
         m_keys = new int[System.Enum.GetValues(typeof(ElementType)).Length];
         for (int i = 0; i < m_keys.Length; i++)
         {
-            m_keys[i] = 5;
+            m_keys[i] = 0;
         }
 
         //stones
         m_stones = new int[System.Enum.GetValues(typeof(ElementType)).Length];
         m_stones[(int)m_element] += 1;
 
-        m_money = 5;
+        m_money = 0;
 
         //abilities
         m_abilities = new List<Ability>();
@@ -439,8 +439,8 @@ public class CharacterManager : MonoBehaviour
     public void ApplyDamage(double damage)
     {
         m_damage += damage;
-        System.Math.Max(m_damage, 0.0);
-        System.Math.Min(m_damage, m_stats[(int)StatType.VIT].FinalStat);
+        m_damage = System.Math.Max(m_damage, 0.0);
+        m_damage = System.Math.Min(m_damage, m_stats[(int)StatType.VIT].FinalStat);
     }
 
     public bool isDead()

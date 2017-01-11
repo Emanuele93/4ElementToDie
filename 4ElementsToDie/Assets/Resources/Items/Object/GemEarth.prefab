@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4205518310152072}
   - component: {fileID: 212059128299307924}
   - component: {fileID: 58218899856831380}
-  - component: {fileID: 114596263347050662}
+  - component: {fileID: 114780472379705620}
   m_Layer: 0
   m_Name: GemEarth
   m_TagString: Untagged
@@ -51,12 +51,12 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &114596263347050662
+--- !u!114 &114780472379705620
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -64,7 +64,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1456139360193884}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcbb726ec15c4f64da4c17722390c733, type: 3}
+  m_Script: {fileID: 11500000, guid: 81312ca74e8a2584ea234ecc21406132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &212059128299307924
@@ -96,7 +96,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
+  m_SortingLayerID: 1179815721
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5dfa33993601e5f43849e86ccd1c9dd6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

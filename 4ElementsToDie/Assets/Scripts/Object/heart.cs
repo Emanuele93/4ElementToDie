@@ -8,7 +8,8 @@ public class heart : usableObject
     {
         if (other.tag == "Player")
         {
-            //GameManager heart();
+            other.gameObject.GetComponent<CharacterManager>().ApplyDamage(-2);
+            GameplayManager.Instance.UpdateHealthBar();
             Destroy(gameObject);
         }
     }
