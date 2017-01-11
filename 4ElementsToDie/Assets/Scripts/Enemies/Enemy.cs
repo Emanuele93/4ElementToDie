@@ -3,15 +3,10 @@ using System.Collections;
 using POLIMIGameCollective;
 
 public class Enemy : MonoBehaviour {
-
-    [Header("Difficulty")]
-    [Range (1,10)]
-    public int difficulty;
-
+    
     // Unity objects references
     Transform tr;
     Animator animator;
-    SpriteRenderer spriteRend;
     CharacterManager charManager;
     GameObject player;
 
@@ -37,19 +32,17 @@ public class Enemy : MonoBehaviour {
 	void Start () {
 		tr = GetComponent<Transform> () as Transform;
 		animator = GetComponent<Animator> () as Animator;
-        spriteRend = GetComponent<SpriteRenderer>() as SpriteRenderer;
         charManager = GetComponent<CharacterManager> () as CharacterManager;
         player = GameObject.FindGameObjectWithTag ("Player");
         
         isFacingRight = true;
         isFacingUp = false;
         isInCooldown = false;
-
     }
 	
 	// Fixed update because the Enemy can
 	void FixedUpdate() {
-
+		animator = GetComponent<Animator> () as Animator;
         isAggressive = EnemyMovement.calculateDistance(tr, player.transform);
 
         if (isAggressive) {
@@ -93,9 +86,9 @@ public class Enemy : MonoBehaviour {
                 go = ObjectPoolingManager.Instance.GetObject(m_SlashPrefab.name);
                 go.transform.position = m_SlashTransform.position;
                 break;
-            case AttackType.Thrusting:
-                go = ObjectPoolingManager.Instance.GetObject(m_ThrustPrefab.name);
-                go.transform.position = m_ThrustTransform.position;
+			case AttackType.Thrusting:
+				go = ObjectPoolingManager.Instance.GetObject (m_ThrustPrefab.name);
+				go.transform.position = m_ThrustTransform.position;
                 break;
             case AttackType.Area:
                 go = ObjectPoolingManager.Instance.GetObject(m_AreaPrefab.name);
@@ -115,7 +108,7 @@ public class Enemy : MonoBehaviour {
     {
 
         isInCooldown = true;
-        double attSpeed = charManager.Stats[(int)StatType.ATTSpd].FinalStat;
+        double attSpeed = charManager.Stats[(int)StatType.AttSPD].FinalStat;
         double cooldownTime = 1 / attSpeed;
 
 		yield return new WaitForSeconds ((float)cooldownTime);

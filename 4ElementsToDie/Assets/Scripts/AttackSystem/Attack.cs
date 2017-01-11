@@ -1,19 +1,26 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
-[RequireComponent (typeof(Rigidbody2D))]
-public  class Attack : MonoBehaviour {
+[RequireComponent (typeof(Rigidbody2D), typeof(SpriteRenderer))]
+public class Attack : MonoBehaviour {
 	
 	protected Rigidbody2D rb;
 	protected Transform tr;
+	protected SpriteRenderer sr;
 
     protected float attRange;
-
-	protected float waitTime = 1f;
+	protected float waitTime = 0.3f;
 
 	protected virtual void Start() {
 		tr = GetComponent<Transform> () as Transform;
 		rb = GetComponent<Rigidbody2D> () as Rigidbody2D;
+		sr = GetComponent<SpriteRenderer> () as SpriteRenderer;
+	}
+
+	protected virtual void OnEnable() {
+		tr = GetComponent<Transform> () as Transform;
+		rb = GetComponent<Rigidbody2D> () as Rigidbody2D;
+		sr = GetComponent<SpriteRenderer> () as SpriteRenderer;
 	}
 
     void FixedUpdate()
@@ -25,12 +32,12 @@ public  class Attack : MonoBehaviour {
     public virtual void AttackNow()
     {
         // Attack Range stat
-        attRange = (float)GameplayManager.Instance.attackersDict[gameObject.GetInstanceID()].Stats[(int)StatType.ATTRng].FinalStat;
-
+        attRange = (float)GameplayManager.Instance.attackersDict[gameObject.GetInstanceID()].Stats[(int)StatType.AttRNG].FinalStat;
         StartCoroutine(Fade());
     }
 
-	protected IEnumerator Fade () {
+	protected virtual IEnumerator Fade ()
+    {
 		yield return new WaitForSeconds (waitTime);
 		gameObject.SetActive (false);
 	}
@@ -42,7 +49,10 @@ public  class Attack : MonoBehaviour {
         
 
 		if ( (attacker.tag == "Player"  && other.tag == "Enemy") || 
-             (attacker.tag == "Enemy" && other.tag == "Player") )
+             (attacker.tag == "Enemy" && other.tag == "Player")  || 
+			 (attacker.tag == "Player" && other.tag == "Boss")   ||
+			 (attacker.tag == "Boss" && other.tag == "Player") 
+		   )
         {
             GameplayManager.Instance.ExecuteAttack(attacker, defender);
         }
