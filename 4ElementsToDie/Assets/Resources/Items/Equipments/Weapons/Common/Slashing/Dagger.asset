@@ -16,18 +16,18 @@ MonoBehaviour:
   itemName: Dagger
   rarity: 0
   description: 
-  price: 0
-  dropRate: 20
+  price: 5
+  dropRate: 22
   element: 3
   statBuffs:
-  - 1
+  - 2
   - 0
   - 0
-  - 0.5
-  - 1.5
   - 0
   - 0
-  - 0.5
+  - 0
+  - 0
+  - 0
   - 0
   - 0
   - 0

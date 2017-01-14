@@ -2,18 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class stoneFire : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-    }
-
+public class stoneFire : usableObject
+{
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")

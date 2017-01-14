@@ -16,21 +16,21 @@ MonoBehaviour:
   itemName: Great Bow of the Falling Thunder
   rarity: 2
   description: 
-  price: 12
-  dropRate: 3
+  price: 15
+  dropRate: 2
   element: 3
   statBuffs:
-  - 3
+  - 4
   - 0
   - 0
-  - 3
-  - 3
-  - 0
-  - 0
-  - 3
+  - 2
   - 0
   - 0
   - 0
   - 2
+  - 0
+  - 0
+  - 0
+  - 3
   abilities: []
   attackType: 3

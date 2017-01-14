@@ -322,7 +322,6 @@ public class CharacterManager : MonoBehaviour
                 }
             }
         }
-
         return freeSlotFound;
     }
 
