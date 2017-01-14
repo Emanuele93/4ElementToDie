@@ -16,20 +16,20 @@ MonoBehaviour:
   itemName: Bone Scarf
   rarity: 1
   description: 
-  price: 6
-  dropRate: 16
+  price: 7
+  dropRate: 14
   element: 1
   statBuffs:
-  - 0.5
+  - 0
   - 2
   - 0
-  - 1
+  - 2
   - 0
   - 0
-  - 1
-  - 0.5
   - 0
-  - 1
+  - 0
+  - 0
+  - 2
   - 0
   - 0
   abilities: []

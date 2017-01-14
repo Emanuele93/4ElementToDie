@@ -16,20 +16,20 @@ MonoBehaviour:
   itemName: White Sun
   rarity: 1
   description: 
-  price: 5
+  price: 6
   dropRate: 15
   element: 3
   statBuffs:
-  - 1
   - 0
   - 0
-  - 1.5
-  - 1
-  - 0
-  - 0
-  - 1
+  - 3
   - 0
   - 0
   - 0
-  - 1
+  - 0
+  - 3
+  - 0
+  - 0
+  - 0
+  - 2
   abilities: []

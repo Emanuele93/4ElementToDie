@@ -9,7 +9,7 @@ public class Attack : MonoBehaviour {
 	protected SpriteRenderer sr;
 
     protected float attRange;
-	protected float waitTime = 0.3f;
+	protected float waitTime = 0.25f;
 
 	protected virtual void Start() {
 		tr = GetComponent<Transform> () as Transform;
