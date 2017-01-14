@@ -16,19 +16,19 @@ MonoBehaviour:
   itemName: Demon Scarf
   rarity: 2
   description: 
-  price: 9
-  dropRate: 5
+  price: 12
+  dropRate: 4
   element: 0
   statBuffs:
-  - 3.5
+  - 2
+  - 0
+  - 0
+  - 4
+  - 0
+  - 0
   - 0
   - 0
   - 3
-  - 2.5
-  - 0
-  - 0
-  - 1.5
-  - 1.5
   - 0
   - 0
   - 0
