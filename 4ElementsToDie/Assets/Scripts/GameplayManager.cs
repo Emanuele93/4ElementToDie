@@ -159,7 +159,7 @@ public class GameplayManager : Singleton<GameplayManager> {
         else if (deadCharacter.gameObject.CompareTag("Boss"))
         {
 			StartCoroutine(SpawnDrops(deadCharacter));
-            Instantiate(secondaryDropGems[(int)deadCharacter.Element], deadCharacter.gameObject.transform.position, deadCharacter.gameObject.transform.rotation, deadCharacter.gameObject.transform.parent);
+            StartCoroutine(SpawnGem(deadCharacter));
             deadCharacter.gameObject.SetActive(false);
             noKilledBosses[(int)deadCharacter.Element]++;
             //TODO: open the next area, obtain the boss crystal and so on.
@@ -202,6 +202,21 @@ public class GameplayManager : Singleton<GameplayManager> {
     #endregion
 
     #region Drops Management
+
+    public IEnumerator SpawnGem(CharacterManager deadCharacter)
+    {
+        GameObject go;
+        go = Instantiate(secondaryDropGems[(int)deadCharacter.Element], deadCharacter.gameObject.transform.position, deadCharacter.gameObject.transform.rotation, deadCharacter.gameObject.transform.parent) as GameObject;
+
+        go.GetComponent<usableObject>().direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f);
+        go.GetComponent<usableObject>().shouldMove = true;
+
+        yield return new WaitForSeconds(1);
+
+        go.GetComponent<usableObject>().shouldMove = false;
+        go.GetComponent<CircleCollider2D>().isTrigger = true;
+    }
+
     public IEnumerator SpawnDrops(CharacterManager character)
     {
         if (character.Inventory != null)
