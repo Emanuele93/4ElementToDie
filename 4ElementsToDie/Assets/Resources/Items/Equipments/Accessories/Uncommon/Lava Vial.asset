@@ -16,19 +16,19 @@ MonoBehaviour:
   itemName: Lava Vial
   rarity: 1
   description: 
-  price: 5
-  dropRate: 14
+  price: 6
+  dropRate: 15
   element: 0
   statBuffs:
-  - 1.5
-  - 0.5
-  - 0.5
-  - 0.5
-  - 1
   - 0
-  - 1
   - 0
-  - 1
+  - 2
+  - 0
+  - 3
+  - 0
+  - 0
+  - 0
+  - 2
   - 0
   - 0
   - 0

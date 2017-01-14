@@ -16,19 +16,19 @@ MonoBehaviour:
   itemName: Flamestone Armor
   rarity: 2
   description: 
-  price: 11
-  dropRate: 4
+  price: 14
+  dropRate: 3
   element: 0
   statBuffs:
-  - 2.5
-  - 3.5
-  - 0
-  - 1
-  - 1.5
   - 2
+  - 4
   - 0
   - 0
-  - 2
+  - 0
+  - 0
+  - 0
+  - 0
+  - 3
   - 0
   - 0
   - 0
