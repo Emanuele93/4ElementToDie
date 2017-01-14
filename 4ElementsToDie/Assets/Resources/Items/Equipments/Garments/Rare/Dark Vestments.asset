@@ -16,20 +16,20 @@ MonoBehaviour:
   itemName: Dark Vestments
   rarity: 2
   description: 
-  price: 8
-  dropRate: 5
+  price: 12
+  dropRate: 4
   element: 1
   statBuffs:
   - 0
   - 3
-  - 1
-  - 2
-  - 1
-  - 2
   - 0
-  - 1.5
+  - 3
   - 0
-  - 1.5
+  - 0
+  - 0
+  - 0
+  - 0
+  - 3
   - 0
   - 0
   abilities: []

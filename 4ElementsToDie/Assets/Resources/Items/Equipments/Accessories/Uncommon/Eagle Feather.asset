@@ -15,8 +15,8 @@ MonoBehaviour:
   itemID: 
   itemName: Eagle Feather
   rarity: 1
-  description: +15% movement Speed
-  price: 5
+  description: You move faster
+  price: 6
   dropRate: 15
   element: 3
   statBuffs:
@@ -31,6 +31,6 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 0.5
+  - 2
   abilities:
   - {fileID: 11400000, guid: 5f9289953d7716548aaae9ada67ba347, type: 2}

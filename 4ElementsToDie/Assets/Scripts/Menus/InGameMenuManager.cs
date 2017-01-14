@@ -62,12 +62,12 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
             if (selectedItem is Equipment)
             {
                 commandsPanel.SetActive(true);
-                commandsText.text = "Press  E                     Press  X  " + "\n" + "to Equip                to Destroy";
+                commandsText.text = "Press   E                     Press   X  " + "\n" + "to   Equip                to   Destroy";
             }
             else if (selectedItem != null)
             {
                 commandsPanel.SetActive(true);
-                commandsText.text = "Press X" + "\n" + "to Destroy";
+                commandsText.text = "Press   X" + "\n" + "to   Destroy";
             }
             else
             {
@@ -104,7 +104,7 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
             if (selectedItem != null)
             {
                 commandsPanel.SetActive(true);
-                commandsText.text = "Press Q" + "\n" + "to Unequip";
+                commandsText.text = "Press   Q" + "\n" + "to   Unequip";
             }
             else
             {
@@ -119,7 +119,7 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
         // character slot
         charSlot.sprite = player.BaseCharacterData.sprite;
         charSlot.GetComponent<Image>().preserveAspect = true;
-        //charSlot.GetComponent<Animator>().runtimeAnimatorController = player.BaseCharacterData.idleAnimation;
+        charSlot.GetComponent<Animator>().runtimeAnimatorController = player.BaseCharacterData.idleAnimation;
     }
 
     private void DrawItems()
@@ -230,12 +230,12 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
                     //positive buffs
                     if (((Equipment)selectedItem).statBuffs[i] > 0)
                     {
-                        text += "          + " + ((Equipment)selectedItem).statBuffs[i] + "   " + (StatType)i;
+                        text += "     + " + ((Equipment)selectedItem).statBuffs[i] + "   " + (StatType)i + "     ";
                     }
                     //negative buffs
                     else if (((Equipment)selectedItem).statBuffs[i] < 0)
                     {
-                        text += "          -  " + -((Equipment)selectedItem).statBuffs[i] + "   " + (StatType)i;
+                        text += "     -  " + -((Equipment)selectedItem).statBuffs[i] + "   " + (StatType)i + "     ";
                     }
                 }
                 text += "\n\n";
@@ -249,7 +249,7 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
             }
             text += "\n";
             text += selectedItem.description + "\n";
-            text += "[" + selectedItem.price + " Gold]";
+            text += "" + selectedItem.price + " Gold";
         }
         itemText.text = text;
     }
