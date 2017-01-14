@@ -16,19 +16,19 @@ MonoBehaviour:
   itemName: Scarf of the Red Fox
   rarity: 1
   description: 
-  price: 6
-  dropRate: 16
+  price: 7
+  dropRate: 14
   element: 0
   statBuffs:
   - 1
   - 0
   - 0
+  - 3
+  - 0
+  - 0
+  - 0
+  - 0
   - 2
-  - 1
-  - 0
-  - 1
-  - 0
-  - 1
   - 0
   - 0
   - 0

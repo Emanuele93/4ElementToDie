@@ -139,6 +139,8 @@ public class GameplayManager : Singleton<GameplayManager> {
 
     public void Kill(CharacterManager deadCharacter)
     {
+        Debug.Log("Killed " + deadCharacter.BaseCharacterData.characterName);
+
         if (deadCharacter.gameObject.CompareTag("Player"))
         {
             StartCoroutine(GameOver());
@@ -171,7 +173,6 @@ public class GameplayManager : Singleton<GameplayManager> {
     public void UpdateHealthBar()
     {
         double currentVitality = System.Math.Round(playerChar.Stats[(int)StatType.VIT].FinalStat - playerChar.Damage, 1);
-        currentVitality = System.Math.Max(currentVitality, 0);
         double totalVitality = System.Math.Round(playerChar.Stats[(int)StatType.VIT].FinalStat, 1);
 
         healthBar.GetComponent<RectTransform>().localScale = new Vector2((float)(currentVitality / totalVitality), 1);
@@ -180,10 +181,10 @@ public class GameplayManager : Singleton<GameplayManager> {
 
     public void UpdateKeyBar()
     {
-        keyAirText.text = "    " + playerChar.Keys[(int)ElementType.Air] ;
-        keyEarthText.text = "    " + playerChar.Keys[(int)ElementType.Earth];
         keyFireText.text = "    " + playerChar.Keys[(int)ElementType.Fire];
+        keyEarthText.text = "    " + playerChar.Keys[(int)ElementType.Earth];
         keyWaterText.text = "    " + playerChar.Keys[(int)ElementType.Water];
+        keyAirText.text = "    " + playerChar.Keys[(int)ElementType.Air];
     }
 
     public void UpdateCoinBar()
@@ -261,7 +262,7 @@ public class GameplayManager : Singleton<GameplayManager> {
 	        foreach (Drop drop in drops)
 	        {
 	            drop.shouldMove = false;
-	        }
+            }
 
 	        foreach (GameObject drop in secondaryDrops)
 	        {
@@ -284,8 +285,6 @@ public class GameplayManager : Singleton<GameplayManager> {
         Item i = chest.GetComponent<chestEnemiesActivator>().item;
         if (i != null)
         {
-            Debug.Log("Spawned " + i.itemName);
-
             //spawn the object
             GameObject go = ObjectPoolingManager.Instance.GetObject(m_drop.name);
             go.transform.position = chest.transform.position;
@@ -403,7 +402,7 @@ public class GameplayManager : Singleton<GameplayManager> {
     }
     #endregion
 
-	#region Game Music Management.
+	#region Game Music Management
 	public void PlayMusic(string musicName, float pitchVariance = 0) {
 		MusicManager.Instance.PlayMusic (musicName, pitchVariance);
 	}
