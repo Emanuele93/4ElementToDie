@@ -16,20 +16,20 @@ MonoBehaviour:
   itemName: Gaia Charm
   rarity: 1
   description: 
-  price: 4
-  dropRate: 16
+  price: 6
+  dropRate: 15
   element: 1
   statBuffs:
-  - 1
-  - 1.5
+  - 0
+  - 0
+  - 3
+  - 0
+  - 0
+  - 3
   - 0
   - 0
   - 0
   - 2
-  - 0.5
-  - 0
-  - 0
-  - 1
   - 0
   - 0
   abilities: []

@@ -58,6 +58,8 @@ public class GameplayManager : Singleton<GameplayManager> {
     // Number of killed bosses, by element.
     private int[] noKilledBosses = new int[System.Enum.GetValues(typeof(ElementType)).Length];
 
+	private bool isGameOver = false;
+
     // Use this for initialization
     void Start ()
     {
@@ -66,8 +68,8 @@ public class GameplayManager : Singleton<GameplayManager> {
         ObjectPoolingManager.Instance.CreatePool (m_AreaAttack, 30, 30);
         ObjectPoolingManager.Instance.CreatePool(m_RangedAttack, 100, 100);
         ObjectPoolingManager.Instance.CreatePool (m_drop, 100, 100);
-       	
-        inGameMenuScreen.SetActive(false);
+
+		inGameMenuScreen.SetActive(false);
         healthScreen.SetActive(true);
         overlayScreen.SetActive(false);
 
@@ -76,6 +78,8 @@ public class GameplayManager : Singleton<GameplayManager> {
         UpdateHealthBar();
         UpdateCoinBar();
         UpdateKeyBar();
+
+		isGameOver = false;
     }
 	
 	// Update is called once per frame
@@ -83,7 +87,7 @@ public class GameplayManager : Singleton<GameplayManager> {
 
         if (Input.GetKeyDown(KeyCode.O))
         {
-            inGameMenuScreen.SetActive(!inGameMenuScreen.activeInHierarchy);
+			inGameMenuScreen.SetActive(!inGameMenuScreen.activeInHierarchy);
             healthScreen.SetActive(!healthScreen.activeInHierarchy);
         }
         //		if (Input.GetKeyDown (KeyCode.Alpha1))
@@ -139,9 +143,14 @@ public class GameplayManager : Singleton<GameplayManager> {
 
     public void Kill(CharacterManager deadCharacter)
     {
+        Debug.Log("Killed " + deadCharacter.BaseCharacterData.characterName);
+
         if (deadCharacter.gameObject.CompareTag("Player"))
         {
-            StartCoroutine(GameOver());
+			if (!isGameOver) { 
+				isGameOver = true;
+				StartCoroutine(GameOver());
+			}
         }
         else if (deadCharacter.gameObject.CompareTag("FinalBoss"))
         {
@@ -171,7 +180,6 @@ public class GameplayManager : Singleton<GameplayManager> {
     public void UpdateHealthBar()
     {
         double currentVitality = System.Math.Round(playerChar.Stats[(int)StatType.VIT].FinalStat - playerChar.Damage, 1);
-        currentVitality = System.Math.Max(currentVitality, 0);
         double totalVitality = System.Math.Round(playerChar.Stats[(int)StatType.VIT].FinalStat, 1);
 
         healthBar.GetComponent<RectTransform>().localScale = new Vector2((float)(currentVitality / totalVitality), 1);
@@ -180,10 +188,10 @@ public class GameplayManager : Singleton<GameplayManager> {
 
     public void UpdateKeyBar()
     {
-        keyAirText.text = "    " + playerChar.Keys[(int)ElementType.Air] ;
-        keyEarthText.text = "    " + playerChar.Keys[(int)ElementType.Earth];
         keyFireText.text = "    " + playerChar.Keys[(int)ElementType.Fire];
+        keyEarthText.text = "    " + playerChar.Keys[(int)ElementType.Earth];
         keyWaterText.text = "    " + playerChar.Keys[(int)ElementType.Water];
+        keyAirText.text = "    " + playerChar.Keys[(int)ElementType.Air];
     }
 
     public void UpdateCoinBar()
@@ -276,7 +284,7 @@ public class GameplayManager : Singleton<GameplayManager> {
 	        foreach (Drop drop in drops)
 	        {
 	            drop.shouldMove = false;
-	        }
+            }
 
 	        foreach (GameObject drop in secondaryDrops)
 	        {
@@ -299,8 +307,6 @@ public class GameplayManager : Singleton<GameplayManager> {
         Item i = chest.GetComponent<chestEnemiesActivator>().item;
         if (i != null)
         {
-            Debug.Log("Spawned " + i.itemName);
-
             //spawn the object
             GameObject go = ObjectPoolingManager.Instance.GetObject(m_drop.name);
             go.transform.position = chest.transform.position;
@@ -418,7 +424,7 @@ public class GameplayManager : Singleton<GameplayManager> {
     }
     #endregion
 
-	#region Game Music Management.
+	#region Game Music Management
 	public void PlayMusic(string musicName, float pitchVariance = 0) {
 		MusicManager.Instance.PlayMusic (musicName, pitchVariance);
 	}

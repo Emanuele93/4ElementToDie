@@ -16,11 +16,11 @@ MonoBehaviour:
   itemName: Long Sword
   rarity: 0
   description: 
-  price: 2
-  dropRate: 20
+  price: 5
+  dropRate: 22
   element: 0
   statBuffs:
-  - 2
+  - 3
   - 0
   - 0
   - 0

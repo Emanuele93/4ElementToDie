@@ -16,15 +16,15 @@ MonoBehaviour:
   itemName: Thrusting Dagger
   rarity: 0
   description: 
-  price: 2
-  dropRate: 20
+  price: 5
+  dropRate: 22
   element: 0
   statBuffs:
-  - 1.5
+  - 3
   - 0
   - 0
   - 0
-  - 2
+  - 1
   - 0
   - 0
   - 0
