@@ -7,14 +7,14 @@
 
     public static readonly double[] StatConstantAdder =
         {
-        1.0, 1.0, 5.0, 3.0,
+        1.0, 1.0, 5.0, 3.5,
         0.5, 0.0, 0.0, 1.0,
         0.0, 0.0, 0.0, 0.0
         };
     public static readonly double[] StatConstantMultiplier =
         {
-        1.0, 1.0, 2.0, 0.25,
-        0.2, 1.0, 1.0, 0.15,
+        1.0, 1.0, 2.0, 0.35,
+        0.25, 1.0, 1.0, 0.15,
         1.0, 1.0, 1.0, 1.0
         };
 

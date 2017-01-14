@@ -16,21 +16,21 @@ MonoBehaviour:
   itemName: Great Staff of the Crystal Water
   rarity: 2
   description: 
-  price: 12
-  dropRate: 3
+  price: 15
+  dropRate: 2
   element: 2
   statBuffs:
-  - 2
+  - 3
   - 0
   - 3
   - 0
   - 0
   - 0
-  - 3
-  - 4
-  - 0
-  - 0
   - 2
+  - 0
+  - 0
+  - 0
+  - 3
   - 0
   abilities: []
   attackType: 2
