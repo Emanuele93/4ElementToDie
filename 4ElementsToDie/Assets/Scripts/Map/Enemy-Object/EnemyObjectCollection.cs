@@ -301,7 +301,7 @@ public class EnemyObjectCollection : MonoBehaviour
 
     public GameObject getFireEnemy(int diff)
     {
-        int difficulty = Random.Range(0, diff - 1);
+        int difficulty = diff - 1;
         while (fireEnemies[difficulty].Count == 0)
             difficulty--;
         int enemyNumber = Random.Range(0, fireEnemies[difficulty].Count);
@@ -312,7 +312,7 @@ public class EnemyObjectCollection : MonoBehaviour
 
     public GameObject getWaterEnemy(int diff)
     {
-        int difficulty = Random.Range(0, diff - 1);
+        int difficulty = diff - 1;
         while (waterEnemies[difficulty].Count == 0)
             difficulty--;
         int enemyNumber = Random.Range(0, waterEnemies[difficulty].Count);
@@ -323,7 +323,7 @@ public class EnemyObjectCollection : MonoBehaviour
 
     public GameObject getAirEnemy(int diff)
     {
-        int difficulty = Random.Range(0, diff - 1);
+        int difficulty = diff - 1;
         while (airEnemies[difficulty].Count == 0)
             difficulty--;
         int enemyNumber = Random.Range(0, airEnemies[difficulty].Count);
@@ -334,7 +334,7 @@ public class EnemyObjectCollection : MonoBehaviour
 
     public GameObject getEarthEnemy(int diff)
     {
-        int difficulty = Random.Range(0, diff - 1);
+        int difficulty = diff - 1;
         while (earthEnemies[difficulty].Count == 0)
             difficulty--;
         int enemyNumber = Random.Range(0, earthEnemies[difficulty].Count);

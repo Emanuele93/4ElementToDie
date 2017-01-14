@@ -58,6 +58,8 @@ public class GameplayManager : Singleton<GameplayManager> {
     // Number of killed bosses, by element.
     private int[] noKilledBosses = new int[System.Enum.GetValues(typeof(ElementType)).Length];
 
+	private bool isGameOver = false;
+
     // Use this for initialization
     void Start ()
     {
@@ -66,8 +68,8 @@ public class GameplayManager : Singleton<GameplayManager> {
         ObjectPoolingManager.Instance.CreatePool (m_AreaAttack, 30, 30);
         ObjectPoolingManager.Instance.CreatePool(m_RangedAttack, 100, 100);
         ObjectPoolingManager.Instance.CreatePool (m_drop, 100, 100);
-       	
-        inGameMenuScreen.SetActive(false);
+
+		inGameMenuScreen.SetActive(false);
         healthScreen.SetActive(true);
         overlayScreen.SetActive(false);
 
@@ -76,6 +78,8 @@ public class GameplayManager : Singleton<GameplayManager> {
         UpdateHealthBar();
         UpdateCoinBar();
         UpdateKeyBar();
+
+		isGameOver = false;
     }
 	
 	// Update is called once per frame
@@ -83,7 +87,7 @@ public class GameplayManager : Singleton<GameplayManager> {
 
         if (Input.GetKeyDown(KeyCode.O))
         {
-            inGameMenuScreen.SetActive(!inGameMenuScreen.activeInHierarchy);
+			inGameMenuScreen.SetActive(!inGameMenuScreen.activeInHierarchy);
             healthScreen.SetActive(!healthScreen.activeInHierarchy);
         }
         //		if (Input.GetKeyDown (KeyCode.Alpha1))
@@ -143,7 +147,10 @@ public class GameplayManager : Singleton<GameplayManager> {
 
         if (deadCharacter.gameObject.CompareTag("Player"))
         {
-            StartCoroutine(GameOver());
+			if (!isGameOver) { 
+				isGameOver = true;
+				StartCoroutine(GameOver());
+			}
         }
         else if (deadCharacter.gameObject.CompareTag("FinalBoss"))
         {
@@ -152,7 +159,7 @@ public class GameplayManager : Singleton<GameplayManager> {
         else if (deadCharacter.gameObject.CompareTag("Boss"))
         {
 			StartCoroutine(SpawnDrops(deadCharacter));
-            Instantiate(secondaryDropGems[(int)deadCharacter.Element], deadCharacter.gameObject.transform.position, deadCharacter.gameObject.transform.rotation, deadCharacter.gameObject.transform.parent);
+            StartCoroutine(SpawnGem(deadCharacter));
             deadCharacter.gameObject.SetActive(false);
             noKilledBosses[(int)deadCharacter.Element]++;
             //TODO: open the next area, obtain the boss crystal and so on.
@@ -195,6 +202,21 @@ public class GameplayManager : Singleton<GameplayManager> {
     #endregion
 
     #region Drops Management
+
+    public IEnumerator SpawnGem(CharacterManager deadCharacter)
+    {
+        GameObject go;
+        go = Instantiate(secondaryDropGems[(int)deadCharacter.Element], deadCharacter.gameObject.transform.position, deadCharacter.gameObject.transform.rotation, deadCharacter.gameObject.transform.parent) as GameObject;
+
+        go.GetComponent<usableObject>().direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f);
+        go.GetComponent<usableObject>().shouldMove = true;
+
+        yield return new WaitForSeconds(1);
+
+        go.GetComponent<usableObject>().shouldMove = false;
+        go.GetComponent<CircleCollider2D>().isTrigger = true;
+    }
+
     public IEnumerator SpawnDrops(CharacterManager character)
     {
         if (character.Inventory != null)
