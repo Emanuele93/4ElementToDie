@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Air Common Ranged
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 2c5ba0541c537e14e9ebcc790a293f52, type: 3}
-  idleAnimation: {fileID: 9100000, guid: 5fc43f0c4b413534ba12c51c0e5e5f6f, type: 2}
+  idleAnimation: {fileID: 22100000, guid: db70425ec54a04f4eb92cd705f5643d7, type: 2}
   moveLeftRightAnimation: {fileID: 0}
   moveUpDownAnimation: {fileID: 0}
   characterName: Air Common Ranged
