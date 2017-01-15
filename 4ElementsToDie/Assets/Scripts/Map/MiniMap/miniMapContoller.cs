@@ -6,6 +6,7 @@ public class miniMapContoller : MonoBehaviour
     public GameObject room;
     public Sprite initialRoom;
     public Sprite bossRoom;
+    public Sprite chestRoom;
     public Sprite completedRoom;
     public Sprite enteredRoom;
     private Vector2 margin;
@@ -43,7 +44,7 @@ public class miniMapContoller : MonoBehaviour
         transform.position = new Vector3(Camera.main.transform.position.x + 7.4f, Camera.main.transform.position.y + 3.5f, 0);
     }
 
-    public void newPosition(float x, float y)
+    public void newPosition(float x, float y, bool chest)
     {
         x = (x - margin.x) / 16;
         if (x < 0) x = -x;
@@ -51,7 +52,9 @@ public class miniMapContoller : MonoBehaviour
         if (y < 0) y = -y;
         int i = (int)y;
         int j = (int)x;
-        if (map[i + 1, j] == -2)
+        if (chest)
+            mapObjects[i, j].GetComponent<SpriteRenderer>().sprite = chestRoom;
+        else if (map[i + 1, j] == -2)
         {
             mapObjects[i, j].GetComponent<SpriteRenderer>().sprite = initialRoom;
             mapObjects[i, j].transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -71,13 +74,7 @@ public class miniMapContoller : MonoBehaviour
             mapObjects[i, j].GetComponent<SpriteRenderer>().sprite = initialRoom;
             mapObjects[i, j].transform.rotation = Quaternion.Euler(0, 0, -90);
         }
-        else if (i + 1 < map.GetLength(0) && map[i + 1, j] == -3)
-            mapObjects[i, j].GetComponent<SpriteRenderer>().sprite = bossRoom;
-        else if (i > 1 && map[i - 1, j] == -3)
-            mapObjects[i, j].GetComponent<SpriteRenderer>().sprite = bossRoom;
-        else if (j + 1 < map.GetLength(1) && map[i, j + 1] == -3)
-            mapObjects[i, j].GetComponent<SpriteRenderer>().sprite = bossRoom;
-        else if (j > 1 && map[i, j - 1] == -3)
+        else if (map[i + 1, j] == -3 || map[i - 1, j] == -3 || map[i, j + 1] == -3 || map[i, j - 1] == -3)
             mapObjects[i, j].GetComponent<SpriteRenderer>().sprite = bossRoom;
         else mapObjects[(int)y, (int)x].GetComponent<SpriteRenderer>().sprite = enteredRoom;
         mapObjects[(int)y, (int)x].SetActive(true);
