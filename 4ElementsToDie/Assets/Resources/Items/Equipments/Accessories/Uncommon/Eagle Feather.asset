@@ -17,7 +17,7 @@ MonoBehaviour:
   rarity: 1
   description: You move faster
   price: 6
-  dropRate: 15
+  dropRate: 10
   element: 3
   statBuffs:
   - 0
