@@ -339,9 +339,9 @@ GameObject:
   - component: {fileID: 4981744496981458}
   - component: {fileID: 212471648733923668}
   - component: {fileID: 60634841028119036}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: initialRoom
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
