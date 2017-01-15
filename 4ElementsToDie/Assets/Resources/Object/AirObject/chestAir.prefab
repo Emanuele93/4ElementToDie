@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 58343205603931742}
   m_Layer: 0
   m_Name: chestAir
-  m_TagString: Untagged
+  m_TagString: Chest
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -182,7 +182,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -444871287
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ea799f03784057d40972d6af63ee6ecd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a8e60fedc1215ce4d9625b81633d824e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

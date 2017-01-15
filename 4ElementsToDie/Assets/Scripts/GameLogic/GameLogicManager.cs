@@ -41,7 +41,7 @@ public static class GameLogicManager {
         double damage = elementalFactor * (effectiveAttack / effectiveDefense);
 
         //calculate if critical hit
-        if (Random.Range(0f, 100f) <= attacker.Stats[(int)StatType.LCK].FinalStat)
+        if (Random.Range(0f, 100f) <= 10 * attacker.Stats[(int)StatType.LCK].FinalStat)
         {
             damage *= 2;
         }
