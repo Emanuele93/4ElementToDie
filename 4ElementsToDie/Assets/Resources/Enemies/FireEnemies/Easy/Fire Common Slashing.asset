@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Fire Common Slashing
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 1df8f584654a97d478dd4cf81375c1a2, type: 3}
-  idleAnimation: {fileID: 9100000, guid: 5fc43f0c4b413534ba12c51c0e5e5f6f, type: 2}
+  idleAnimation: {fileID: 22100000, guid: e7feede4c2456407c8feca358273ed2b, type: 2}
   moveLeftRightAnimation: {fileID: 0}
   moveUpDownAnimation: {fileID: 0}
   characterName: Fire Common Slashing

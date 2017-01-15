@@ -17,7 +17,7 @@ MonoBehaviour:
   rarity: 1
   description: 
   price: 6
-  dropRate: 15
+  dropRate: 10
   element: 2
   statBuffs:
   - 0

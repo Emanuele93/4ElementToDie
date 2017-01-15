@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Earth Rare Thrusting
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 63c47d8ce71739b47b73f8d46c7f9544, type: 3}
-  idleAnimation: {fileID: 9100000, guid: 5fc43f0c4b413534ba12c51c0e5e5f6f, type: 2}
+  idleAnimation: {fileID: 22100000, guid: 6929b60c4673e460ea016d9b9d11aa34, type: 2}
   moveLeftRightAnimation: {fileID: 0}
   moveUpDownAnimation: {fileID: 0}
   characterName: Earth Rare Thrusting
