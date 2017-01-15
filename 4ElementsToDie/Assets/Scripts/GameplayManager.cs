@@ -143,8 +143,6 @@ public class GameplayManager : Singleton<GameplayManager> {
 
     public void Kill(CharacterManager deadCharacter)
     {
-        Debug.Log("Killed " + deadCharacter.BaseCharacterData.characterName);
-
         if (deadCharacter.gameObject.CompareTag("Player"))
         {
 			if (!isGameOver) { 
