@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Fire Rare Area
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 7047185a7b1e76f48a6298fe1884bb87, type: 3}
-  idleAnimation: {fileID: 9100000, guid: 5fc43f0c4b413534ba12c51c0e5e5f6f, type: 2}
+  idleAnimation: {fileID: 22100000, guid: 5e6ff39c700e94e9a96b0fc425069234, type: 2}
   moveLeftRightAnimation: {fileID: 0}
   moveUpDownAnimation: {fileID: 0}
   characterName: Fire Rare Area

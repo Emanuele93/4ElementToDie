@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Water Rare Ranged
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 8e0bbf4ed8645434ea6a517593e35b0b, type: 3}
-  idleAnimation: {fileID: 9100000, guid: 5fc43f0c4b413534ba12c51c0e5e5f6f, type: 2}
+  idleAnimation: {fileID: 22100000, guid: 435c61a7568a744c8bf96997ae914b5f, type: 2}
   moveLeftRightAnimation: {fileID: 0}
   moveUpDownAnimation: {fileID: 0}
   characterName: Water Rare Ranged

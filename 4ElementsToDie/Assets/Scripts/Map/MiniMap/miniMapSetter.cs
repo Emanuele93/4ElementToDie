@@ -29,7 +29,16 @@ public class miniMapSetter : MonoBehaviour
         {
             if (!entered)
             {
-                controller.GetComponent<miniMapContoller>().newPosition(transform.position.x, transform.position.y);
+                bool chest = false;
+                foreach(Transform t in transform)
+                {
+                    if (t.tag == "Chest")
+                        chest = true;
+                }
+                if(chest)
+                    controller.GetComponent<miniMapContoller>().newPosition(transform.position.x, transform.position.y, true);
+                else
+                    controller.GetComponent<miniMapContoller>().newPosition(transform.position.x, transform.position.y, false);
                 entered = true;
             }
             else
@@ -37,5 +46,10 @@ public class miniMapSetter : MonoBehaviour
                 controller.GetComponent<miniMapContoller>().movePlayer(transform.position.x, transform.position.y);
             }
         }
+    }
+
+    public void removeChest()
+    {
+        controller.GetComponent<miniMapContoller>().newPosition(transform.position.x, transform.position.y, false);
     }
 }
