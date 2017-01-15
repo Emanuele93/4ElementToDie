@@ -63,14 +63,14 @@ public class Player : MonoBehaviour {
 				// RIGHT attack
 				if ((Input.GetKeyDown(KeyCode.L)) || (Input.GetKeyDown(KeyCode.RightArrow)))
 				{
-					m_attackPosition.x = 1.25f; m_attackPosition.y = -0.5f;
+					m_attackPosition.x = 1.25f; m_attackPosition.y = -0.25f;
 					Attack(m_attackPosition, Quaternion.Euler(0f, 0f, 0f));
 				}
 
 				// LEFT attack
 				if ((Input.GetKeyDown(KeyCode.J)) || (Input.GetKeyDown(KeyCode.LeftArrow)))
 				{
-					m_attackPosition.x = -1.25f; m_attackPosition.y = -0.5f;
+					m_attackPosition.x = -1.25f; m_attackPosition.y = -0.25f;
 					Attack(m_attackPosition, Quaternion.Euler(0f, 0f, 180f));
 				}
 
@@ -123,7 +123,7 @@ public class Player : MonoBehaviour {
 			break;
 		case AttackType.Thrusting:
 			go = ObjectPoolingManager.Instance.GetObject(m_ThrustPrefab.name);
-			go.transform.position = m_ThrustTransform.position + attackPosition;
+			go.transform.position = m_ThrustTransform.position + attackPosition * 2;
 			break;
 		case AttackType.Area:
 			go = ObjectPoolingManager.Instance.GetObject(m_AreaPrefab.name);

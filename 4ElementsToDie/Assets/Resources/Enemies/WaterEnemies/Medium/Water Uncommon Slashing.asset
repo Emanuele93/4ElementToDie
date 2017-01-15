@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Water Uncommon Slashing
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 3033a2894bfe7784bbe0cec6f27ea2d3, type: 3}
-  idleAnimation: {fileID: 9100000, guid: 5fc43f0c4b413534ba12c51c0e5e5f6f, type: 2}
+  idleAnimation: {fileID: 22100000, guid: ae3b9d700095f4539b3b4171d093fc7f, type: 2}
   moveLeftRightAnimation: {fileID: 0}
   moveUpDownAnimation: {fileID: 0}
   characterName: Water Uncommon Slashing
