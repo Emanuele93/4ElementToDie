@@ -83,7 +83,6 @@ public class Enemy : MonoBehaviour {
 
 		// The rotation is the angle in Z to get the player.
 		float radianAngle = Mathf.Atan2 (deltaY,deltaX);
-		Debug.Log ("RADIAN: " + radianAngle);
 		float rotation =  radianAngle * 180 / Mathf.PI;
 
 		// Adjusting the attack position.
