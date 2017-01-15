@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Earth Common Slashing
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: c9b5d7b8b3f75f040b43b26cab3d5137, type: 3}
-  idleAnimation: {fileID: 9100000, guid: 5fc43f0c4b413534ba12c51c0e5e5f6f, type: 2}
+  idleAnimation: {fileID: 22100000, guid: 664fb99b8a26d46bbae65f07f01a349b, type: 2}
   moveLeftRightAnimation: {fileID: 0}
   moveUpDownAnimation: {fileID: 0}
   characterName: Earth Common Slashing

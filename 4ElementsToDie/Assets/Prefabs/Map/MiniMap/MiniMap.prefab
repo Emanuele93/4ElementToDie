@@ -55,6 +55,7 @@ MonoBehaviour:
   room: {fileID: 1000011460057710, guid: cf2e71326e5b5aa45a468f3df4dba17d, type: 2}
   initialRoom: {fileID: 21300000, guid: 37e8174233e96464e9f32488ed6cc48b, type: 3}
   bossRoom: {fileID: 21300000, guid: 223c1c8eb9f190c4186db6b3402ae179, type: 3}
+  chestRoom: {fileID: 21300000, guid: f0f3dde4924bee948a29f2cd09559fc1, type: 3}
   completedRoom: {fileID: 21300000, guid: 34d4b6d9ac3b14d4e9172d6a34567638, type: 3}
   enteredRoom: {fileID: 21300000, guid: e9d1e2188a2c1b14aa88e07a5d2b6489, type: 3}
   playerObject: {fileID: 1000011460057710, guid: 5563749485cc1d84384e556854c029fc,

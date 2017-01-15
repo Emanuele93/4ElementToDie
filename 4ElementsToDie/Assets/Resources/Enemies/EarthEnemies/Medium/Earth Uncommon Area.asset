@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Earth Uncommon Area
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: d44e2914f91b65d419ede68d1a23e59e, type: 3}
-  idleAnimation: {fileID: 9100000, guid: 5fc43f0c4b413534ba12c51c0e5e5f6f, type: 2}
+  idleAnimation: {fileID: 22100000, guid: 2afc643a8618c42b9934bde40e97b3b2, type: 2}
   moveLeftRightAnimation: {fileID: 0}
   moveUpDownAnimation: {fileID: 0}
   characterName: Earth Uncommon Area

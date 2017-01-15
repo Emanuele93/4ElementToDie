@@ -7,6 +7,9 @@ public class EnemyMovement {
 		Vector3 chasingDirection = 
 			(playerTr.position - enemyTr.position).normalized;
 
+		// Check which direction is greater. So the enemy will face in that direction.
+		bool lookingHorizontal = (Mathf.Abs (chasingDirection.x) > Mathf.Abs (chasingDirection.y)) ? true : false; 
+
 		// Moving the enemy.
 		enemyTr.position += chasingDirection * enemySpeed * Time.fixedDeltaTime;
 		
@@ -31,15 +34,11 @@ public class EnemyMovement {
 		// Flip enemy vertically
 		if ( (chasingDirection.y < 0) && (enemyFacingUp) ){
 			enemyFacingUp = !enemyFacingUp;
-
-
-
 		} else if ( (chasingDirection.y > 0) && (!enemyFacingUp) ) {
 			enemyFacingUp = !enemyFacingUp;
-
 		}
 
-		return new bool[]{enemyFacingRight,enemyFacingUp};
+		return new bool[]{enemyFacingRight,enemyFacingUp,lookingHorizontal};
 	}
 
 	// This functions calculates if the user is inside the enemy vision radius. 

@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 58769158736117788}
   m_Layer: 0
   m_Name: chestEarth
-  m_TagString: Untagged
+  m_TagString: Chest
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -147,7 +147,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -444871287
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a296773e32c62294e890d5373b9b37f5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2525ecb5564573342a98827be571c9fd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
