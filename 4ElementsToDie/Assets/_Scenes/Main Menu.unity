@@ -261,13 +261,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 300
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 1
     m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '                 or                :      select'
+  m_Text: '             or                 :      select'
 --- !u!222 &89642168
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1024,13 +1024,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 4
     m_MaxSize: 50
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 1
     m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '       spacebar           :   confirm'
+  m_Text: '       spacebar            :    confirm '
 --- !u!222 &518885349
 CanvasRenderer:
   m_ObjectHideFlags: 0
