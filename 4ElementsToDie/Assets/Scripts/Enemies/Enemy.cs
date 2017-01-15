@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour {
     bool isFacingUp;
     bool isAggressive;
     bool isInCooldown;
+	bool lookingHorizontal;
 
     [Header ("Attack transforms")]
     public Transform m_SlashTransform;
@@ -38,6 +39,7 @@ public class Enemy : MonoBehaviour {
         isFacingRight = true;
         isFacingUp = false;
         isInCooldown = false;
+		lookingHorizontal = false;
     }
 	
 	// Fixed update because the Enemy can
@@ -58,7 +60,7 @@ public class Enemy : MonoBehaviour {
             }
 		} 
 			
-		EnemyAnimation.Animate (animator, isAggressive);
+		EnemyAnimation.Animate (animator, isAggressive, isFacingRight, isFacingUp, lookingHorizontal);
 	}
 
     void Move()
@@ -67,6 +69,7 @@ public class Enemy : MonoBehaviour {
         bool[] facings = EnemyMovement.Move(tr, movSpeed, isFacingRight, isFacingUp, player.transform);
         isFacingRight = facings[0];
 		isFacingUp = facings [1];
+		lookingHorizontal = facings [2];
     }
 
 	void Attack() {
