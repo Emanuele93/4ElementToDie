@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using POLIMIGameCollective;
+using System;
 
 public class Enemy : MonoBehaviour {
     
@@ -80,18 +82,27 @@ public class Enemy : MonoBehaviour {
 		float deltaX = player.transform.position.x - tr.position.x;
 
 		// The rotation is the angle in Z to get the player.
-		float rotation =  Mathf.Atan2 (deltaY, deltaX) * 180 / Mathf.PI;
+		float radianAngle = Mathf.Atan2 (deltaY,deltaX);
+		Debug.Log ("RADIAN: " + radianAngle);
+		float rotation =  radianAngle * 180 / Mathf.PI;
+
+		// Adjusting the attack position.
+		Vector3 attackPosition = new Vector3(0f,0f,0f);
+		float attackRadius = 1.25f;
+
+		attackPosition.x = Mathf.Cos (radianAngle) * attackRadius;
+		attackPosition.y = Mathf.Sin (radianAngle) * attackRadius;
 
         //choose the correct attack type;
         switch (charManager.AttackType)
         {
             case AttackType.Slashing:
                 go = ObjectPoolingManager.Instance.GetObject(m_SlashPrefab.name);
-                go.transform.position = m_SlashTransform.position;
+				go.transform.position = m_SlashTransform.position + attackPosition;
                 break;
 			case AttackType.Thrusting:
 				go = ObjectPoolingManager.Instance.GetObject (m_ThrustPrefab.name);
-				go.transform.position = m_ThrustTransform.position;
+				go.transform.position = m_ThrustTransform.position + attackPosition * 2;
                 break;
             case AttackType.Area:
                 go = ObjectPoolingManager.Instance.GetObject(m_AreaPrefab.name);
@@ -99,7 +110,7 @@ public class Enemy : MonoBehaviour {
                 break;
             case AttackType.Ranged:
                 go = ObjectPoolingManager.Instance.GetObject(m_RangedPrefab.name);
-                go.transform.position = m_RangedTransform.position;
+				go.transform.position = m_RangedTransform.position + attackPosition;
                 break;
         }
 		go.transform.rotation = Quaternion.Euler (new Vector3 (0, 0, rotation));
