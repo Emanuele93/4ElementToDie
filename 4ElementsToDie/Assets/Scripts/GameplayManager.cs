@@ -152,24 +152,27 @@ public class GameplayManager : Singleton<GameplayManager> {
 				StartCoroutine(GameOver());
 			}
         }
-        else if (deadCharacter.gameObject.CompareTag("FinalBoss"))
-        {
-            StartCoroutine(Victory());
-        }
         else if (deadCharacter.gameObject.CompareTag("Boss"))
         {
 			StartCoroutine(SpawnDrops(deadCharacter));
             StartCoroutine(SpawnGem(deadCharacter));
             deadCharacter.gameObject.SetActive(false);
+
             noKilledBosses[(int)deadCharacter.Element]++;
-            //TODO: open the next area, obtain the boss crystal and so on.
+            bool victory = true;
+            for (int i = 0; victory && i < System.Enum.GetValues(typeof(ElementType)).Length; i++)
+            {
+                if (noKilledBosses[i] <= 0)
+                {
+                    victory = false;
+                }
+            }
+            if (victory)
+            {
+                StartCoroutine(Victory());
+            }
         }
-////        else if (deadCharacter.gameObject.CompareTag("Enemy"))
-//		else {
-//			StartCoroutine(SpawnDrops(deadCharacter));
-//            deadCharacter.gameObject.SetActive(false);
-//        }
-		//        else if (deadCharacter.gameObject.CompareTag("Enemy"))
+		//else if (deadCharacter.gameObject.CompareTag("Enemy"))
 		else {
 			StartCoroutine(SpawnDrops(deadCharacter));
 			deadCharacter.gameObject.SetActive (false);
@@ -227,8 +230,7 @@ public class GameplayManager : Singleton<GameplayManager> {
 
             foreach (Item i in character.Inventory)
             {
-
-                if (i != null && (Random.Range(0f, 100f) <= i.dropRate + luck))
+                if (i != null && (Random.Range(0f, 100f) <= i.dropRate * (1 + luck / 10)))
                 {
 
                     //spawn the object
