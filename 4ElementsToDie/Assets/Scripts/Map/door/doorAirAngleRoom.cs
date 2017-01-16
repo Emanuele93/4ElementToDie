@@ -21,8 +21,9 @@ public class doorAirAngleRoom : MonoBehaviour
             player.transform.position = transform.rotation * mouvement + transform.position;
             Camera.main.transform.position = new Vector3(where.transform.position.x, where.transform.position.y, Camera.main.transform.position.z);
 
-            transform.parent.gameObject.SetActive(false);
+            inDoorArea = false;
             where.SetActive(true);
+            transform.parent.gameObject.SetActive(false);
         }
     }
 
