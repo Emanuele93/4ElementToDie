@@ -211,7 +211,7 @@ public class GameplayManager : Singleton<GameplayManager> {
         go.GetComponent<Canvas>().transform.Translate(position);
         go.SetActive(true);
         tx = go.transform.Find("Text").GetComponent<Text>();
-        tx.text = "-" + (damage * 100 - damage % 1) / 100 + "";
+        tx.text = -System.Math.Round(damage, 1) + "";
         StartCoroutine(hideDamage(go));
     }
 
