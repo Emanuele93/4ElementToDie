@@ -437,6 +437,7 @@ public class CharacterManager : MonoBehaviour
     #region Damage Methods
     public void ApplyDamage(double damage)
     {
+        GameplayManager.Instance.showDamage(damage, gameObject.transform.position);
         m_damage += damage;
         m_damage = System.Math.Max(m_damage, 0.0);
         m_damage = System.Math.Min(m_damage, m_stats[(int)StatType.VIT].FinalStat);

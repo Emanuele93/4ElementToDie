@@ -20,9 +20,10 @@ public class doorWaterAngleRoom : MonoBehaviour
             Vector3 mouvement = new Vector3(0, 3.5f, 0);
             player.transform.position = transform.rotation * mouvement + transform.position;
             Camera.main.transform.position = new Vector3(where.transform.position.x, where.transform.position.y, Camera.main.transform.position.z);
-
-            transform.parent.gameObject.SetActive(false);
+            
+            inDoorArea = false;
             where.SetActive(true);
+            transform.parent.gameObject.SetActive(false);
         }
     }
 
