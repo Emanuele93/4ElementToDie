@@ -15,6 +15,7 @@ public class bossDoor : door
 
             inDoorArea = false;
             where.SetActive(true);
+            Destroy(gameObject);
         }
     }
 }
