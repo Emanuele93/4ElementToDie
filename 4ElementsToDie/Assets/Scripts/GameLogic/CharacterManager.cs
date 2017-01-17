@@ -244,6 +244,8 @@ public class CharacterManager : MonoBehaviour
             //check static abilities activation
             AbilityManager.CheckStaticAbilitiesActivation(this);
 
+            //update the UI Vitality Bar
+            GameplayManager.Instance.UpdateHealthBar();
         }
     }
 
@@ -302,6 +304,9 @@ public class CharacterManager : MonoBehaviour
 
                 //put item back into the inventory
                 AddItem(equip);
+
+                //update the UI Vitality Bar
+                GameplayManager.Instance.UpdateHealthBar();
             }
         }
     }
