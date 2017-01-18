@@ -28,8 +28,10 @@ public class door : MonoBehaviour
             GameplayManager.Instance.StopAllMusic();
 			GameplayManager.Instance.PlayMusic(Constants.MUSIC_Background);
 
-            transform.parent.gameObject.SetActive(false);
+
+            inDoorArea = false;
             where.SetActive(true);
+            transform.parent.gameObject.SetActive(false);
         }
     }
 

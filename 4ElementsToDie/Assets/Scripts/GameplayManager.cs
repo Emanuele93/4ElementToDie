@@ -33,6 +33,7 @@ public class GameplayManager : Singleton<GameplayManager> {
     public Text coinText;
     public GameObject overlayScreen;
     public Text overlayText;
+    public GameObject effectDamageObject;
 
     [Header("Player")]
     public Player m_player;
@@ -198,6 +199,26 @@ public class GameplayManager : Singleton<GameplayManager> {
     public void UpdateCoinBar()
     {
         coinText.text = "      " + playerChar.Money;
+    }
+
+    public void showDamage(double damage, Vector3 position)
+    {
+        GameObject go;
+        Text tx;
+        float x = Camera.main.transform.position.x - position.x;
+        float y = Camera.main.transform.position.y - position.y;
+        go = Instantiate(effectDamageObject) as GameObject;
+        go.GetComponent<Canvas>().transform.Translate(position);
+        go.SetActive(true);
+        tx = go.transform.Find("Text").GetComponent<Text>();
+        tx.text = -System.Math.Round(damage, 1) + "";
+        StartCoroutine(hideDamage(go));
+    }
+
+    private IEnumerator hideDamage(GameObject go)
+    {
+        yield return new WaitForSeconds(1);
+        Destroy(go);
     }
 
     #endregion
