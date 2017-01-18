@@ -98,4 +98,13 @@ public class MainMenuManager : Singleton<MainMenuManager> {
         SwitchMenuTo(eMenuScreen.Credits);
     }
 
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+	public void SwitchMuteMusic () {
+		MusicManager.Instance.SwitchMute ();
+	}
+
 }

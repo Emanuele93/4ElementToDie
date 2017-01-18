@@ -51,11 +51,13 @@ public class RangedAttack : Attack
         CharacterManager attacker = GameplayManager.Instance.attackersDict[gameObject.GetInstanceID()];
         CharacterManager defender = other.GetComponent<CharacterManager>() as CharacterManager;
 
+        /*
 		if (other.tag == "wall" || other.tag == "door")
         {
             gameObject.SetActive(false);
         }
-		else if ( 
+		else*/
+        if ( 
 			(attacker.tag == "Player"  && other.tag == "Enemy") || 
 			(attacker.tag == "Enemy" && other.tag == "Player")  || 
 			(attacker.tag == "Player" && other.tag == "Boss")   ||
@@ -63,7 +65,7 @@ public class RangedAttack : Attack
 		    )
         {
             GameplayManager.Instance.ExecuteAttack(attacker, defender);
-			gameObject.SetActive(false);
+			//gameObject.SetActive(false);
         }
     }
 }
