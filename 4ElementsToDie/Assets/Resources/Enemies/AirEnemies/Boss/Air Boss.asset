@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Air Boss
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 87274a6b7b15db44a84efa40474a91ce, type: 3}
-  idleAnimation: {fileID: 9100000, guid: 8243241efb88d4dedb337051974c2a4c, type: 2}
+  idleAnimation: {fileID: 22100000, guid: d206a127111ae4d6f95d876f5e8e74da, type: 2}
   moveLeftRightAnimation: {fileID: 9100000, guid: 15afd23d5a8e04eafbb94837b35c00db,
     type: 2}
   moveUpDownAnimation: {fileID: 9100000, guid: a7b92dc188cd14138ae4cce1dda51d95, type: 2}

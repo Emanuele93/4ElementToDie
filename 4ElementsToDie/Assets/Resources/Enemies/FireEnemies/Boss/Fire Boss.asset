@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Fire Boss
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 74b8f1ee040e9904983f2e30c114ab0b, type: 3}
-  idleAnimation: {fileID: 9100000, guid: c73033894b66c47f5b72c8f0f338df31, type: 2}
+  idleAnimation: {fileID: 22100000, guid: f7f78d9c4da244a5b8b2440a89630844, type: 2}
   moveLeftRightAnimation: {fileID: 9100000, guid: 3c1a4b864188e4ff786e1199893ee988,
     type: 2}
   moveUpDownAnimation: {fileID: 9100000, guid: 051c41f8f86724e0bb109d0beeb51a5a, type: 2}
