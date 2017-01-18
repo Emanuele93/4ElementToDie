@@ -394,7 +394,10 @@ public class CharacterManager : MonoBehaviour
                 }
             }
 
-            ApplyDamage(effect.damage);
+            if (effect.damage != 0)
+            {
+                ApplyDamage(effect.damage);
+            }
 
             //check static abilities activation
             AbilityManager.CheckStaticAbilitiesActivation(this);
