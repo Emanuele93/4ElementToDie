@@ -13,7 +13,9 @@ public class bossDoor : door
             mouvement = transform.rotation * mouvement + transform.position;
             Camera.main.transform.position = new Vector3(mouvement.x, mouvement.y, Camera.main.transform.position.z);
 
+            inDoorArea = false;
             where.SetActive(true);
+            Destroy(gameObject);
         }
     }
 }
