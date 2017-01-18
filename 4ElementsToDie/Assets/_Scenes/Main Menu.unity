@@ -4664,8 +4664,8 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1167198092}
-        m_MethodName: SwitchMute
+      - m_Target: {fileID: 1562729296}
+        m_MethodName: SwitchMuteMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -103,4 +103,8 @@ public class MainMenuManager : Singleton<MainMenuManager> {
         Application.Quit();
     }
 
+	public void SwitchMuteMusic () {
+		MusicManager.Instance.SwitchMute ();
+	}
+
 }
