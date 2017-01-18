@@ -27,8 +27,9 @@ public class doorFire : MonoBehaviour
             // Changing the sound.
             GameplayManager.Instance.PlayMusic(Constants.MUSIC_FireArea);
 
-            transform.parent.gameObject.SetActive(false);
+            inDoorArea = false;
             where.SetActive(true);
+            transform.parent.gameObject.SetActive(false);
         }
     }
 

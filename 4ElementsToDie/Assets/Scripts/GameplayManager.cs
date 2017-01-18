@@ -32,7 +32,9 @@ public class GameplayManager : Singleton<GameplayManager> {
     public Text keyWaterText;
     public Text coinText;
     public GameObject overlayScreen;
-    public Text overlayText;
+    public GameObject victoryMessage;
+    public GameObject defeatMessage;
+    public GameObject effectDamageObject;
 
     [Header("Player")]
     public Player m_player;
@@ -198,6 +200,35 @@ public class GameplayManager : Singleton<GameplayManager> {
     public void UpdateCoinBar()
     {
         coinText.text = "      " + playerChar.Money;
+    }
+
+    public void showDamage(double damage, Vector3 position)
+    {
+        GameObject go;
+        Text tx;
+        float x = Camera.main.transform.position.x - position.x;
+        float y = Camera.main.transform.position.y - position.y;
+        go = Instantiate(effectDamageObject) as GameObject;
+        go.GetComponent<Canvas>().transform.Translate(position);
+        go.SetActive(true);
+        tx = go.transform.Find("Text").GetComponent<Text>();
+        if (damage > 0)
+        {
+            tx.text = "- " + System.Math.Round(damage, 1);
+            tx.color = Color.white;
+        }
+        else if (damage < 0)
+        {
+            tx.text = "+ " + -System.Math.Round(damage, 1);
+            tx.color = Color.green;
+        }
+        StartCoroutine(hideDamage(go));
+    }
+
+    private IEnumerator hideDamage(GameObject go)
+    {
+        yield return new WaitForSeconds(1);
+        Destroy(go);
     }
 
     #endregion
@@ -395,31 +426,39 @@ public class GameplayManager : Singleton<GameplayManager> {
     #region Game Ending Management
     IEnumerator GameOver()
     {
-        //ClearArea();
 		m_player.isDead = true;
+
 		yield return new WaitForSeconds(1f);
-        overlayText.text = "GAME OVER";
+
         inGameMenuScreen.SetActive(false);
         healthScreen.SetActive(true);
         overlayScreen.SetActive(true);
-        yield return new WaitForSeconds(1f);
+        defeatMessage.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
         inGameMenuScreen.SetActive(false);
         healthScreen.SetActive(false);
         overlayScreen.SetActive(false);
+        defeatMessage.SetActive(false);
         SceneManager.LoadScene("Main Menu");
     }
 
     IEnumerator Victory()
     {
-        //ClearArea();
-        overlayText.text = "CONGRATULATIONS";
+        yield return new WaitForSeconds(1f);
+
         inGameMenuScreen.SetActive(false);
         healthScreen.SetActive(true);
         overlayScreen.SetActive(true);
-        yield return new WaitForSeconds(2f);
+        victoryMessage.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
         inGameMenuScreen.SetActive(false);
         healthScreen.SetActive(false);
         overlayScreen.SetActive(false);
+        victoryMessage.SetActive(false);
         SceneManager.LoadScene("Main Menu");
     }
     #endregion

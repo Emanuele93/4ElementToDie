@@ -244,6 +244,8 @@ public class CharacterManager : MonoBehaviour
             //check static abilities activation
             AbilityManager.CheckStaticAbilitiesActivation(this);
 
+            //update the UI Vitality Bar
+            GameplayManager.Instance.UpdateHealthBar();
         }
     }
 
@@ -302,6 +304,9 @@ public class CharacterManager : MonoBehaviour
 
                 //put item back into the inventory
                 AddItem(equip);
+
+                //update the UI Vitality Bar
+                GameplayManager.Instance.UpdateHealthBar();
             }
         }
     }
@@ -389,7 +394,10 @@ public class CharacterManager : MonoBehaviour
                 }
             }
 
-            ApplyDamage(effect.damage);
+            if (effect.damage != 0)
+            {
+                ApplyDamage(effect.damage);
+            }
 
             //check static abilities activation
             AbilityManager.CheckStaticAbilitiesActivation(this);
@@ -437,6 +445,7 @@ public class CharacterManager : MonoBehaviour
     #region Damage Methods
     public void ApplyDamage(double damage)
     {
+        GameplayManager.Instance.showDamage(damage, gameObject.transform.position);
         m_damage += damage;
         m_damage = System.Math.Max(m_damage, 0.0);
         m_damage = System.Math.Min(m_damage, m_stats[(int)StatType.VIT].FinalStat);

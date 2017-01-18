@@ -69,6 +69,12 @@ namespace POLIMIGameCollective {
 				m_audio_sources [i].mute = false;
 		}
 
+        public void SwitchMute()
+        {
+            for (int i = 0; i < m_audio_sources.Length; i++)
+                m_audio_sources[i].mute = !m_audio_sources[i].mute;
+        }
+
 		public void StopAll()
 		{
 			for (int i = 0; i < m_audio_sources.Length; i++)
