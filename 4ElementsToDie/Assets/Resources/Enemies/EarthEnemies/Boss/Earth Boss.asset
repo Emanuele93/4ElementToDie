@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Earth Boss
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: bbba5c01b4323a84ca5484d14b567bf7, type: 3}
-  idleAnimation: {fileID: 9100000, guid: ddc933e568fa44664995f8f68a051d8f, type: 2}
+  idleAnimation: {fileID: 22100000, guid: 256bf600e3e54411cbaa2217549c2d28, type: 2}
   moveLeftRightAnimation: {fileID: 9100000, guid: 6e64c8bea1c8f4af7b646abf833266a7,
     type: 2}
   moveUpDownAnimation: {fileID: 9100000, guid: 395f2accf3d154aeda5afb5c00ac1439, type: 2}
