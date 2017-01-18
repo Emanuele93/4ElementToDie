@@ -441,6 +441,11 @@ public class GameplayManager : Singleton<GameplayManager> {
         healthScreen.SetActive(false);
         overlayScreen.SetActive(false);
         defeatMessage.SetActive(false);
+
+		// Changing the background music to main menu music.
+		GameplayManager.Instance.StopAllMusic ();
+		GameplayManager.Instance.PlayMusic(Constants.MUSIC_Menu);
+
         SceneManager.LoadScene("Main Menu");
     }
 
@@ -459,6 +464,11 @@ public class GameplayManager : Singleton<GameplayManager> {
         healthScreen.SetActive(false);
         overlayScreen.SetActive(false);
         victoryMessage.SetActive(false);
+
+		// Changing the background music to main menu music.
+		GameplayManager.Instance.StopAllMusic ();
+		GameplayManager.Instance.PlayMusic(Constants.MUSIC_Menu);
+
         SceneManager.LoadScene("Main Menu");
     }
     #endregion
