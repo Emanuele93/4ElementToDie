@@ -20,7 +20,7 @@ MonoBehaviour:
   dropRate: 7
   element: 0
   statBuffs:
-  - 4
+  - 3
   - 0
   - 0
   - 0
