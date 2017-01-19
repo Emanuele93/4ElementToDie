@@ -295,17 +295,12 @@ public abstract class roomFactory : MonoBehaviour
         j = y = Random.Range(0, roomStructure.GetLength(1));
         full = stop = false;
 
-        int difficulty = getDifficulty() + 1;
-        if (difficulty > 3) difficulty = 3;
-        if (Random.Range(0, 2) == 0)
-        {
-            if (Random.Range(0, 3) == 0) diff = 2;
-            else diff = 1;
-            if (Random.Range(0, 2) == 0) diff = -diff;
-            difficulty += diff;
-            if (difficulty < 1) difficulty = 1;
-            else if (difficulty > 3) difficulty = 3;
-        }
+        int numBoss = getDifficulty();
+        int difficulty =  1 + numBoss;
+        if (Random.Range(0, 3) == 0) difficulty++;
+        else if (Random.Range(0, 3) == 0) difficulty += 2;
+        else if (Random.Range(0, 3) == 0) difficulty += 3;
+
         if (Random.Range(0, 3) == 0)
         {
             while (roomStructure[i, j] != 0 && !full)
@@ -354,6 +349,7 @@ public abstract class roomFactory : MonoBehaviour
                         roomStructure[i, j] = 2;
 
                         diff = Random.Range(1, difficulty + 1);
+                        if (diff > 3) diff = 3;
                         GameObject enemy = getEnemy(diff);
                         difficulty -= diff;
                         enemy.transform.position = new Vector3(i - 6, j - 3, 0);
@@ -390,6 +386,7 @@ public abstract class roomFactory : MonoBehaviour
                 {
                     roomStructure[i, j] = 2;
                     diff = Random.Range(1, difficulty + 1);
+                    if (diff > 3) diff = 3;
                     GameObject enemy = getEnemy(diff);
                     difficulty -= diff;
                     enemy.transform.position = new Vector3(i - 6, j - 3, 0);
