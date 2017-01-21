@@ -16,20 +16,20 @@ MonoBehaviour:
   itemName: Heavy Armor
   rarity: 1
   description: 
-  price: 6
-  dropRate: 12
+  price: 8
+  dropRate: 8
   element: 1
   statBuffs:
   - 0
-  - 3
-  - 0
-  - -0.5
-  - 0
-  - 3
+  - 4
   - 0
   - 0
   - 0
-  - 1
+  - 2
+  - 0
+  - 0
+  - 0
+  - 2
   - 0
   - 0
   abilities: []

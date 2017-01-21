@@ -15,9 +15,9 @@ MonoBehaviour:
   itemID: 
   itemName: Phoenix Feather
   rarity: 1
-  description: 20% chance to resurrect on death
-  price: 5
-  dropRate: 15
+  description: Sometimes resurrects on death
+  price: 6
+  dropRate: 10
   element: 0
   statBuffs:
   - 0
@@ -28,7 +28,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 0.5
+  - 2
   - 0
   - 0
   - 0

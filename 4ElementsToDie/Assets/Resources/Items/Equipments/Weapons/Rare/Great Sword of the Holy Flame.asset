@@ -16,19 +16,19 @@ MonoBehaviour:
   itemName: Great Sword of the Holy Flame
   rarity: 2
   description: 
-  price: 12
-  dropRate: 3
+  price: 15
+  dropRate: 2
   element: 0
   statBuffs:
-  - 4.5
-  - 2
+  - 5
   - 0
   - 0
-  - 3.5
+  - 0
+  - 3
   - 0
   - 0
-  - 2
-  - 2
+  - 0
+  - 3
   - 0
   - 0
   - 0

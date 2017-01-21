@@ -16,21 +16,21 @@ MonoBehaviour:
   itemName: Ocean Staff
   rarity: 1
   description: 
-  price: 6
-  dropRate: 10
+  price: 9
+  dropRate: 7
   element: 2
   statBuffs:
   - 2
   - 0
-  - 1
-  - 0
-  - 2
-  - 0
-  - 1
   - 2
   - 0
   - 0
-  - 1.5
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 2
   - 0
   abilities: []
   attackType: 2

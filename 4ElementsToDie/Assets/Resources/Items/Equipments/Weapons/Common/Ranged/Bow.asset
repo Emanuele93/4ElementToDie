@@ -11,23 +11,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a0aa54f0d1260e40aec89f1182ff997, type: 3}
   m_Name: Bow
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 117d7be55a0af49cc97ce8997bdd0f84, type: 3}
   itemID: 
   itemName: Bow
   rarity: 0
   description: 
-  price: 2
-  dropRate: 20
+  price: 5
+  dropRate: 12
   element: 3
   statBuffs:
-  - 2
-  - 0
-  - 0
-  - 0.5
-  - 0.5
-  - 0
-  - 0
   - 1.5
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   - 0
   - 0
   - 0

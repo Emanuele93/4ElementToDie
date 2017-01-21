@@ -16,15 +16,15 @@ MonoBehaviour:
   itemName: Mace
   rarity: 0
   description: 
-  price: 0
-  dropRate: 0
+  price: 5
+  dropRate: 12
   element: 0
   statBuffs:
-  - 2.5
+  - 2
   - 0
   - 0
   - 0
-  - 1.5
+  - 1
   - 0
   - 0
   - 0

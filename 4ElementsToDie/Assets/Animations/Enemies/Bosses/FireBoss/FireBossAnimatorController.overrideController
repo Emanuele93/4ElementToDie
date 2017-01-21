@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: FireBossAnimatorController
+  m_Controller: {fileID: 9100000, guid: c07fea2a012ae4f2cae5fa6f6d3b58c7, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 751c012fa91b142ef80e8e21dd3ca159, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2b35a599200ee4ac3b179ecd4e1823e9, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: a961b5714ddbc4a80a40594ea4d54f1b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: eacbfb747a38049dead891c8b46a70f3, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 6c64d52c19d2f4b4992c3cd85fd46c28, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: c580ba8cd651641298c4a06a7eb256e2, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: beb7d3a750871438fbb1ea774b605e17, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 494b6b6bc4cbb41b8ac8e31d12d28595, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 030ac42cc6b4f49bdbad400631ccdf1f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: c8cb27bae66164bfe9135f2180b1f801, type: 2}

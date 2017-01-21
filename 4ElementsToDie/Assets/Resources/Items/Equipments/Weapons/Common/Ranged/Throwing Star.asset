@@ -16,17 +16,17 @@ MonoBehaviour:
   itemName: Throwing Star
   rarity: 0
   description: 
-  price: 2
-  dropRate: 20
+  price: 5
+  dropRate: 12
   element: 2
   statBuffs:
   - 1
   - 0
-  - 0.5
-  - 0
   - 1
   - 0
-  - 0.5
+  - 0
+  - 0
+  - 0
   - 0
   - 0
   - 0

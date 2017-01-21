@@ -16,20 +16,20 @@ MonoBehaviour:
   itemName: Great Hammer of the Sacred Mountain
   rarity: 2
   description: 
-  price: 12
-  dropRate: 3
+  price: 15
+  dropRate: 2
   element: 1
   statBuffs:
-  - 3.5
   - 4
+  - 2
+  - 0
+  - 0
+  - 0
+  - 2
   - 0
   - 0
   - 0
   - 3
-  - 0
-  - 1.5
-  - 0
-  - 2
   - 0
   - 0
   abilities: []

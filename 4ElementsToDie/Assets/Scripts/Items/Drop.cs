@@ -46,4 +46,17 @@ public class Drop : MonoBehaviour
         // rotation around Y axis
         //tr.RotateAround(tr.position, tr.up, Time.deltaTime * m_rotationSpeed);
     }
+
+    /*
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("colliding with " + other);
+        if (other.tag == "Player")
+        {
+            Debug.Log("picking up " + this);
+            GameplayManager.Instance.PickUpDrop(this);
+        }
+    }
+    */
+
 }

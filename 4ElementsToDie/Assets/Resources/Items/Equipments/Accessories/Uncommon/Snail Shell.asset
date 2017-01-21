@@ -11,14 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c4837644e7b514a963b41bc218eaf0, type: 3}
   m_Name: Snail Shell
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: d7108538e415548f7abb52cce3978196, type: 3}
+  sprite: {fileID: 21300000, guid: 90a984227c6834404a1ccc766dca0b3a, type: 3}
   itemID: 
-  itemName: Phoenix Feather
+  itemName: Snail Shell
   rarity: 1
-  description: 20% chance to resurrect on death
-  price: 5
-  dropRate: 15
-  element: 0
+  description: Can slow enemies down
+  price: 6
+  dropRate: 10
+  element: 2
   statBuffs:
   - 0
   - 0
@@ -28,9 +28,9 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 0.5
   - 0
   - 0
+  - 2
   - 0
   abilities:
-  - {fileID: 11400000, guid: 4e6d4ab9f7c7c7847950b54dafd96a38, type: 2}
+  - {fileID: 11400000, guid: def66766f47c9224c9548431d66b2b34, type: 2}

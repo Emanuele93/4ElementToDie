@@ -16,21 +16,21 @@ MonoBehaviour:
   itemName: Thunder Sword
   rarity: 1
   description: 
-  price: 6
-  dropRate: 10
+  price: 9
+  dropRate: 7
   element: 3
   statBuffs:
-  - 3
-  - 0
-  - 0
-  - 2
-  - 0
+  - 2.5
   - 0
   - 0
   - 1
   - 0
   - 0
   - 0
-  - 1.5
+  - 0
+  - 0
+  - 0
+  - 0
+  - 2
   abilities: []
   attackType: 0

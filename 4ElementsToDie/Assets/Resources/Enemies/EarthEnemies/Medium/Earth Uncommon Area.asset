@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b358bab5d19b4c441b4618565fbc0d43, type: 3}
+  m_Name: Earth Uncommon Area
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: d44e2914f91b65d419ede68d1a23e59e, type: 3}
+  idleAnimation: {fileID: 22100000, guid: 2afc643a8618c42b9934bde40e97b3b2, type: 2}
+  moveLeftRightAnimation: {fileID: 0}
+  moveUpDownAnimation: {fileID: 0}
+  characterName: Earth Uncommon Area
+  element: 1
+  defaultAttackType: 2
+  baseStats:
+  - 1
+  - 2
+  - 1
+  - 0
+  - 1
+  - 2
+  - 1
+  - 0
+  - 0
+  - 1
+  - 0
+  - 0
+  growingRatios:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 1
+  - 0
+  - 0
+  weapon: {fileID: 0}
+  armor: {fileID: 0}
+  accessory: {fileID: 0}
+  garment: {fileID: 0}
+  inventory:
+  - {fileID: 11400000, guid: c4ac4e2a2e397d249b2937dcf5f9e802, type: 2}
+  - {fileID: 11400000, guid: b5aa5b4cd8e5d0149a51f61fbf1464f7, type: 2}
+  abilities: []

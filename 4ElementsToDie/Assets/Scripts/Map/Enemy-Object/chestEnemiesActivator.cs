@@ -25,6 +25,7 @@ public abstract class chestEnemiesActivator : MonoBehaviour
         if (inChestArea && Input.GetKeyDown(KeyCode.F))
         {
             remouveKey();
+            transform.parent.GetComponent<miniMapSetter>().removeChest();
             GameplayManager.Instance.UpdateKeyBar();
             foreach (GameObject go in enemies)
                 go.SetActive(true);

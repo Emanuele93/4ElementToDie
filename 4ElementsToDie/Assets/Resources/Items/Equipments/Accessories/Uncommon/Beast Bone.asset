@@ -15,9 +15,9 @@ MonoBehaviour:
   itemID: 
   itemName: Beast Bone
   rarity: 1
-  description: 
-  price: 5
-  dropRate: 15
+  description: Go berserk on < 50% VIT
+  price: 6
+  dropRate: 10
   element: 1
   statBuffs:
   - 0
@@ -29,7 +29,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 0.5
+  - 2
   - 0
   - 0
   abilities:

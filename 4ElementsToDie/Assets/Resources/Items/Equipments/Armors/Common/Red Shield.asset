@@ -16,19 +16,19 @@ MonoBehaviour:
   itemName: Red Shield
   rarity: 0
   description: 
-  price: 3
-  dropRate: 24
+  price: 4
+  dropRate: 13
   element: 0
   statBuffs:
-  - 0.5
-  - 1.5
+  - 0
+  - 2
   - 0
   - 0
   - 0
   - 0
   - 0
   - 0
-  - 0.5
+  - 1
   - 0
   - 0
   - 0

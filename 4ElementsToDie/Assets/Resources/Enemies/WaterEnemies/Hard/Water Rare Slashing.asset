@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b358bab5d19b4c441b4618565fbc0d43, type: 3}
+  m_Name: Water Rare Slashing
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: 8e0bbf4ed8645434ea6a517593e35b0b, type: 3}
+  idleAnimation: {fileID: 22100000, guid: 435c61a7568a744c8bf96997ae914b5f, type: 2}
+  moveLeftRightAnimation: {fileID: 0}
+  moveUpDownAnimation: {fileID: 0}
+  characterName: Water Rare Slashing
+  element: 2
+  defaultAttackType: 0
+  baseStats:
+  - 1
+  - 2
+  - 3
+  - 2
+  - 1
+  - 2
+  - 3
+  - 2
+  - 0
+  - 0
+  - 1
+  - 0
+  growingRatios:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 0
+  - 1
+  - 0
+  weapon: {fileID: 0}
+  armor: {fileID: 0}
+  accessory: {fileID: 0}
+  garment: {fileID: 0}
+  inventory:
+  - {fileID: 11400000, guid: 25995e7febce3d841af318ccb5698156, type: 2}
+  - {fileID: 11400000, guid: 43204fa8f0f99194ba26dc25992135ca, type: 2}
+  abilities: []

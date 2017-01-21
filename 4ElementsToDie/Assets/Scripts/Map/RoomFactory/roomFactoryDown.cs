@@ -151,6 +151,8 @@ public class roomFactoryDown : roomFactory
     public override void getBossEnemy(Vector3 pos, Transform parent)
     {
         GameObject go = enemyObjectCollection.GetComponent<EnemyObjectCollection>().getWaterEnemy(4);
+        go.transform.localScale = new Vector3(1.5f, 1.5f, 1f);
+        go.GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 0.51f, 1f);
         go.transform.parent = parent;
         go.transform.position = pos;
         go.tag = "Boss";

@@ -17,6 +17,7 @@ public class saleObject : MonoBehaviour
     {
         value.text = item.price + " ";
         onArea = false;
+        //gameObject.transform.localScale = new Vector3(1.5f, 1.5f, 1f);
     }
 
     void Update()

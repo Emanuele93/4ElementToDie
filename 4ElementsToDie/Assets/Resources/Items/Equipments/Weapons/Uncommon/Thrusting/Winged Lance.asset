@@ -16,21 +16,21 @@ MonoBehaviour:
   itemName: Winged Lance
   rarity: 1
   description: 
-  price: 6
-  dropRate: 10
+  price: 9
+  dropRate: 7
   element: 3
   statBuffs:
-  - 1.5
+  - 2.5
+  - 0
+  - 0
   - 1
   - 0
-  - 1
   - 0
   - 0
   - 0
-  - 3.5
   - 0
   - 0
   - 0
-  - 1.5
+  - 2
   abilities: []
   attackType: 1

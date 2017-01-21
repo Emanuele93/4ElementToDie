@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: FireEnemyRoundAnimatorController
+  m_Controller: {fileID: 9100000, guid: 1146659bf75b4487fa51f6d69164c0f9, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 6c64d52c19d2f4b4992c3cd85fd46c28, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 1c6e9b2e82544471c932fe9c4ca3b1a8, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: beb7d3a750871438fbb1ea774b605e17, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ce9dd1f05f0824791acf9b80d8130ed3, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 030ac42cc6b4f49bdbad400631ccdf1f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 5e622938f6c4e4c3d92a0c57ee015ff8, type: 2}
