@@ -39,5 +39,7 @@ public class CameraController : MonoBehaviour {
             to = new Vector3(fixedX, fixedY, transform.position.z);
         }
         transform.position = Vector3.MoveTowards(from, to, speed * Time.deltaTime);
+
+        speed = player.GetComponent<Player>().getPleyerSpeed() * 1.1f;
     }
 }

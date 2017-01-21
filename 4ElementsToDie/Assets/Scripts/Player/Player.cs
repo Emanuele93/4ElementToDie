@@ -174,4 +174,9 @@ public class Player : MonoBehaviour {
 
 		isInCooldown = false;
 	}
+
+    public float getPleyerSpeed()
+    {
+        return (float)charManager.Stats[(int)StatType.SPD].FinalStat;
+    }
 }
