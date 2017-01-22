@@ -4,7 +4,7 @@ using System.Collections;
 public class SplashScreenManager : MonoBehaviour {
 
 	public GameObject[] screens = new GameObject[2];
-	public float m_totalDuration = 5.5f;
+	public float m_totalDuration = 6f;
 	private float m_duration = 0f;
 
 	void OnEnable() {

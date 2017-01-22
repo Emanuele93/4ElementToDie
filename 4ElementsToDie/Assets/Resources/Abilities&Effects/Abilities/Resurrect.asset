@@ -16,7 +16,7 @@ MonoBehaviour:
   effect: {fileID: 11400000, guid: f20a97ade61206a46b4c953cf24b43ee, type: 2}
   trigger: 3
   target: 0
-  probability: 20
+  probability: 25
   duration: 0
   noTicks: 0
   secondsBetweenTicks: 0

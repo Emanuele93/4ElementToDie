@@ -13,11 +13,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectName: Berserk 50%
   statBuffs:
-  - 30
-  - -30
+  - 50
+  - -50
   - 0
   - 0
-  - 30
+  - 50
   - 0
   - 0
   - 0
