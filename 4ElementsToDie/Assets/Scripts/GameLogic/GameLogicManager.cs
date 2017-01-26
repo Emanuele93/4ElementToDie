@@ -46,6 +46,8 @@ public static class GameLogicManager {
             damage *= 2;
         }
 
+        damage = System.Math.Round(damage, 1);
+
         return damage;
     }
 }

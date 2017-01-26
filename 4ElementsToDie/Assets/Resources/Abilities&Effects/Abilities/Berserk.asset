@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Berserk
   m_EditorClassIdentifier: 
   abilityName: Berserk
-  description: Sacrifice 30% defense for offense when life is <50%
+  description: Sacrifice 50% defense for offense when life is <50%
   effect: {fileID: 11400000, guid: ec6c7cb41df7cbd4facb54cf51cb9978, type: 2}
   trigger: 4
   statToCheck: 0
