@@ -225,17 +225,26 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
                 text += " " + selectedItem.GetType().ToString() + "\n\n";
 
                 // stat buffs
+                bool newLine = false;
                 for (int i = 0; i < ((Equipment)selectedItem).statBuffs.Length; i++)
                 {
                     //positive buffs
                     if (((Equipment)selectedItem).statBuffs[i] > 0)
                     {
-                        text += "     + " + ((Equipment)selectedItem).statBuffs[i] + "   " + (StatType)i + "     ";
+                        text += "     + " + ((Equipment)selectedItem).statBuffs[i] + "   " + (StatType)i;
+                        
+                        if (newLine) text += "\n";
+                        else text += "          ";
+                        newLine = !newLine;
                     }
                     //negative buffs
                     else if (((Equipment)selectedItem).statBuffs[i] < 0)
                     {
-                        text += "     -  " + -((Equipment)selectedItem).statBuffs[i] + "   " + (StatType)i + "     ";
+                        text += "     -  " + -((Equipment)selectedItem).statBuffs[i] + "   " + (StatType)i;
+
+                        if (newLine) text += "\n";
+                        else text += "          ";
+                        newLine = !newLine;
                     }
                 }
                 text += "\n\n";
@@ -278,12 +287,6 @@ public class InGameMenuManager : Singleton<InGameMenuManager>
         text += "    EARTH : " + player.Stats[(int)StatType.EARTH].VisibleStat + "\n";
         text += "    WATER : " + player.Stats[(int)StatType.WATER].VisibleStat;
         text += "    AIR : " + player.Stats[(int)StatType.AIR].VisibleStat + "\n";
-        
-        //abilities
-        foreach (Ability a in player.Abilities)
-        {
-            text += a.abilityName + " " + "\n";
-        }
 
         characterText.text = text;
     }

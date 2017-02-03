@@ -2657,7 +2657,7 @@ MonoBehaviour:
   screens:
   - {fileID: 863796875}
   - {fileID: 433206272}
-  m_totalDuration: 5.5
+  m_totalDuration: 6
 --- !u!1 &1096796609
 GameObject:
   m_ObjectHideFlags: 0

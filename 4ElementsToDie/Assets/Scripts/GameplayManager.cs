@@ -116,31 +116,33 @@ public class GameplayManager : Singleton<GameplayManager> {
     #region Attack Management
     public void ExecuteAttack(CharacterManager attacker, CharacterManager defender)
     {
-        double damage = GameLogicManager.CalculateDamage(attacker, defender);
-        defender.ApplyDamage(damage);
-
-        // check abilities that trigger on attack
-        AbilityManager.CheckTriggeredAbilitiesActivation (TriggeredTriggerType.OnInflictedAttack, attacker, defender);
-        AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnReceivedAttack, defender, attacker);
-
-        if (defender.isDead())
+        if (!defender.isDead())
         {
-            // check abilities that trigger on death
-            AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnKill, attacker, defender);
-            AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnDeath, defender, attacker);
+            double damage = GameLogicManager.CalculateDamage(attacker, defender);
+            defender.ApplyDamage(damage);
 
-            // check again in case of resurrection
+            // check abilities that trigger on attack
+            AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnInflictedAttack, attacker, defender);
+            AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnReceivedAttack, defender, attacker);
+
             if (defender.isDead())
             {
-                Kill(defender);
+                // check abilities that trigger on death
+                AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnKill, attacker, defender);
+                AbilityManager.CheckTriggeredAbilitiesActivation(TriggeredTriggerType.OnDeath, defender, attacker);
+
+                // check again in case of resurrection
+                if (defender.isDead())
+                {
+                    Kill(defender);
+                }
+            }
+
+            if (defender.gameObject.CompareTag("Player"))
+            {
+                UpdateHealthBar();
             }
         }
-
-        if (defender.gameObject.CompareTag("Player"))
-        {
-            UpdateHealthBar();
-        }
-
     }
 
     public void Kill(CharacterManager deadCharacter)
@@ -182,8 +184,8 @@ public class GameplayManager : Singleton<GameplayManager> {
 
     public void UpdateHealthBar()
     {
-        double currentVitality = System.Math.Round(playerChar.Stats[(int)StatType.VIT].FinalStat - playerChar.Damage, 1);
         double totalVitality = System.Math.Round(playerChar.Stats[(int)StatType.VIT].FinalStat, 1);
+        double currentVitality = System.Math.Round(playerChar.Stats[(int)StatType.VIT].FinalStat - playerChar.Damage, 1);
 
         healthBar.GetComponent<RectTransform>().localScale = new Vector2((float)(currentVitality / totalVitality), 1);
         healthText.text = currentVitality + " / " + totalVitality;
@@ -214,12 +216,12 @@ public class GameplayManager : Singleton<GameplayManager> {
         tx = go.transform.Find("Text").GetComponent<Text>();
         if (damage > 0)
         {
-            tx.text = "- " + System.Math.Round(damage, 1);
+            tx.text = "- " + damage;
             tx.color = Color.white;
         }
         else if (damage < 0)
         {
-            tx.text = "+ " + -System.Math.Round(damage, 1);
+            tx.text = "+ " + -damage;
             tx.color = Color.green;
         }
         StartCoroutine(hideDamage(go));

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Haste
   m_EditorClassIdentifier: 
   abilityName: Haste
-  description: +15% movement Speed
+  description: Increase movement Speed
   effect: {fileID: 11400000, guid: 3d94835387e1d6b4a84b48ea84891a1f, type: 2}
   trigger: 0
   statToCheck: 0
